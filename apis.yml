@@ -36,3 +36,34 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
+common:
+  - name: Home - Escape Documentation
+    description: 'null'
+    url: https://docs.escape.tech/
+    type: Documentation
+  - name: Escape - The API Security Blog
+    description: 'null'
+    url: https://escape.tech/blog/
+    type: Blog
+  - name: Integrations - Escape Documentation
+    description: 'null'
+    url: https://docs.escape.tech/documentation/inventory/integrations/
+    type: Integrations
+  - name: Case Study - Escape - The API Security Blog
+    description: 'null'
+    url: https://escape.tech/blog/tag/case-study/
+    type: CaseStudies
+  - name: Privacy Policy - Escape
+    description: 'null'
+    url: https://escape.tech/privacy
+    type: PrivacyPolicy
+  - name: Terms of Service
+    description: 'null'
+    url: https://escape.tech/terms
+    type: TermsOfService
+  - name: >-
+      EscapeThe only DAST that works with your modern stack and tests business
+      logic.
+    description: 'null'
+    url: https://escape.tech/
+    type: Website
