@@ -54,8 +54,8 @@ common:
     type: Website
     description: 'null'
 created: '2025-01-08'
-modified: '2025-03-30'
-position: Consuming
+modified: '2026-03-16'
+position: Consumer
 description: >-
   Escape was founded in 2020 after one of our co-founders experienced a
   cyberattack and saw firsthand how vulnerable exposed APIs can be. Driven by a
@@ -68,5 +68,5 @@ description: >-
   applications secure.
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
 specificationVersion: '0.19'
