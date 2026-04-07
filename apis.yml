@@ -17,8 +17,8 @@ apis:
       CI/CD pipeline.
 name: Escape
 tags:
-  - Security
   - Platform
+  - Security
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
