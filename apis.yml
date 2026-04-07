@@ -57,15 +57,10 @@ created: '2025-01-08'
 modified: '2026-03-16'
 position: Consumer
 description: >-
-  Escape was founded in 2020 after one of our co-founders experienced a
-  cyberattack and saw firsthand how vulnerable exposed APIs can be. Driven by a
-  belief in the power of AI to transform cybersecurity, we built a platform that
-  emulates hacker behavior to identify vulnerabilities before they can be
-  exploited. Today, Escape goes beyond traditional protectionhelping you
-  document all your APIs, detect complex business logic flaws across modern
-  applications like APIs, SPAs, and Microservices, and seamlessly integrate
-  security into your CI/CD pipeline. You can trust Escape to keep your
-  applications secure.
+  Escape was founded in 2020 after one of our co-founders experienced a cyberattack
+  and saw firsthand how vulnerable exposed APIs can be. Driven by a belief in the
+  power of AI to transform cybersecurity, we built a platform that emulates hacker
+  behavior to identify vulnerabilities before they can be exploited.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
