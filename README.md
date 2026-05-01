@@ -1,52 +1,59 @@
 # Escape (escape)
-Escape was founded in 2020 after one of our co-founders experienced a cyberattack and saw firsthand how vulnerable exposed APIs can be. Driven by a belief in the power of AI to transform cybersecurity, we built a platform that emulates hacker behavior to identify vulnerabilities before they can be exploited. Today, Escape goes beyond traditional protectionhelping you document all your APIs, detect complex business logic flaws across modern applications like APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD pipeline. You can trust Escape to keep your applications secure.
+
+Escape was founded in 2020 after one of its co-founders experienced a cyberattack and saw firsthand how vulnerable exposed APIs can be. Driven by a belief in the power of AI to transform cybersecurity, Escape built a platform that emulates hacker behavior to identify vulnerabilities before they can be exploited. Today, Escape is a DAST (Dynamic Application Security Testing) platform that helps you document all your APIs, detect complex business logic flaws across modern applications like APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD pipeline.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/escape/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Contract
+- **Position:** Consumer
+- **Access:** 3rd-Party
 
-## Tags:
+## Tags
 
- - Security
+- Platform
+- Security
 
 ## Timestamps
 
-- **Created:** 2025-01-08 
-- **Modified:** 2025-03-30 
+- **Created:** 2025-01-08
+- **Modified:** 2026-04-28
 
 ## APIs
 
-### Escape
-Escape goes beyond traditional protectionhelping you document all your APIs, detect complex business logic flaws across modern applications like APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD pipeline.
+### Escape Public API
 
-**Human URL:** [https://docs.escape.tech/documentation/](https://docs.escape.tech/documentation/)
+The Escape Public API (V3) provides programmatic access to DAST scanning profiles, assets, integrations, scan results, authentications, issues, and job/report exports. Endpoints support automation of API security testing workflows and CI/CD pipeline integration.
 
+- **Human URL:** [https://docs.escape.tech/documentation/automate/public-api/](https://docs.escape.tech/documentation/automate/public-api/)
+- **Base URL:** `https://public.escape.tech/v3`
 
-#### Tags:
+#### Tags
 
- - Security
+- API Security
+- DAST
+- Security
+- Vulnerability Scanning
 
 #### Properties
 
-- [Documentation](https://public.escape.tech/v1/)
+- [Documentation](https://docs.escape.tech/documentation/automate/public-api/)
+- [OpenAPI](openapi/escape-openapi.yml)
+- [Authentication](https://docs.escape.tech/documentation/automate/public-api/)
 
 ## Common Properties
 
 - [Documentation](https://docs.escape.tech/)
 - [Blog](https://escape.tech/blog/)
 - [Integrations](https://docs.escape.tech/documentation/inventory/integrations/)
-- [CaseStudies](https://escape.tech/blog/tag/case-study/)
-- [PrivacyPolicy](https://escape.tech/privacy)
-- [TermsOfService](https://escape.tech/terms)
+- [Case Studies](https://escape.tech/blog/tag/case-study/)
+- [Privacy Policy](https://escape.tech/privacy)
+- [Terms of Service](https://escape.tech/terms)
 - [Website](https://escape.tech/)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
-**Email:** info@apievangelist.com
-
+**Email:** kin@apievangelist.com
