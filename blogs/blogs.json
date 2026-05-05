@@ -1,0 +1,13 @@
+{
+  "repo": "escape",
+  "feeds": [
+    {
+      "source": "https://escape.tech/blog/",
+      "feed_url": "https://escape.tech/blog/rss/",
+      "saved": 10,
+      "title": "Escape - Application Security & Offensive Security Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:27:50Z"
+}
