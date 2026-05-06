@@ -1,0 +1,2968 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically. All requests must be authenticated
+    with a valid API key, provided in the `X-ESCAPE-API-KEY` header. For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`. You can
+    find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+  tags:
+  - Escape
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: escape
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API HTTP API.
+    authentication:
+      type: apikey
+      in: header
+      name: X-ESCAPE-API-KEY
+      value: '{{ESCAPE_TOKEN}}'
+    resources:
+    - name: profiles
+      path: /profiles
+      operations:
+      - name: listprofiles
+        method: GET
+        description: List profiles
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: assetIds
+          in: query
+          type: string
+          description: Filter by asset IDs
+        - name: domains
+          in: query
+          type: string
+          description: Filter by domain
+        - name: issueIds
+          in: query
+          type: string
+          description: Filter by issue IDs
+        - name: tagIds
+          in: query
+          type: string
+          description: Filter by tag IDs
+        - name: search
+          in: query
+          type: string
+          description: Search term to filter profiles by name or description
+        - name: initiators
+          in: query
+          type: array
+          description: Filter by initiator
+        - name: kinds
+          in: query
+          type: array
+          description: Filter by kind
+        - name: risks
+          in: query
+          type: array
+          description: Filter by risk
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-problems
+      path: /profiles/problems
+      operations:
+      - name: problems
+        method: GET
+        description: List all scan statuses and problems
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: assetIds
+          in: query
+          type: string
+          description: Filter by asset IDs
+        - name: domains
+          in: query
+          type: string
+          description: Filter by domain
+        - name: issueIds
+          in: query
+          type: string
+          description: Filter by issue IDs
+        - name: tagIds
+          in: query
+          type: string
+          description: Filter by tag IDs
+        - name: search
+          in: query
+          type: string
+          description: Search term to filter profiles by name or description
+        - name: initiators
+          in: query
+          type: array
+          description: Filter by initiator
+        - name: kinds
+          in: query
+          type: array
+          description: Filter by kind
+        - name: risks
+          in: query
+          type: array
+          description: Filter by risk
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-profileid
+      path: /profiles/{profileId}
+      operations:
+      - name: getprofile
+        method: GET
+        description: Get a profile
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          required: true
+          description: The profile ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateprofile
+        method: PUT
+        description: Update a profile
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          required: true
+          description: The profile ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteprofile
+        method: DELETE
+        description: Delete a profile
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          required: true
+          description: The profile ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-profileid-configuration
+      path: /profiles/{profileId}/configuration
+      operations:
+      - name: updateprofileconfiguration
+        method: PUT
+        description: Update profile configuration
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          required: true
+          description: The profile ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-profileid-schema
+      path: /profiles/{profileId}/schema
+      operations:
+      - name: updateprofileschema
+        method: PUT
+        description: Update profile schema
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          required: true
+          description: The profile ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-rest
+      path: /profiles/rest
+      operations:
+      - name: createdastrestprofile
+        method: POST
+        description: Create a DAST REST profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-graphql
+      path: /profiles/graphql
+      operations:
+      - name: createdastgraphqlprofile
+        method: POST
+        description: Create a DAST GraphQL profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-webapp
+      path: /profiles/webapp
+      operations:
+      - name: createdastwebappprofile
+        method: POST
+        description: Create a DAST WebApp profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-ai-pentesting-rest
+      path: /profiles/ai-pentesting/rest
+      operations:
+      - name: createpentestrestprofile
+        method: POST
+        description: Create an Automated Pentest REST profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-ai-pentesting-graphql
+      path: /profiles/ai-pentesting/graphql
+      operations:
+      - name: createpentestgraphqlprofile
+        method: POST
+        description: Create an Automated Pentest GraphQL profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profiles-ai-pentesting-webapp
+      path: /profiles/ai-pentesting/webapp
+      operations:
+      - name: createpentestwebappprofile
+        method: POST
+        description: Create an Automated Pentest WebApp profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: authentications
+      path: /authentications
+      operations:
+      - name: startauthentication
+        method: POST
+        description: Start an authentication configuration check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: authentications-authenticationid
+      path: /authentications/{authenticationId}
+      operations:
+      - name: getauthentication
+        method: GET
+        description: Get authentication configuration check status
+        inputParameters:
+        - name: authenticationId
+          in: path
+          type: string
+          required: true
+          description: Identifier returned by the start endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets
+      path: /assets
+      operations:
+      - name: listassets
+        method: GET
+        description: List assets
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: search
+          in: query
+          type: string
+          description: Search term to filter assets by name or description
+        - name: types
+          in: query
+          type: array
+          description: Filter by type
+        - name: statuses
+          in: query
+          type: array
+          description: Filter by status
+        - name: manuallyCreated
+          in: query
+          type: string
+          description: Filter by manually created
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-bulk-update
+      path: /assets/bulk-update
+      operations:
+      - name: bulkupdateassets
+        method: POST
+        description: Bulk update assets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-bulk-delete
+      path: /assets/bulk-delete
+      operations:
+      - name: bulkdeleteassets
+        method: POST
+        description: Bulk delete assets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-assetid
+      path: /assets/{assetId}
+      operations:
+      - name: getasset
+        method: GET
+        description: Get an asset
+        inputParameters:
+        - name: assetId
+          in: path
+          type: string
+          required: true
+          description: The asset ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateasset
+        method: PUT
+        description: Update an asset
+        inputParameters:
+        - name: assetId
+          in: path
+          type: string
+          required: true
+          description: The asset ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteasset
+        method: DELETE
+        description: Delete an asset
+        inputParameters:
+        - name: assetId
+          in: path
+          type: string
+          required: true
+          description: The asset ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-assetid-activities
+      path: /assets/{assetId}/activities
+      operations:
+      - name: listassetactivities
+        method: GET
+        description: List activities of an asset
+        inputParameters:
+        - name: assetId
+          in: path
+          type: string
+          required: true
+          description: The asset ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createassetcomment
+        method: POST
+        description: Comment on an asset
+        inputParameters:
+        - name: assetId
+          in: path
+          type: string
+          required: true
+          description: The asset ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-dns
+      path: /assets/dns
+      operations:
+      - name: createasset-dns
+        method: POST
+        description: Create asset dns
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-ipv4
+      path: /assets/ipv4
+      operations:
+      - name: createasset-ipv4
+        method: POST
+        description: Create asset ipv4
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-ipv6
+      path: /assets/ipv6
+      operations:
+      - name: createasset-ipv6
+        method: POST
+        description: Create asset ipv6
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-graphql
+      path: /assets/graphql
+      operations:
+      - name: createasset-graphql
+        method: POST
+        description: Create asset graphql
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-rest
+      path: /assets/rest
+      operations:
+      - name: createasset-rest
+        method: POST
+        description: Create asset rest
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-grpc
+      path: /assets/grpc
+      operations:
+      - name: createasset-grpc
+        method: POST
+        description: Create asset grpc
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-websocket
+      path: /assets/websocket
+      operations:
+      - name: createasset-websocket
+        method: POST
+        description: Create asset websocket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-mcp
+      path: /assets/mcp
+      operations:
+      - name: createasset-mcp
+        method: POST
+        description: Create asset mcp
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-soap
+      path: /assets/soap
+      operations:
+      - name: createasset-soap
+        method: POST
+        description: Create asset soap
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-webapp
+      path: /assets/webapp
+      operations:
+      - name: createasset-webapp
+        method: POST
+        description: Create asset webapp
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-azure-tenant
+      path: /assets/azure-tenant
+      operations:
+      - name: createasset-azure-tenant
+        method: POST
+        description: Create asset azure-tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-ipv4-range
+      path: /assets/ipv4-range
+      operations:
+      - name: createasset-ipv4-range
+        method: POST
+        description: Create asset ipv4-range
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-gitlab-repository
+      path: /assets/gitlab-repository
+      operations:
+      - name: createasset-gitlab-repository
+        method: POST
+        description: Create asset gitlab-repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-github-repository
+      path: /assets/github-repository
+      operations:
+      - name: createasset-github-repository
+        method: POST
+        description: Create asset github-repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-bitbucket-repository
+      path: /assets/bitbucket-repository
+      operations:
+      - name: createasset-bitbucket-repository
+        method: POST
+        description: Create asset bitbucket-repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-code-project
+      path: /assets/code-project
+      operations:
+      - name: createasset-code-project
+        method: POST
+        description: Create asset code-project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-aws-lambda
+      path: /assets/aws-lambda
+      operations:
+      - name: createasset-aws-lambda
+        method: POST
+        description: Create asset aws-lambda
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-package
+      path: /assets/package
+      operations:
+      - name: createasset-package
+        method: POST
+        description: Create asset package
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-software
+      path: /assets/software
+      operations:
+      - name: createasset-software
+        method: POST
+        description: Create asset software
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: assets-schema
+      path: /assets/schema
+      operations:
+      - name: createasset-schema
+        method: POST
+        description: Create asset schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans
+      path: /scans
+      operations:
+      - name: listscans
+        method: GET
+        description: List scans
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: after
+          in: query
+          type: string
+          description: Filter by after date
+        - name: before
+          in: query
+          type: string
+          description: Filter by before date
+        - name: assetIds
+          in: query
+          type: string
+          description: Filter by asset IDs
+        - name: profileIds
+          in: query
+          type: string
+          description: Filter by profile IDs
+        - name: ignored
+          in: query
+          type: string
+          description: Filter by ignored status
+        - name: initiator
+          in: query
+          type: array
+          description: Filter by initiator
+        - name: kinds
+          in: query
+          type: array
+          description: Filter by kind
+        - name: status
+          in: query
+          type: array
+          description: Filter by status
+        - name: projectIds
+          in: query
+          type: string
+          description: Filter by project IDs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: startscan
+        method: POST
+        description: Start a new scan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-problems
+      path: /scans/problems
+      operations:
+      - name: scansproblems
+        method: GET
+        description: List scans with their problems
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: after
+          in: query
+          type: string
+          description: Filter by after date
+        - name: before
+          in: query
+          type: string
+          description: Filter by before date
+        - name: assetIds
+          in: query
+          type: string
+          description: Filter by asset IDs
+        - name: profileIds
+          in: query
+          type: string
+          description: Filter by profile IDs
+        - name: projectIds
+          in: query
+          type: string
+          description: Filter by project IDs
+        - name: ignored
+          in: query
+          type: string
+          description: Filter by ignored status
+        - name: initiator
+          in: query
+          type: array
+          description: Filter by initiator
+        - name: kinds
+          in: query
+          type: array
+          description: Filter by kind
+        - name: status
+          in: query
+          type: array
+          description: Filter by status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-emails
+      path: /scans/emails
+      operations:
+      - name: listinboxemails
+        method: GET
+        description: List inbox emails
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: ids
+          in: query
+          type: array
+          description: Filter by email IDs
+        - name: before
+          in: query
+          type: string
+          description: Filter by before date
+        - name: after
+          in: query
+          type: string
+          description: Filter by after date
+        - name: email
+          in: query
+          type: string
+          required: true
+          description: Inbox email address used as `to` filter
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-emails-id
+      path: /scans/emails/{id}
+      operations:
+      - name: readinboxemail
+        method: GET
+        description: Read inbox email content
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          description: The inbox email ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-scanid
+      path: /scans/{scanId}
+      operations:
+      - name: getscan
+        method: GET
+        description: Get a scan
+        inputParameters:
+        - name: scanId
+          in: path
+          type: string
+          required: true
+          description: The scan ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-scanid-cancel
+      path: /scans/{scanId}/cancel
+      operations:
+      - name: cancelscan
+        method: PUT
+        description: Cancel a scan
+        inputParameters:
+        - name: scanId
+          in: path
+          type: string
+          required: true
+          description: The scan ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-scanid-ignore
+      path: /scans/{scanId}/ignore
+      operations:
+      - name: ignorescan
+        method: PUT
+        description: Ignore a scan
+        inputParameters:
+        - name: scanId
+          in: path
+          type: string
+          required: true
+          description: The scan ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: scans-scanid-targets
+      path: /scans/{scanId}/targets
+      operations:
+      - name: listscantargets
+        method: GET
+        description: List scan targets and API coverage
+        inputParameters:
+        - name: scanId
+          in: path
+          type: string
+          required: true
+          description: The scan ID
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: types
+          in: query
+          type: array
+          description: Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: issues
+      path: /issues
+      operations:
+      - name: listissues
+        method: GET
+        description: List issues
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: profileIds
+          in: query
+          type: string
+          description: Filter by application IDs
+        - name: assetIds
+          in: query
+          type: string
+          description: Filter by asset IDs
+        - name: domains
+          in: query
+          type: string
+          description: Filter by domain
+        - name: ids
+          in: query
+          type: string
+          description: Filter by specific issue IDs
+        - name: names
+          in: query
+          type: string
+          description: Filter by issue names
+        - name: scanIds
+          in: query
+          type: string
+          description: Filter by scan IDs
+        - name: tagIds
+          in: query
+          type: string
+          description: Filter by tag IDs
+        - name: search
+          in: query
+          type: string
+          description: Search term to filter issues by name or description
+        - name: jiraTicket
+          in: query
+          type: string
+          description: Filter by issues with Jira tickets
+        - name: risks
+          in: query
+          type: array
+          description: Filter by risk types
+        - name: assetClasses
+          in: query
+          type: array
+          description: Filter by asset classes
+        - name: scannerKinds
+          in: query
+          type: array
+          description: Filter by scanner kinds
+        - name: severities
+          in: query
+          type: array
+          description: Filter by issue severities
+        - name: status
+          in: query
+          type: array
+          description: Filter by issue status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: issues-funnel
+      path: /issues/funnel
+      operations:
+      - name: getissuefunnel
+        method: GET
+        description: Get issue funnel
+        inputParameters:
+        - name: projectIds
+          in: query
+          type: string
+          description: Filter by project IDs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: issues-trends
+      path: /issues/trends
+      operations:
+      - name: getissuetrends
+        method: GET
+        description: Get issue severity trends
+        inputParameters:
+        - name: after
+          in: query
+          type: string
+          required: true
+          description: Start date (ISO 8601)
+        - name: before
+          in: query
+          type: string
+          required: true
+          description: End date (ISO 8601)
+        - name: interval
+          in: query
+          type: string
+          description: Time bucket interval (e.g. "1 day", "1 week")
+        - name: applicationIds
+          in: query
+          type: string
+          description: Filter by application IDs
+        - name: projectIds
+          in: query
+          type: string
+          description: Filter by project IDs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: issues-bulk-update
+      path: /issues/bulk-update
+      operations:
+      - name: bulkupdateissues
+        method: POST
+        description: Bulk update issues
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: issues-issueid
+      path: /issues/{issueId}
+      operations:
+      - name: getissue
+        method: GET
+        description: Get an issue
+        inputParameters:
+        - name: issueId
+          in: path
+          type: string
+          required: true
+          description: The issue ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateissue
+        method: PUT
+        description: Update an issue
+        inputParameters:
+        - name: issueId
+          in: path
+          type: string
+          required: true
+          description: The issue ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: issues-issueid-activities
+      path: /issues/{issueId}/activities
+      operations:
+      - name: listissueactivities
+        method: GET
+        description: List activities of an issue
+        inputParameters:
+        - name: issueId
+          in: path
+          type: string
+          required: true
+          description: The issue ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createissuecomment
+        method: POST
+        description: Comment on an issue
+        inputParameters:
+        - name: issueId
+          in: path
+          type: string
+          required: true
+          description: The issue ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: escape-rest
+    description: REST adapter for Escape Public API.
+    resources:
+    - path: /profiles
+      name: listprofiles
+      operations:
+      - method: GET
+        name: listprofiles
+        description: List profiles
+        call: escape.listprofiles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/problems
+      name: problems
+      operations:
+      - method: GET
+        name: problems
+        description: List all scan statuses and problems
+        call: escape.problems
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/{profileId}
+      name: getprofile
+      operations:
+      - method: GET
+        name: getprofile
+        description: Get a profile
+        call: escape.getprofile
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/{profileId}
+      name: updateprofile
+      operations:
+      - method: PUT
+        name: updateprofile
+        description: Update a profile
+        call: escape.updateprofile
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/{profileId}
+      name: deleteprofile
+      operations:
+      - method: DELETE
+        name: deleteprofile
+        description: Delete a profile
+        call: escape.deleteprofile
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/{profileId}/configuration
+      name: updateprofileconfiguration
+      operations:
+      - method: PUT
+        name: updateprofileconfiguration
+        description: Update profile configuration
+        call: escape.updateprofileconfiguration
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/{profileId}/schema
+      name: updateprofileschema
+      operations:
+      - method: PUT
+        name: updateprofileschema
+        description: Update profile schema
+        call: escape.updateprofileschema
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/rest
+      name: createdastrestprofile
+      operations:
+      - method: POST
+        name: createdastrestprofile
+        description: Create a DAST REST profile
+        call: escape.createdastrestprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/graphql
+      name: createdastgraphqlprofile
+      operations:
+      - method: POST
+        name: createdastgraphqlprofile
+        description: Create a DAST GraphQL profile
+        call: escape.createdastgraphqlprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/webapp
+      name: createdastwebappprofile
+      operations:
+      - method: POST
+        name: createdastwebappprofile
+        description: Create a DAST WebApp profile
+        call: escape.createdastwebappprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/ai-pentesting/rest
+      name: createpentestrestprofile
+      operations:
+      - method: POST
+        name: createpentestrestprofile
+        description: Create an Automated Pentest REST profile
+        call: escape.createpentestrestprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/ai-pentesting/graphql
+      name: createpentestgraphqlprofile
+      operations:
+      - method: POST
+        name: createpentestgraphqlprofile
+        description: Create an Automated Pentest GraphQL profile
+        call: escape.createpentestgraphqlprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /profiles/ai-pentesting/webapp
+      name: createpentestwebappprofile
+      operations:
+      - method: POST
+        name: createpentestwebappprofile
+        description: Create an Automated Pentest WebApp profile
+        call: escape.createpentestwebappprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /authentications
+      name: startauthentication
+      operations:
+      - method: POST
+        name: startauthentication
+        description: Start an authentication configuration check
+        call: escape.startauthentication
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /authentications/{authenticationId}
+      name: getauthentication
+      operations:
+      - method: GET
+        name: getauthentication
+        description: Get authentication configuration check status
+        call: escape.getauthentication
+        with:
+          authenticationId: rest.authenticationId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets
+      name: listassets
+      operations:
+      - method: GET
+        name: listassets
+        description: List assets
+        call: escape.listassets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/bulk-update
+      name: bulkupdateassets
+      operations:
+      - method: POST
+        name: bulkupdateassets
+        description: Bulk update assets
+        call: escape.bulkupdateassets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/bulk-delete
+      name: bulkdeleteassets
+      operations:
+      - method: POST
+        name: bulkdeleteassets
+        description: Bulk delete assets
+        call: escape.bulkdeleteassets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/{assetId}
+      name: getasset
+      operations:
+      - method: GET
+        name: getasset
+        description: Get an asset
+        call: escape.getasset
+        with:
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/{assetId}
+      name: updateasset
+      operations:
+      - method: PUT
+        name: updateasset
+        description: Update an asset
+        call: escape.updateasset
+        with:
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/{assetId}
+      name: deleteasset
+      operations:
+      - method: DELETE
+        name: deleteasset
+        description: Delete an asset
+        call: escape.deleteasset
+        with:
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/{assetId}/activities
+      name: listassetactivities
+      operations:
+      - method: GET
+        name: listassetactivities
+        description: List activities of an asset
+        call: escape.listassetactivities
+        with:
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/{assetId}/activities
+      name: createassetcomment
+      operations:
+      - method: POST
+        name: createassetcomment
+        description: Comment on an asset
+        call: escape.createassetcomment
+        with:
+          assetId: rest.assetId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/dns
+      name: createasset-dns
+      operations:
+      - method: POST
+        name: createasset-dns
+        description: Create asset dns
+        call: escape.createasset-dns
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/ipv4
+      name: createasset-ipv4
+      operations:
+      - method: POST
+        name: createasset-ipv4
+        description: Create asset ipv4
+        call: escape.createasset-ipv4
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/ipv6
+      name: createasset-ipv6
+      operations:
+      - method: POST
+        name: createasset-ipv6
+        description: Create asset ipv6
+        call: escape.createasset-ipv6
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/graphql
+      name: createasset-graphql
+      operations:
+      - method: POST
+        name: createasset-graphql
+        description: Create asset graphql
+        call: escape.createasset-graphql
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/rest
+      name: createasset-rest
+      operations:
+      - method: POST
+        name: createasset-rest
+        description: Create asset rest
+        call: escape.createasset-rest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/grpc
+      name: createasset-grpc
+      operations:
+      - method: POST
+        name: createasset-grpc
+        description: Create asset grpc
+        call: escape.createasset-grpc
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/websocket
+      name: createasset-websocket
+      operations:
+      - method: POST
+        name: createasset-websocket
+        description: Create asset websocket
+        call: escape.createasset-websocket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/mcp
+      name: createasset-mcp
+      operations:
+      - method: POST
+        name: createasset-mcp
+        description: Create asset mcp
+        call: escape.createasset-mcp
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/soap
+      name: createasset-soap
+      operations:
+      - method: POST
+        name: createasset-soap
+        description: Create asset soap
+        call: escape.createasset-soap
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/webapp
+      name: createasset-webapp
+      operations:
+      - method: POST
+        name: createasset-webapp
+        description: Create asset webapp
+        call: escape.createasset-webapp
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/azure-tenant
+      name: createasset-azure-tenant
+      operations:
+      - method: POST
+        name: createasset-azure-tenant
+        description: Create asset azure-tenant
+        call: escape.createasset-azure-tenant
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/ipv4-range
+      name: createasset-ipv4-range
+      operations:
+      - method: POST
+        name: createasset-ipv4-range
+        description: Create asset ipv4-range
+        call: escape.createasset-ipv4-range
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/gitlab-repository
+      name: createasset-gitlab-repository
+      operations:
+      - method: POST
+        name: createasset-gitlab-repository
+        description: Create asset gitlab-repository
+        call: escape.createasset-gitlab-repository
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/github-repository
+      name: createasset-github-repository
+      operations:
+      - method: POST
+        name: createasset-github-repository
+        description: Create asset github-repository
+        call: escape.createasset-github-repository
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/bitbucket-repository
+      name: createasset-bitbucket-repository
+      operations:
+      - method: POST
+        name: createasset-bitbucket-repository
+        description: Create asset bitbucket-repository
+        call: escape.createasset-bitbucket-repository
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/code-project
+      name: createasset-code-project
+      operations:
+      - method: POST
+        name: createasset-code-project
+        description: Create asset code-project
+        call: escape.createasset-code-project
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/aws-lambda
+      name: createasset-aws-lambda
+      operations:
+      - method: POST
+        name: createasset-aws-lambda
+        description: Create asset aws-lambda
+        call: escape.createasset-aws-lambda
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/package
+      name: createasset-package
+      operations:
+      - method: POST
+        name: createasset-package
+        description: Create asset package
+        call: escape.createasset-package
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/software
+      name: createasset-software
+      operations:
+      - method: POST
+        name: createasset-software
+        description: Create asset software
+        call: escape.createasset-software
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /assets/schema
+      name: createasset-schema
+      operations:
+      - method: POST
+        name: createasset-schema
+        description: Create asset schema
+        call: escape.createasset-schema
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans
+      name: listscans
+      operations:
+      - method: GET
+        name: listscans
+        description: List scans
+        call: escape.listscans
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans
+      name: startscan
+      operations:
+      - method: POST
+        name: startscan
+        description: Start a new scan
+        call: escape.startscan
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/problems
+      name: scansproblems
+      operations:
+      - method: GET
+        name: scansproblems
+        description: List scans with their problems
+        call: escape.scansproblems
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/emails
+      name: listinboxemails
+      operations:
+      - method: GET
+        name: listinboxemails
+        description: List inbox emails
+        call: escape.listinboxemails
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/emails/{id}
+      name: readinboxemail
+      operations:
+      - method: GET
+        name: readinboxemail
+        description: Read inbox email content
+        call: escape.readinboxemail
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/{scanId}
+      name: getscan
+      operations:
+      - method: GET
+        name: getscan
+        description: Get a scan
+        call: escape.getscan
+        with:
+          scanId: rest.scanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/{scanId}/cancel
+      name: cancelscan
+      operations:
+      - method: PUT
+        name: cancelscan
+        description: Cancel a scan
+        call: escape.cancelscan
+        with:
+          scanId: rest.scanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/{scanId}/ignore
+      name: ignorescan
+      operations:
+      - method: PUT
+        name: ignorescan
+        description: Ignore a scan
+        call: escape.ignorescan
+        with:
+          scanId: rest.scanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /scans/{scanId}/targets
+      name: listscantargets
+      operations:
+      - method: GET
+        name: listscantargets
+        description: List scan targets and API coverage
+        call: escape.listscantargets
+        with:
+          scanId: rest.scanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues
+      name: listissues
+      operations:
+      - method: GET
+        name: listissues
+        description: List issues
+        call: escape.listissues
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/funnel
+      name: getissuefunnel
+      operations:
+      - method: GET
+        name: getissuefunnel
+        description: Get issue funnel
+        call: escape.getissuefunnel
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/trends
+      name: getissuetrends
+      operations:
+      - method: GET
+        name: getissuetrends
+        description: Get issue severity trends
+        call: escape.getissuetrends
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/bulk-update
+      name: bulkupdateissues
+      operations:
+      - method: POST
+        name: bulkupdateissues
+        description: Bulk update issues
+        call: escape.bulkupdateissues
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/{issueId}
+      name: getissue
+      operations:
+      - method: GET
+        name: getissue
+        description: Get an issue
+        call: escape.getissue
+        with:
+          issueId: rest.issueId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/{issueId}
+      name: updateissue
+      operations:
+      - method: PUT
+        name: updateissue
+        description: Update an issue
+        call: escape.updateissue
+        with:
+          issueId: rest.issueId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/{issueId}/activities
+      name: listissueactivities
+      operations:
+      - method: GET
+        name: listissueactivities
+        description: List activities of an issue
+        call: escape.listissueactivities
+        with:
+          issueId: rest.issueId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /issues/{issueId}/activities
+      name: createissuecomment
+      operations:
+      - method: POST
+        name: createissuecomment
+        description: Comment on an issue
+        call: escape.createissuecomment
+        with:
+          issueId: rest.issueId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: escape-mcp
+    transport: http
+    description: MCP adapter for Escape Public API for AI agent use.
+    tools:
+    - name: listprofiles
+      description: List profiles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listprofiles
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        assetIds: tools.assetIds
+        domains: tools.domains
+        issueIds: tools.issueIds
+        tagIds: tools.tagIds
+        search: tools.search
+        initiators: tools.initiators
+        kinds: tools.kinds
+        risks: tools.risks
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: assetIds
+        type: string
+        description: Filter by asset IDs
+      - name: domains
+        type: string
+        description: Filter by domain
+      - name: issueIds
+        type: string
+        description: Filter by issue IDs
+      - name: tagIds
+        type: string
+        description: Filter by tag IDs
+      - name: search
+        type: string
+        description: Search term to filter profiles by name or description
+      - name: initiators
+        type: array
+        description: Filter by initiator
+      - name: kinds
+        type: array
+        description: Filter by kind
+      - name: risks
+        type: array
+        description: Filter by risk
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: problems
+      description: List all scan statuses and problems
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.problems
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        assetIds: tools.assetIds
+        domains: tools.domains
+        issueIds: tools.issueIds
+        tagIds: tools.tagIds
+        search: tools.search
+        initiators: tools.initiators
+        kinds: tools.kinds
+        risks: tools.risks
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: assetIds
+        type: string
+        description: Filter by asset IDs
+      - name: domains
+        type: string
+        description: Filter by domain
+      - name: issueIds
+        type: string
+        description: Filter by issue IDs
+      - name: tagIds
+        type: string
+        description: Filter by tag IDs
+      - name: search
+        type: string
+        description: Search term to filter profiles by name or description
+      - name: initiators
+        type: array
+        description: Filter by initiator
+      - name: kinds
+        type: array
+        description: Filter by kind
+      - name: risks
+        type: array
+        description: Filter by risk
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getprofile
+      description: Get a profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getprofile
+      with:
+        profileId: tools.profileId
+      inputParameters:
+      - name: profileId
+        type: string
+        description: The profile ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateprofile
+      description: Update a profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.updateprofile
+      with:
+        profileId: tools.profileId
+      inputParameters:
+      - name: profileId
+        type: string
+        description: The profile ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteprofile
+      description: Delete a profile
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: escape.deleteprofile
+      with:
+        profileId: tools.profileId
+      inputParameters:
+      - name: profileId
+        type: string
+        description: The profile ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateprofileconfiguration
+      description: Update profile configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.updateprofileconfiguration
+      with:
+        profileId: tools.profileId
+      inputParameters:
+      - name: profileId
+        type: string
+        description: The profile ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateprofileschema
+      description: Update profile schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.updateprofileschema
+      with:
+        profileId: tools.profileId
+      inputParameters:
+      - name: profileId
+        type: string
+        description: The profile ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createdastrestprofile
+      description: Create a DAST REST profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createdastrestprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createdastgraphqlprofile
+      description: Create a DAST GraphQL profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createdastgraphqlprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createdastwebappprofile
+      description: Create a DAST WebApp profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createdastwebappprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createpentestrestprofile
+      description: Create an Automated Pentest REST profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createpentestrestprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createpentestgraphqlprofile
+      description: Create an Automated Pentest GraphQL profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createpentestgraphqlprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createpentestwebappprofile
+      description: Create an Automated Pentest WebApp profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createpentestwebappprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: startauthentication
+      description: Start an authentication configuration check
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.startauthentication
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getauthentication
+      description: Get authentication configuration check status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getauthentication
+      with:
+        authenticationId: tools.authenticationId
+      inputParameters:
+      - name: authenticationId
+        type: string
+        description: Identifier returned by the start endpoint
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listassets
+      description: List assets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listassets
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        search: tools.search
+        types: tools.types
+        statuses: tools.statuses
+        manuallyCreated: tools.manuallyCreated
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: search
+        type: string
+        description: Search term to filter assets by name or description
+      - name: types
+        type: array
+        description: Filter by type
+      - name: statuses
+        type: array
+        description: Filter by status
+      - name: manuallyCreated
+        type: string
+        description: Filter by manually created
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulkupdateassets
+      description: Bulk update assets
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.bulkupdateassets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulkdeleteassets
+      description: Bulk delete assets
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.bulkdeleteassets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getasset
+      description: Get an asset
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getasset
+      with:
+        assetId: tools.assetId
+      inputParameters:
+      - name: assetId
+        type: string
+        description: The asset ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateasset
+      description: Update an asset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.updateasset
+      with:
+        assetId: tools.assetId
+      inputParameters:
+      - name: assetId
+        type: string
+        description: The asset ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteasset
+      description: Delete an asset
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: escape.deleteasset
+      with:
+        assetId: tools.assetId
+      inputParameters:
+      - name: assetId
+        type: string
+        description: The asset ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listassetactivities
+      description: List activities of an asset
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listassetactivities
+      with:
+        assetId: tools.assetId
+      inputParameters:
+      - name: assetId
+        type: string
+        description: The asset ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createassetcomment
+      description: Comment on an asset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createassetcomment
+      with:
+        assetId: tools.assetId
+      inputParameters:
+      - name: assetId
+        type: string
+        description: The asset ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-dns
+      description: Create asset dns
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-dns
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-ipv4
+      description: Create asset ipv4
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-ipv4
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-ipv6
+      description: Create asset ipv6
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-ipv6
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-graphql
+      description: Create asset graphql
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-graphql
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-rest
+      description: Create asset rest
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-rest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-grpc
+      description: Create asset grpc
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-grpc
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-websocket
+      description: Create asset websocket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-websocket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-mcp
+      description: Create asset mcp
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-mcp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-soap
+      description: Create asset soap
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-soap
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-webapp
+      description: Create asset webapp
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-webapp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-azure-tenant
+      description: Create asset azure-tenant
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-azure-tenant
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-ipv4-range
+      description: Create asset ipv4-range
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-ipv4-range
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-gitlab-repository
+      description: Create asset gitlab-repository
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-gitlab-repository
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-github-repository
+      description: Create asset github-repository
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-github-repository
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-bitbucket-repository
+      description: Create asset bitbucket-repository
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-bitbucket-repository
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-code-project
+      description: Create asset code-project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-code-project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-aws-lambda
+      description: Create asset aws-lambda
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-aws-lambda
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-package
+      description: Create asset package
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-package
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-software
+      description: Create asset software
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-software
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createasset-schema
+      description: Create asset schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createasset-schema
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listscans
+      description: List scans
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listscans
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        after: tools.after
+        before: tools.before
+        assetIds: tools.assetIds
+        profileIds: tools.profileIds
+        ignored: tools.ignored
+        initiator: tools.initiator
+        kinds: tools.kinds
+        status: tools.status
+        projectIds: tools.projectIds
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: after
+        type: string
+        description: Filter by after date
+      - name: before
+        type: string
+        description: Filter by before date
+      - name: assetIds
+        type: string
+        description: Filter by asset IDs
+      - name: profileIds
+        type: string
+        description: Filter by profile IDs
+      - name: ignored
+        type: string
+        description: Filter by ignored status
+      - name: initiator
+        type: array
+        description: Filter by initiator
+      - name: kinds
+        type: array
+        description: Filter by kind
+      - name: status
+        type: array
+        description: Filter by status
+      - name: projectIds
+        type: string
+        description: Filter by project IDs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: startscan
+      description: Start a new scan
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.startscan
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: scansproblems
+      description: List scans with their problems
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.scansproblems
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        after: tools.after
+        before: tools.before
+        assetIds: tools.assetIds
+        profileIds: tools.profileIds
+        projectIds: tools.projectIds
+        ignored: tools.ignored
+        initiator: tools.initiator
+        kinds: tools.kinds
+        status: tools.status
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: after
+        type: string
+        description: Filter by after date
+      - name: before
+        type: string
+        description: Filter by before date
+      - name: assetIds
+        type: string
+        description: Filter by asset IDs
+      - name: profileIds
+        type: string
+        description: Filter by profile IDs
+      - name: projectIds
+        type: string
+        description: Filter by project IDs
+      - name: ignored
+        type: string
+        description: Filter by ignored status
+      - name: initiator
+        type: array
+        description: Filter by initiator
+      - name: kinds
+        type: array
+        description: Filter by kind
+      - name: status
+        type: array
+        description: Filter by status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listinboxemails
+      description: List inbox emails
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listinboxemails
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        ids: tools.ids
+        before: tools.before
+        after: tools.after
+        email: tools.email
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: ids
+        type: array
+        description: Filter by email IDs
+      - name: before
+        type: string
+        description: Filter by before date
+      - name: after
+        type: string
+        description: Filter by after date
+      - name: email
+        type: string
+        description: Inbox email address used as `to` filter
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: readinboxemail
+      description: Read inbox email content
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.readinboxemail
+      with:
+        id: tools.id
+      inputParameters:
+      - name: id
+        type: string
+        description: The inbox email ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getscan
+      description: Get a scan
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getscan
+      with:
+        scanId: tools.scanId
+      inputParameters:
+      - name: scanId
+        type: string
+        description: The scan ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancelscan
+      description: Cancel a scan
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.cancelscan
+      with:
+        scanId: tools.scanId
+      inputParameters:
+      - name: scanId
+        type: string
+        description: The scan ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ignorescan
+      description: Ignore a scan
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.ignorescan
+      with:
+        scanId: tools.scanId
+      inputParameters:
+      - name: scanId
+        type: string
+        description: The scan ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listscantargets
+      description: List scan targets and API coverage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listscantargets
+      with:
+        scanId: tools.scanId
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        types: tools.types
+      inputParameters:
+      - name: scanId
+        type: string
+        description: The scan ID
+        required: true
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: types
+        type: array
+        description: Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listissues
+      description: List issues
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listissues
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        profileIds: tools.profileIds
+        assetIds: tools.assetIds
+        domains: tools.domains
+        ids: tools.ids
+        names: tools.names
+        scanIds: tools.scanIds
+        tagIds: tools.tagIds
+        search: tools.search
+        jiraTicket: tools.jiraTicket
+        risks: tools.risks
+        assetClasses: tools.assetClasses
+        scannerKinds: tools.scannerKinds
+        severities: tools.severities
+        status: tools.status
+      inputParameters:
+      - name: cursor
+        type: string
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+          first page will be returned.
+      - name: size
+        type: integer
+        description: The number of items to return per page
+      - name: sortType
+        type: string
+        description: The type to sort by
+      - name: sortDirection
+        type: string
+        description: The direction to sort by
+      - name: profileIds
+        type: string
+        description: Filter by application IDs
+      - name: assetIds
+        type: string
+        description: Filter by asset IDs
+      - name: domains
+        type: string
+        description: Filter by domain
+      - name: ids
+        type: string
+        description: Filter by specific issue IDs
+      - name: names
+        type: string
+        description: Filter by issue names
+      - name: scanIds
+        type: string
+        description: Filter by scan IDs
+      - name: tagIds
+        type: string
+        description: Filter by tag IDs
+      - name: search
+        type: string
+        description: Search term to filter issues by name or description
+      - name: jiraTicket
+        type: string
+        description: Filter by issues with Jira tickets
+      - name: risks
+        type: array
+        description: Filter by risk types
+      - name: assetClasses
+        type: array
+        description: Filter by asset classes
+      - name: scannerKinds
+        type: array
+        description: Filter by scanner kinds
+      - name: severities
+        type: array
+        description: Filter by issue severities
+      - name: status
+        type: array
+        description: Filter by issue status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getissuefunnel
+      description: Get issue funnel
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getissuefunnel
+      with:
+        projectIds: tools.projectIds
+      inputParameters:
+      - name: projectIds
+        type: string
+        description: Filter by project IDs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getissuetrends
+      description: Get issue severity trends
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getissuetrends
+      with:
+        after: tools.after
+        before: tools.before
+        interval: tools.interval
+        applicationIds: tools.applicationIds
+        projectIds: tools.projectIds
+      inputParameters:
+      - name: after
+        type: string
+        description: Start date (ISO 8601)
+        required: true
+      - name: before
+        type: string
+        description: End date (ISO 8601)
+        required: true
+      - name: interval
+        type: string
+        description: Time bucket interval (e.g. "1 day", "1 week")
+      - name: applicationIds
+        type: string
+        description: Filter by application IDs
+      - name: projectIds
+        type: string
+        description: Filter by project IDs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulkupdateissues
+      description: Bulk update issues
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.bulkupdateissues
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getissue
+      description: Get an issue
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.getissue
+      with:
+        issueId: tools.issueId
+      inputParameters:
+      - name: issueId
+        type: string
+        description: The issue ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateissue
+      description: Update an issue
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape.updateissue
+      with:
+        issueId: tools.issueId
+      inputParameters:
+      - name: issueId
+        type: string
+        description: The issue ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listissueactivities
+      description: List activities of an issue
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape.listissueactivities
+      with:
+        issueId: tools.issueId
+      inputParameters:
+      - name: issueId
+        type: string
+        description: The issue ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createissuecomment
+      description: Comment on an issue
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape.createissuecomment
+      with:
+        issueId: tools.issueId
+      inputParameters:
+      - name: issueId
+        type: string
+        description: The issue ID
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    ESCAPE_TOKEN: ESCAPE_TOKEN
