@@ -11,7 +11,7 @@ description: >-
   APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD
   pipeline.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-type: Contract
+kind: contract
 position: Consumer
 access: 3rd-Party
 tags:
