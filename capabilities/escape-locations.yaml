@@ -1,0 +1,269 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Locations
+  description: 'Escape Public API — Locations. 5 operations. Lead operation: List locations. Self-contained Naftiko capability
+    covering one Escape business surface.'
+  tags:
+  - Escape
+  - Locations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-locations
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Locations business capability. Self-contained, no shared references.
+    resources:
+    - name: locations
+      path: /locations
+      operations:
+      - name: listlocations
+        method: GET
+        description: List locations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: search
+          in: query
+          type: string
+        - name: enabled
+          in: query
+          type: string
+        - name: type
+          in: query
+          type: array
+      - name: createlocation
+        method: POST
+        description: Create a location
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: locations-locationId
+      path: /locations/{locationId}
+      operations:
+      - name: getlocation
+        method: GET
+        description: Get a location
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: locationId
+          in: path
+          type: string
+          description: The ID of the location to get
+          required: true
+      - name: updatelocation
+        method: PUT
+        description: Update a location
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: locationId
+          in: path
+          type: string
+          description: The ID of the location to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletelocation
+        method: DELETE
+        description: Delete a location
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: locationId
+          in: path
+          type: string
+          description: The ID of the location to delete
+          required: true
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-locations-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Locations. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/locations
+      name: locations
+      description: REST surface for locations.
+      operations:
+      - method: GET
+        name: listlocations
+        description: List locations
+        call: escape-locations.listlocations
+        with:
+          cursor: rest.cursor
+          size: rest.size
+          sortType: rest.sortType
+          sortDirection: rest.sortDirection
+          search: rest.search
+          enabled: rest.enabled
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createlocation
+        description: Create a location
+        call: escape-locations.createlocation
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/locations/{locationid}
+      name: locations-locationid
+      description: REST surface for locations-locationId.
+      operations:
+      - method: GET
+        name: getlocation
+        description: Get a location
+        call: escape-locations.getlocation
+        with:
+          locationId: rest.locationId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatelocation
+        description: Update a location
+        call: escape-locations.updatelocation
+        with:
+          locationId: rest.locationId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletelocation
+        description: Delete a location
+        call: escape-locations.deletelocation
+        with:
+          locationId: rest.locationId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-locations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Locations. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-locations
+      description: List locations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-locations.listlocations
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        search: tools.search
+        enabled: tools.enabled
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-location
+      description: Create a location
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape-locations.createlocation
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-location
+      description: Get a location
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-locations.getlocation
+      with:
+        locationId: tools.locationId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-location
+      description: Update a location
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape-locations.updatelocation
+      with:
+        locationId: tools.locationId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-location
+      description: Delete a location
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: escape-locations.deletelocation
+      with:
+        locationId: tools.locationId
+      outputParameters:
+      - type: object
+        mapping: $.

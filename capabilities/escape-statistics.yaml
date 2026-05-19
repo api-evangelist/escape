@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Statistics
+  description: 'Escape Public API — Statistics. 1 operations. Lead operation: Get organization statistics. Self-contained
+    Naftiko capability covering one Escape business surface.'
+  tags:
+  - Escape
+  - Statistics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-statistics
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Statistics business capability. Self-contained, no shared references.
+    resources:
+    - name: statistics
+      path: /statistics
+      operations:
+      - name: getstatistics
+        method: GET
+        description: Get organization statistics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-statistics-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Statistics. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/statistics
+      name: statistics
+      description: REST surface for statistics.
+      operations:
+      - method: GET
+        name: getstatistics
+        description: Get organization statistics
+        call: escape-statistics.getstatistics
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-statistics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Statistics. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-organization-statistics
+      description: Get organization statistics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-statistics.getstatistics
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Asm
+  description: 'Escape Public API — Asm. 1 operations. Lead operation: Trigger ASM scans. Self-contained Naftiko capability
+    covering one Escape business surface.'
+  tags:
+  - Escape
+  - Asm
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-asm
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Asm business capability. Self-contained, no shared references.
+    resources:
+    - name: asm-scans
+      path: /asm/scans
+      operations:
+      - name: triggerasmscans
+        method: POST
+        description: Trigger ASM scans
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-asm-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Asm. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/asm/scans
+      name: asm-scans
+      description: REST surface for asm-scans.
+      operations:
+      - method: POST
+        name: triggerasmscans
+        description: Trigger ASM scans
+        call: escape-asm.triggerasmscans
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-asm-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Asm. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: trigger-asm-scans
+      description: Trigger ASM scans
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape-asm.triggerasmscans
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

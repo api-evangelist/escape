@@ -1,0 +1,190 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Events
+  description: 'Escape Public API — Events. 2 operations. Lead operation: List events. Self-contained Naftiko capability covering
+    one Escape business surface.'
+  tags:
+  - Escape
+  - Events
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-events
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Events business capability. Self-contained, no shared references.
+    resources:
+    - name: events
+      path: /events
+      operations:
+      - name: listevents
+        method: GET
+        description: List events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: sortType
+          in: query
+          type: string
+          description: The type to sort by
+        - name: sortDirection
+          in: query
+          type: string
+          description: The direction to sort by
+        - name: search
+          in: query
+          type: string
+          description: Search term to filter events by name or description
+        - name: scanIds
+          in: query
+          type: string
+          description: Filter by scan IDs
+        - name: assetIds
+          in: query
+          type: string
+          description: Filter by asset IDs
+        - name: issueIds
+          in: query
+          type: string
+          description: Filter by issue IDs
+        - name: levels
+          in: query
+          type: array
+          description: Filter by level
+        - name: stages
+          in: query
+          type: array
+          description: Filter by stage
+        - name: hasAttachments
+          in: query
+          type: string
+          description: Filter by attachments
+        - name: attachments
+          in: query
+          type: array
+          description: Filter by attachments
+    - name: events-eventId
+      path: /events/{eventId}
+      operations:
+      - name: getevent
+        method: GET
+        description: Get an event
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: eventId
+          in: path
+          type: string
+          description: The event ID
+          required: true
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-events-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Events. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/events
+      name: events
+      description: REST surface for events.
+      operations:
+      - method: GET
+        name: listevents
+        description: List events
+        call: escape-events.listevents
+        with:
+          cursor: rest.cursor
+          size: rest.size
+          sortType: rest.sortType
+          sortDirection: rest.sortDirection
+          search: rest.search
+          scanIds: rest.scanIds
+          assetIds: rest.assetIds
+          issueIds: rest.issueIds
+          levels: rest.levels
+          stages: rest.stages
+          hasAttachments: rest.hasAttachments
+          attachments: rest.attachments
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/events/{eventid}
+      name: events-eventid
+      description: REST surface for events-eventId.
+      operations:
+      - method: GET
+        name: getevent
+        description: Get an event
+        call: escape-events.getevent
+        with:
+          eventId: rest.eventId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-events-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Events. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-events
+      description: List events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-events.listevents
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        sortType: tools.sortType
+        sortDirection: tools.sortDirection
+        search: tools.search
+        scanIds: tools.scanIds
+        assetIds: tools.assetIds
+        issueIds: tools.issueIds
+        levels: tools.levels
+        stages: tools.stages
+        hasAttachments: tools.hasAttachments
+        attachments: tools.attachments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-event
+      description: Get an event
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-events.getevent
+      with:
+        eventId: tools.eventId
+      outputParameters:
+      - type: object
+        mapping: $.

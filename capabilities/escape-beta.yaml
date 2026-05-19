@@ -1,0 +1,365 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Beta
+  description: 'Escape Public API — Beta. 7 operations. Lead operation: Trigger a template export job. Self-contained Naftiko
+    capability covering one Escape business surface.'
+  tags:
+  - Escape
+  - Beta
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-beta
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Beta business capability. Self-contained, no shared references.
+    resources:
+    - name: jobs
+      path: /jobs
+      operations:
+      - name: triggerexport
+        method: POST
+        description: Trigger a template export job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: jobs-jobId
+      path: /jobs/{jobId}
+      operations:
+      - name: getjob
+        method: GET
+        description: Get a job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: jobId
+          in: path
+          type: string
+          description: The job ID
+          required: true
+    - name: profiles-ai-pentesting-graphql
+      path: /profiles/ai-pentesting/graphql
+      operations:
+      - name: createpentestgraphqlprofile
+        method: POST
+        description: Create an Automated Pentest GraphQL profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: profiles-ai-pentesting-rest
+      path: /profiles/ai-pentesting/rest
+      operations:
+      - name: createpentestrestprofile
+        method: POST
+        description: Create an Automated Pentest REST profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: profiles-ai-pentesting-webapp
+      path: /profiles/ai-pentesting/webapp
+      operations:
+      - name: createpentestwebappprofile
+        method: POST
+        description: Create an Automated Pentest WebApp profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scans-emails
+      path: /scans/emails
+      operations:
+      - name: listinboxemails
+        method: GET
+        description: List inbox emails
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the
+            first page will be returned.
+        - name: size
+          in: query
+          type: integer
+          description: The number of items to return per page
+        - name: ids
+          in: query
+          type: array
+          description: Filter by email IDs
+        - name: before
+          in: query
+          type: string
+          description: Filter by before date
+        - name: after
+          in: query
+          type: string
+          description: Filter by after date
+        - name: email
+          in: query
+          type: string
+          description: Inbox email address used as `to` filter
+          required: true
+    - name: scans-emails-id
+      path: /scans/emails/{id}
+      operations:
+      - name: readinboxemail
+        method: GET
+        description: Read inbox email content
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The inbox email ID
+          required: true
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-beta-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Beta. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/jobs
+      name: jobs
+      description: REST surface for jobs.
+      operations:
+      - method: POST
+        name: triggerexport
+        description: Trigger a template export job
+        call: escape-beta.triggerexport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jobs/{jobid}
+      name: jobs-jobid
+      description: REST surface for jobs-jobId.
+      operations:
+      - method: GET
+        name: getjob
+        description: Get a job
+        call: escape-beta.getjob
+        with:
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/profiles/ai-pentesting/graphql
+      name: profiles-ai-pentesting-graphql
+      description: REST surface for profiles-ai-pentesting-graphql.
+      operations:
+      - method: POST
+        name: createpentestgraphqlprofile
+        description: Create an Automated Pentest GraphQL profile
+        call: escape-beta.createpentestgraphqlprofile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/profiles/ai-pentesting/rest
+      name: profiles-ai-pentesting-rest
+      description: REST surface for profiles-ai-pentesting-rest.
+      operations:
+      - method: POST
+        name: createpentestrestprofile
+        description: Create an Automated Pentest REST profile
+        call: escape-beta.createpentestrestprofile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/profiles/ai-pentesting/webapp
+      name: profiles-ai-pentesting-webapp
+      description: REST surface for profiles-ai-pentesting-webapp.
+      operations:
+      - method: POST
+        name: createpentestwebappprofile
+        description: Create an Automated Pentest WebApp profile
+        call: escape-beta.createpentestwebappprofile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/emails
+      name: scans-emails
+      description: REST surface for scans-emails.
+      operations:
+      - method: GET
+        name: listinboxemails
+        description: List inbox emails
+        call: escape-beta.listinboxemails
+        with:
+          cursor: rest.cursor
+          size: rest.size
+          ids: rest.ids
+          before: rest.before
+          after: rest.after
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scans/emails/{id}
+      name: scans-emails-id
+      description: REST surface for scans-emails-id.
+      operations:
+      - method: GET
+        name: readinboxemail
+        description: Read inbox email content
+        call: escape-beta.readinboxemail
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-beta-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Beta. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: trigger-template-export-job
+      description: Trigger a template export job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape-beta.triggerexport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-job
+      description: Get a job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-beta.getjob
+      with:
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-automated-pentest-graphql-profile
+      description: Create an Automated Pentest GraphQL profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: escape-beta.createpentestgraphqlprofile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-automated-pentest-rest-profile
+      description: Create an Automated Pentest REST profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: escape-beta.createpentestrestprofile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-automated-pentest-webapp-profile
+      description: Create an Automated Pentest WebApp profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: escape-beta.createpentestwebappprofile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-inbox-emails
+      description: List inbox emails
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-beta.listinboxemails
+      with:
+        cursor: tools.cursor
+        size: tools.size
+        ids: tools.ids
+        before: tools.before
+        after: tools.after
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: read-inbox-email-content
+      description: Read inbox email content
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-beta.readinboxemail
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

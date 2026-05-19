@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Upload
+  description: 'Escape Public API — Upload. 1 operations. Lead operation: Create signed URL. Self-contained Naftiko capability
+    covering one Escape business surface.'
+  tags:
+  - Escape
+  - Upload
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-upload
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Upload business capability. Self-contained, no shared references.
+    resources:
+    - name: upload-signed-url
+      path: /upload/signed-url
+      operations:
+      - name: createuploadsignedurl
+        method: POST
+        description: Create signed URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-upload-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Upload. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/upload/signed-url
+      name: upload-signed-url
+      description: REST surface for upload-signed-url.
+      operations:
+      - method: POST
+        name: createuploadsignedurl
+        description: Create signed URL
+        call: escape-upload.createuploadsignedurl
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-upload-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Upload. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-signed-url
+      description: Create signed URL
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape-upload.createuploadsignedurl
+      outputParameters:
+      - type: object
+        mapping: $.

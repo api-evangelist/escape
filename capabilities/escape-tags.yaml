@@ -1,0 +1,233 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Escape Public API — Tags
+  description: 'Escape Public API — Tags. 5 operations. Lead operation: List tags. Self-contained Naftiko capability covering
+    one Escape business surface.'
+  tags:
+  - Escape
+  - Tags
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ESCAPE_API_KEY: ESCAPE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: escape-tags
+    baseUri: https://public.escape.tech/v3
+    description: Escape Public API — Tags business capability. Self-contained, no shared references.
+    resources:
+    - name: tags
+      path: /tags
+      operations:
+      - name: listtags
+        method: GET
+        description: List tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createtag
+        method: POST
+        description: Create a tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tags-tagId
+      path: /tags/{tagId}
+      operations:
+      - name: gettag
+        method: GET
+        description: Get a tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tagId
+          in: path
+          type: string
+          description: The tag ID
+          required: true
+      - name: deletetag
+        method: DELETE
+        description: Delete a tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tagId
+          in: path
+          type: string
+          description: The tag ID
+          required: true
+    - name: tags-tagId-tagId
+      path: /tags/{tagId}/{tagId}
+      operations:
+      - name: updatetag
+        method: PUT
+        description: Update a tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tagId
+          in: path
+          type: string
+          description: The tag ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: X-ESCAPE-API-KEY
+      value: '{{env.ESCAPE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: escape-tags-rest
+    port: 8080
+    description: REST adapter for Escape Public API — Tags. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/tags
+      name: tags
+      description: REST surface for tags.
+      operations:
+      - method: GET
+        name: listtags
+        description: List tags
+        call: escape-tags.listtags
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtag
+        description: Create a tag
+        call: escape-tags.createtag
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tags/{tagid}
+      name: tags-tagid
+      description: REST surface for tags-tagId.
+      operations:
+      - method: GET
+        name: gettag
+        description: Get a tag
+        call: escape-tags.gettag
+        with:
+          tagId: rest.tagId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetag
+        description: Delete a tag
+        call: escape-tags.deletetag
+        with:
+          tagId: rest.tagId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tags/{tagid}/{tagid}
+      name: tags-tagid-tagid
+      description: REST surface for tags-tagId-tagId.
+      operations:
+      - method: PUT
+        name: updatetag
+        description: Update a tag
+        call: escape-tags.updatetag
+        with:
+          tagId: rest.tagId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: escape-tags-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Escape Public API — Tags. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-tags
+      description: List tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-tags.listtags
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-tag
+      description: Create a tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: escape-tags.createtag
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-tag
+      description: Get a tag
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: escape-tags.gettag
+      with:
+        tagId: tools.tagId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-tag
+      description: Delete a tag
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: escape-tags.deletetag
+      with:
+        tagId: tools.tagId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-tag
+      description: Update a tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: escape-tags.updatetag
+      with:
+        tagId: tools.tagId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
