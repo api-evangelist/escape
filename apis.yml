@@ -11,95 +11,97 @@ kind: contract
 position: Consumer
 access: 3rd-Party
 tags:
-- Platform
-- Security
+  - Platform
+  - Security
 created: '2025-01-08'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: escape:escape-public-api
-  name: Escape Public API
-  description: The Escape Public API (V3) provides programmatic access to DAST scanning profiles, assets, integrations, scan
-    results, authentications, issues, and job/report exports. Endpoints support automation of API security testing workflows
-    and CI/CD pipeline integration.
-  humanURL: https://docs.escape.tech/documentation/automate/public-api/
-  baseURL: https://public.escape.tech/v3
-  tags:
-  - API Security
-  - DAST
-  - Security
-  - Vulnerability Scanning
-  properties:
-  - type: Documentation
-    url: https://docs.escape.tech/documentation/automate/public-api/
-  - type: OpenAPI
-    url: openapi/escape-openapi.yml
-  - type: Authentication
-    url: https://docs.escape.tech/documentation/automate/public-api/
-  - type: NaftikoCapability
-    url: capabilities/escape-asm.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-assets.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-audit.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-beta.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-customrules.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-emails.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-events.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-integrations.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-issues.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-jobs.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-locations.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-profiles.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-projects.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-roles.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-scans.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-statistics.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-tags.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-upload.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-users.yaml
-  - type: NaftikoCapability
-    url: capabilities/escape-workflows.yaml
+  - aid: escape:escape-public-api
+    name: Escape Public API
+    description: The Escape Public API (V3) provides programmatic access to DAST scanning profiles, assets, integrations, scan
+      results, authentications, issues, and job/report exports. Endpoints support automation of API security testing workflows
+      and CI/CD pipeline integration.
+    humanURL: https://docs.escape.tech/documentation/automate/public-api/
+    baseURL: https://public.escape.tech/v3
+    tags:
+    - API Security
+    - DAST
+    - Security
+    - Vulnerability Scanning
+    properties:
+    - type: Documentation
+      url: https://docs.escape.tech/documentation/automate/public-api/
+    - type: OpenAPI
+      url: openapi/escape-openapi.yml
+    - type: Authentication
+      url: https://docs.escape.tech/documentation/automate/public-api/
+    - type: NaftikoCapability
+      url: capabilities/escape-asm.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-assets.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-audit.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-beta.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-customrules.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-emails.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-events.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-integrations.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-issues.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-jobs.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-locations.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-profiles.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-projects.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-roles.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-scans.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-statistics.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-tags.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-upload.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-users.yaml
+    - type: NaftikoCapability
+      url: capabilities/escape-workflows.yaml
 common:
-- type: LinkedIn
-  url: https://www.linkedin.com/company/escapetech
-- type: Documentation
-  url: https://docs.escape.tech/
-  name: Home - Escape Documentation
-- type: Blog
-  url: https://escape.tech/blog/
-  name: Escape - The API Security Blog
-- type: Integrations
-  url: https://docs.escape.tech/documentation/inventory/integrations/
-  name: Integrations - Escape Documentation
-- type: CaseStudies
-  url: https://escape.tech/blog/tag/case-study/
-  name: Case Study - Escape
-- type: PrivacyPolicy
-  url: https://escape.tech/privacy
-  name: Privacy Policy - Escape
-- type: TermsOfService
-  url: https://escape.tech/terms
-  name: Terms of Service
-- type: Website
-  url: https://escape.tech/
-  name: Escape - The only DAST that works with your modern stack
+  - type: GitHubOrganization
+    url: https://github.com/escape-technologies
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/escapetech
+  - type: Documentation
+    url: https://docs.escape.tech/
+    name: Home - Escape Documentation
+  - type: Blog
+    url: https://escape.tech/blog/
+    name: Escape - The API Security Blog
+  - type: Integrations
+    url: https://docs.escape.tech/documentation/inventory/integrations/
+    name: Integrations - Escape Documentation
+  - type: CaseStudies
+    url: https://escape.tech/blog/tag/case-study/
+    name: Case Study - Escape
+  - type: PrivacyPolicy
+    url: https://escape.tech/privacy
+    name: Privacy Policy - Escape
+  - type: TermsOfService
+    url: https://escape.tech/terms
+    name: Terms of Service
+  - type: Website
+    url: https://escape.tech/
+    name: Escape - The only DAST that works with your modern stack
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
