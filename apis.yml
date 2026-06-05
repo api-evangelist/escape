@@ -1,11 +1,13 @@
 aid: escape
 name: Escape
 url: https://raw.githubusercontent.com/api-evangelist/escape/refs/heads/main/apis.yml
-description: Escape was founded in 2020 after one of our co-founders experienced a cyberattack and saw firsthand how vulnerable
-  exposed APIs can be. Driven by a belief in the power of AI to transform cybersecurity, we built a platform that emulates
-  hacker behavior to identify vulnerabilities before they can be exploited. Escape is a DAST (Dynamic Application Security
-  Testing) platform that helps you document all your APIs, detect complex business logic flaws across modern applications
-  like APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD pipeline.
+description: >-
+  Escape was founded in 2020 after one of our co-founders experienced a cyberattack and saw firsthand how vulnerable
+  exposed APIs can be. Driven by a belief in the power of AI to transform cybersecurity, we built a platform that
+  emulates hacker behavior to identify vulnerabilities before they can be exploited. Escape is a DAST (Dynamic
+  Application Security Testing) platform that helps you document all your APIs, detect complex business logic flaws
+  across modern applications like APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD
+  pipeline.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 kind: contract
 position: Consumer
@@ -19,63 +21,24 @@ specificationVersion: '0.19'
 apis:
   - aid: escape:escape-public-api
     name: Escape Public API
-    description: The Escape Public API (V3) provides programmatic access to DAST scanning profiles, assets, integrations, scan
-      results, authentications, issues, and job/report exports. Endpoints support automation of API security testing workflows
-      and CI/CD pipeline integration.
+    description: >-
+      The Escape Public API (V3) provides programmatic access to DAST scanning profiles, assets, integrations, scan
+      results, authentications, issues, and job/report exports. Endpoints support automation of API security testing
+      workflows and CI/CD pipeline integration.
     humanURL: https://docs.escape.tech/documentation/automate/public-api/
     baseURL: https://public.escape.tech/v3
     tags:
-    - API Security
-    - DAST
-    - Security
-    - Vulnerability Scanning
+      - API Security
+      - DAST
+      - Security
+      - Vulnerability Scanning
     properties:
-    - type: Documentation
-      url: https://docs.escape.tech/documentation/automate/public-api/
-    - type: OpenAPI
-      url: openapi/escape-openapi.yml
-    - type: Authentication
-      url: https://docs.escape.tech/documentation/automate/public-api/
-    - type: NaftikoCapability
-      url: capabilities/escape-asm.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-assets.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-audit.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-beta.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-customrules.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-emails.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-events.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-integrations.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-issues.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-jobs.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-locations.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-profiles.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-projects.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-roles.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-scans.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-statistics.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-tags.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-upload.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-users.yaml
-    - type: NaftikoCapability
-      url: capabilities/escape-workflows.yaml
+      - type: Documentation
+        url: https://docs.escape.tech/documentation/automate/public-api/
+      - type: OpenAPI
+        url: openapi/escape-openapi.yml
+      - type: Authentication
+        url: https://docs.escape.tech/documentation/automate/public-api/
 common:
   - type: GitHubOrganization
     url: https://github.com/escape-technologies
