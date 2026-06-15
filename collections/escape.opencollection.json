@@ -1,0 +1,4478 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/profiles",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain"
+              },
+              {
+                "name": "issueIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue IDs"
+              },
+              {
+                "name": "tagIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter profiles by name or description"
+              },
+              {
+                "name": "initiators",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "risks",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk"
+              }
+            ]
+          },
+          "docs": "List and search profiles of the organization."
+        },
+        {
+          "info": {
+            "name": "List all scan statuses and problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/profiles/problems",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain"
+              },
+              {
+                "name": "issueIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue IDs"
+              },
+              {
+                "name": "tagIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter profiles by name or description"
+              },
+              {
+                "name": "initiators",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "risks",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk"
+              }
+            ]
+          },
+          "docs": "List all scan statuses and problems"
+        },
+        {
+          "info": {
+            "name": "Get a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ]
+          },
+          "docs": "Get a profile by ID"
+        },
+        {
+          "info": {
+            "name": "Update a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a profile of a given scanner kind"
+        },
+        {
+          "info": {
+            "name": "Delete a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ]
+          },
+          "docs": "Delete a profile by ID"
+        },
+        {
+          "info": {
+            "name": "Update profile configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/profiles/:profileId/configuration",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of a profile"
+        },
+        {
+          "info": {
+            "name": "Update profile schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/profiles/:profileId/schema",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n*This route is deprecated, use the [PUT /profiles/:profileId](#tag/profiles/PUT/profiles/:profileId) endpoint instead.*\n\nUpdate the schema used to scan this profile.\nThe schema ID is the ID of a schema uploaded to the Escape Platform using the [POST /assets/schema](#tag/assets/POST/assets/schema) endpoint.\n\n"
+        },
+        {
+          "info": {
+            "name": "Create a DAST REST profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a DAST REST profile."
+        },
+        {
+          "info": {
+            "name": "Create a DAST GraphQL profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a DAST GraphQL profile."
+        },
+        {
+          "info": {
+            "name": "Create a DAST WebApp profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/webapp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a DAST WebApp profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest REST profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest REST profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest GraphQL profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest GraphQL profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest WebApp profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/webapp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest WebApp profile."
+        },
+        {
+          "info": {
+            "name": "Start an authentication configuration check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/authentications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates authentication credentials without running a full scan. Provide `authentication` directly, or pass a `profileId` to reuse its saved authentication (optionally overriding it). Poll `GET /authentications/{id}` until `status` is FINISHED, FAILED, or CANCELED."
+        },
+        {
+          "info": {
+            "name": "Get authentication configuration check status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/authentications/:authenticationId",
+            "params": [
+              {
+                "name": "authenticationId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier returned by the start endpoint"
+              }
+            ]
+          },
+          "docs": "Returns the current status, chronological log messages, and (when finished) structured authentication results for a check started via `POST /authentications`."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/assets",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter assets by name or description"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Filter by type"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              },
+              {
+                "name": "manuallyCreated",
+                "value": "",
+                "type": "query",
+                "description": "Filter by manually created"
+              }
+            ]
+          },
+          "docs": "List and search assets of the organization."
+        },
+        {
+          "info": {
+            "name": "Bulk update assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/bulk-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update tags, projects, or status of multiple assets matching a filter predicate."
+        },
+        {
+          "info": {
+            "name": "Bulk delete assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/bulk-delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule multiple assets matching a filter predicate for deletion."
+        },
+        {
+          "info": {
+            "name": "Get an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/assets/:assetId",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID"
+              }
+            ]
+          },
+          "docs": "Get an asset by ID"
+        },
+        {
+          "info": {
+            "name": "Update an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/assets/:assetId",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an asset by ID"
+        },
+        {
+          "info": {
+            "name": "Delete an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/assets/:assetId",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID"
+              }
+            ]
+          },
+          "docs": "Delete an asset by ID"
+        },
+        {
+          "info": {
+            "name": "List activities of an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/assets/:assetId/activities",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID"
+              }
+            ]
+          },
+          "docs": "List activities related to a specific asset."
+        },
+        {
+          "info": {
+            "name": "Comment on an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/:assetId/activities",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a comment to an asset."
+        },
+        {
+          "info": {
+            "name": "Create asset dns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/dns",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a dns"
+        },
+        {
+          "info": {
+            "name": "Create asset ipv4",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/ipv4",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ipv4"
+        },
+        {
+          "info": {
+            "name": "Create asset ipv6",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/ipv6",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ipv6"
+        },
+        {
+          "info": {
+            "name": "Create asset graphql",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a graphql"
+        },
+        {
+          "info": {
+            "name": "Create asset rest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a rest"
+        },
+        {
+          "info": {
+            "name": "Create asset grpc",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/grpc",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a grpc"
+        },
+        {
+          "info": {
+            "name": "Create asset websocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/websocket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a websocket"
+        },
+        {
+          "info": {
+            "name": "Create asset mcp",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/mcp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a mcp"
+        },
+        {
+          "info": {
+            "name": "Create asset soap",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/soap",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a soap"
+        },
+        {
+          "info": {
+            "name": "Create asset webapp",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/webapp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a webapp"
+        },
+        {
+          "info": {
+            "name": "Create asset azure-tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/azure-tenant",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a azure-tenant"
+        },
+        {
+          "info": {
+            "name": "Create asset ipv4-range",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/ipv4-range",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ipv4-range"
+        },
+        {
+          "info": {
+            "name": "Create asset gitlab-repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/gitlab-repository",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a gitlab-repository"
+        },
+        {
+          "info": {
+            "name": "Create asset github-repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/github-repository",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a github-repository"
+        },
+        {
+          "info": {
+            "name": "Create asset bitbucket-repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/bitbucket-repository",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a bitbucket-repository"
+        },
+        {
+          "info": {
+            "name": "Create asset code-project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/code-project",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a code-project"
+        },
+        {
+          "info": {
+            "name": "Create asset aws-lambda",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/aws-lambda",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a aws-lambda"
+        },
+        {
+          "info": {
+            "name": "Create asset package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/package",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a package"
+        },
+        {
+          "info": {
+            "name": "Create asset software",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/software",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a software"
+        },
+        {
+          "info": {
+            "name": "Create asset schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/assets/schema",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a schema asset.\n\nThe schema data can either be fetched from a URL or uploaded from a file.\n\n**Fetch example:**\n```json\n{\n  \"asset_type\": \"SCHEMA\",\n  \"fetch\": {\n    \"url\": \"https://api.example.com/v1\"\n  }\n}\n```\n\n\n**Upload example:**\n\nThe file should first be uploaded to the Escape Platform using the [upload endpoint](/v3/#tag/upload/post/upload/signed-url).\n\nThe upload endpoint returns an `id` that should be used in the `temporaryObjectKey` field.\n\n```json\n{\n  \"asset_type\": \"SCHEMA\",\n  \"up"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Scans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by after date"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by before date"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "profileIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by profile IDs"
+              },
+              {
+                "name": "ignored",
+                "value": "",
+                "type": "query",
+                "description": "Filter by ignored status"
+              },
+              {
+                "name": "initiator",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              }
+            ]
+          },
+          "docs": "List and search scans of the organization."
+        },
+        {
+          "info": {
+            "name": "Start a new scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/scans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a new scan"
+        },
+        {
+          "info": {
+            "name": "List scans with their problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/problems",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by after date"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by before date"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "profileIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by profile IDs"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ignored",
+                "value": "",
+                "type": "query",
+                "description": "Filter by ignored status"
+              },
+              {
+                "name": "initiator",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              }
+            ]
+          },
+          "docs": "List scans together with the validation problems surfaced by the scanner during execution. Diagnostic counterpart of GET /v3/profiles/problems, but indexed by scan instead of profile."
+        },
+        {
+          "info": {
+            "name": "Get a scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/:scanId",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              }
+            ]
+          },
+          "docs": "Get a scan by ID"
+        },
+        {
+          "info": {
+            "name": "Cancel a scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/scans/:scanId/cancel",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              }
+            ]
+          },
+          "docs": "Cancel a scan by ID"
+        },
+        {
+          "info": {
+            "name": "Ignore a scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/scans/:scanId/ignore",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ignore a scan by ID"
+        },
+        {
+          "info": {
+            "name": "List scan targets and API coverage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/:scanId/targets",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER"
+              }
+            ]
+          },
+          "docs": "Returns targets discovered during a scan, including REST and GraphQL operations with per-endpoint coverage. Filter by target type to focus on API routes and resolvers for CI/CD quality gates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List inbox emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/emails",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email IDs"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by before date"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by after date"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Inbox email address used as `to` filter"
+              }
+            ]
+          },
+          "docs": "Given a target email address, list inbox emails with cursor pagination."
+        },
+        {
+          "info": {
+            "name": "Read inbox email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The inbox email ID"
+              }
+            ]
+          },
+          "docs": "Given an email id, fetch and return its full raw content."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List issues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "profileIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by application IDs"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific issue IDs"
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue names"
+              },
+              {
+                "name": "scanIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scan IDs"
+              },
+              {
+                "name": "tagIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter issues by name or description"
+              },
+              {
+                "name": "jiraTicket",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issues with Jira tickets"
+              },
+              {
+                "name": "risks",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk types"
+              },
+              {
+                "name": "assetClasses",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset classes"
+              },
+              {
+                "name": "scannerKinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scanner kinds"
+              },
+              {
+                "name": "severities",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue severities"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue status"
+              }
+            ]
+          },
+          "docs": "List and search issues of the organization."
+        },
+        {
+          "info": {
+            "name": "Get issue funnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/funnel",
+            "params": [
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              }
+            ]
+          },
+          "docs": "Get issue funnel data showing how issues distribute across severity/exposure steps: ALL → OPEN_ISSUES → EXPOSED → UNAUTHENTICATED → HIGH_BUSINESS_IMPACT → CRITICAL."
+        },
+        {
+          "info": {
+            "name": "Get issue severity trends",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/trends",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601)"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601)"
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time bucket interval (e.g. \"1 day\", \"1 week\")"
+              },
+              {
+                "name": "applicationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by application IDs"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              }
+            ]
+          },
+          "docs": "Get time-bucketed issue counts by severity. Useful for tracking security posture over time."
+        },
+        {
+          "info": {
+            "name": "Bulk update issues",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/issues/bulk-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status of multiple issues matching a filter predicate. For example, mark all LOW severity issues on a given asset as IGNORED."
+        },
+        {
+          "info": {
+            "name": "Get an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/:issueId",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ]
+          },
+          "docs": "Get an issue by ID"
+        },
+        {
+          "info": {
+            "name": "Update an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/issues/:issueId",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an issue by ID"
+        },
+        {
+          "info": {
+            "name": "List activities of an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/:issueId/activities",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ]
+          },
+          "docs": "List activities related to a specific issue."
+        },
+        {
+          "info": {
+            "name": "Comment on an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/issues/:issueId/activities",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a comment to an issue."
+        },
+        {
+          "info": {
+            "name": "Notify issue owners",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/issues/:issueId/notify",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an email notification to the owners of the asset associated with this issue."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Trigger a template export job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules the same export job as the product UI (SAAS_EXPORT_TEMPLATE): PDF/report blocks, optional scan and issue scope. Use GET /jobs/{jobId} to read status and artefact download URLs when completed."
+        },
+        {
+          "info": {
+            "name": "Get a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The job ID"
+              }
+            ]
+          },
+          "docs": "Returns job status, parameters, and artefacts (including signedUrl download links for completed export outputs)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/events",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter events by name or description"
+              },
+              {
+                "name": "scanIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scan IDs"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "issueIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue IDs"
+              },
+              {
+                "name": "levels",
+                "value": "",
+                "type": "query",
+                "description": "Filter by level"
+              },
+              {
+                "name": "stages",
+                "value": "",
+                "type": "query",
+                "description": "Filter by stage"
+              },
+              {
+                "name": "hasAttachments",
+                "value": "",
+                "type": "query",
+                "description": "Filter by attachments"
+              },
+              {
+                "name": "attachments",
+                "value": "",
+                "type": "query",
+                "description": "Filter by attachments"
+              }
+            ]
+          },
+          "docs": "List and search events of the organization."
+        },
+        {
+          "info": {
+            "name": "Get an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "The event ID"
+              }
+            ]
+          },
+          "docs": "Get an event by ID (including attachments)"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List audit logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/audit/logs",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "An ISO 8601 timestamp to filter audit logs after"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "An ISO 8601 timestamp to filter audit logs before"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filter by action type"
+              },
+              {
+                "name": "actor",
+                "value": "",
+                "type": "query",
+                "description": "Filter by actor"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filter by search term"
+              }
+            ]
+          },
+          "docs": "List audit logs of the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/locations",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "enabled",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List and search locations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/locations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Private Location."
+        },
+        {
+          "info": {
+            "name": "Get a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the location to get"
+              }
+            ]
+          },
+          "docs": "Retrieve a Private Location details."
+        },
+        {
+          "info": {
+            "name": "Update a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the location to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Private Location details."
+        },
+        {
+          "info": {
+            "name": "Delete a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the location to delete"
+              }
+            ]
+          },
+          "docs": "Delete a Private Location."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/tags"
+          },
+          "docs": "List and search tags of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a tag for the organization."
+        },
+        {
+          "info": {
+            "name": "Get a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/tags/:tagId",
+            "params": [
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The tag ID"
+              }
+            ]
+          },
+          "docs": "Get a tag by ID."
+        },
+        {
+          "info": {
+            "name": "Delete a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/tags/:tagId",
+            "params": [
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The tag ID"
+              }
+            ]
+          },
+          "docs": "Delete a tag from the organization."
+        },
+        {
+          "info": {
+            "name": "Update a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/tags/:tagId/:tagId",
+            "params": [
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The tag ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a tag name and/or color."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Upload",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/upload/signed-url"
+          },
+          "docs": "Retrieve a signed URL link to upload a file to the Escape Platform.\n\nBy running a query with this endpoint, you will receive a signed URL that you can use to upload a file to the Escape Platform.\n\n```json\n{\n  \"url\": \"[SIGNED URL]\",\n  \"id\": \"[SIGNED URL ID]\"\n}\n```\n\nWith the url, you are able to upload one file:\n\n```bash\ncurl -X PUT --data-binary '@./schema.json' \"[SIGNED URL]\"\n```\n\nNow, you are able to use the previously received id in another query.\nFor example to update a schema of your applica"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current user context",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/me"
+          },
+          "docs": "Get basic information about the authenticated user and current organization."
+        },
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/users"
+          },
+          "docs": "List users of the organization."
+        },
+        {
+          "info": {
+            "name": "Invite users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/users/invite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invite users to the organization, and give them roles."
+        },
+        {
+          "info": {
+            "name": "Get a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The user ID"
+              }
+            ]
+          },
+          "docs": "Get a user by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CustomRules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List custom rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/custom-rules",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Filter by custom rule context"
+              }
+            ]
+          },
+          "docs": "List and search custom rules of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/custom-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a custom rule for the organization."
+        },
+        {
+          "info": {
+            "name": "Get a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/custom-rules/:customRuleId",
+            "params": [
+              {
+                "name": "customRuleId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a custom rule of the organization."
+        },
+        {
+          "info": {
+            "name": "Update a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/custom-rules/:customRuleId",
+            "params": [
+              {
+                "name": "customRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the custom rule to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a custom rule for the organization."
+        },
+        {
+          "info": {
+            "name": "Delete a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/custom-rules/:customRuleId",
+            "params": [
+              {
+                "name": "customRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the custom rule to delete"
+              }
+            ]
+          },
+          "docs": "Delete a custom rule for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/projects",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter projects by name"
+              }
+            ]
+          },
+          "docs": "List and search projects of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a project for the organization."
+        },
+        {
+          "info": {
+            "name": "Get a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The project ID"
+              }
+            ]
+          },
+          "docs": "Get a project by ID."
+        },
+        {
+          "info": {
+            "name": "Update a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a project."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/roles"
+          },
+          "docs": "List and search roles of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a role for the organization."
+        },
+        {
+          "info": {
+            "name": "Create role bindings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/roles/bindings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create role bindings."
+        },
+        {
+          "info": {
+            "name": "Delete a role binding",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/roles/bindings/:bindingId",
+            "params": [
+              {
+                "name": "bindingId",
+                "value": "",
+                "type": "path",
+                "description": "The role binding ID"
+              }
+            ]
+          },
+          "docs": "Delete a role binding."
+        },
+        {
+          "info": {
+            "name": "Get a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The role ID"
+              }
+            ]
+          },
+          "docs": "Get a role by ID."
+        },
+        {
+          "info": {
+            "name": "Update a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The role ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a role."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Akamai integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/akamai",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Akamai integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Akamai integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/akamai",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "Get Akamai integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/akamai/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "Update Akamai integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/akamai/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "Delete Akamai integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/akamai/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "List AWS integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/aws",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search AWS integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create AWS integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a AWS integration."
+        },
+        {
+          "info": {
+            "name": "Get AWS integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/aws/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a AWS integration."
+        },
+        {
+          "info": {
+            "name": "Update AWS integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/aws/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a AWS integration."
+        },
+        {
+          "info": {
+            "name": "Delete AWS integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/aws/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a AWS integration."
+        },
+        {
+          "info": {
+            "name": "List Azure integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/azure",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Azure integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Azure integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/azure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Azure integration."
+        },
+        {
+          "info": {
+            "name": "Get Azure integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/azure/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Azure integration."
+        },
+        {
+          "info": {
+            "name": "Update Azure integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/azure/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Azure integration."
+        },
+        {
+          "info": {
+            "name": "Delete Azure integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/azure/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Azure integration."
+        },
+        {
+          "info": {
+            "name": "List Bitbucket integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Bitbucket integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Bitbucket integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "Get Bitbucket integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "Update Bitbucket integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "Delete Bitbucket integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "List Cloudflare integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Cloudflare integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Cloudflare integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "Get Cloudflare integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "Update Cloudflare integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "Delete Cloudflare integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "List Custom Integration integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/custom",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Custom Integration integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Custom Integration integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "Get Custom Integration integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/custom/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "Update Custom Integration integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/custom/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "Delete Custom Integration integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/custom/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "List GCP integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gcp",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search GCP integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create GCP integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/gcp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a GCP integration."
+        },
+        {
+          "info": {
+            "name": "Get GCP integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a GCP integration."
+        },
+        {
+          "info": {
+            "name": "Update GCP integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/gcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GCP integration."
+        },
+        {
+          "info": {
+            "name": "Delete GCP integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/gcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a GCP integration."
+        },
+        {
+          "info": {
+            "name": "List GitHub integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/github",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search GitHub integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create GitHub integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/github",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "Get GitHub integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/github/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "Update GitHub integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/github/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "Delete GitHub integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/github/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "List GitLab integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gitlab",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search GitLab integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create GitLab integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/gitlab",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "Get GitLab integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gitlab/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "Update GitLab integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/gitlab/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "Delete GitLab integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/gitlab/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "List Jira integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/jira",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Jira integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Jira integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/jira",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Jira integration."
+        },
+        {
+          "info": {
+            "name": "Get Jira integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/jira/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Jira integration."
+        },
+        {
+          "info": {
+            "name": "Update Jira integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/jira/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Jira integration."
+        },
+        {
+          "info": {
+            "name": "Delete Jira integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/jira/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Jira integration."
+        },
+        {
+          "info": {
+            "name": "List Kubernetes integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Kubernetes integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Kubernetes integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "Get Kubernetes integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "Update Kubernetes integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "Delete Kubernetes integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "List Postman integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/postman",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Postman integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Postman integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/postman",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Postman integration."
+        },
+        {
+          "info": {
+            "name": "Get Postman integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/postman/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Postman integration."
+        },
+        {
+          "info": {
+            "name": "Update Postman integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/postman/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Postman integration."
+        },
+        {
+          "info": {
+            "name": "Delete Postman integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/postman/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Postman integration."
+        },
+        {
+          "info": {
+            "name": "List Wiz integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/wiz",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Wiz integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Wiz integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/wiz",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Wiz integration."
+        },
+        {
+          "info": {
+            "name": "Get Wiz integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/wiz/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Wiz integration."
+        },
+        {
+          "info": {
+            "name": "Update Wiz integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/wiz/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Wiz integration."
+        },
+        {
+          "info": {
+            "name": "Delete Wiz integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/wiz/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Wiz integration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workflows.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/workflows",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "workflowIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workflow IDs"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "integrationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "triggers",
+                "value": "",
+                "type": "query",
+                "description": "Filter by triggers"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search workflows of the organization."
+        },
+        {
+          "info": {
+            "name": "Create workflows.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/workflows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a workflow."
+        },
+        {
+          "info": {
+            "name": "Get workflow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The workflow ID"
+              }
+            ]
+          },
+          "docs": "Get a workflow."
+        },
+        {
+          "info": {
+            "name": "Update workflow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The workflow ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a workflow."
+        },
+        {
+          "info": {
+            "name": "Delete workflow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The workflow ID"
+              }
+            ]
+          },
+          "docs": "Delete a workflow."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get organization statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/statistics"
+          },
+          "docs": "Get a high-level overview of the organization security posture: application count, asset count, and open issue counts by severity."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Asm",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Trigger ASM scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/asm/scans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Trigger Attack Surface Management scans on assets matching the given filter. If no filter is provided, scans all monitored assets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
