@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: escape.tech
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 31 20:25:53 2026 GMT
+  hsts: false
+- host: docs.escape.tech
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug  9 13:30:49 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: public.escape.tech
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  7 23:59:59 2026 GMT
+  hsts: false
+domains:
+- domain: escape.tech
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

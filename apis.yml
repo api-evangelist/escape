@@ -40,6 +40,10 @@ apis:
       - type: Authentication
         url: https://docs.escape.tech/documentation/automate/public-api/
 common:
+  - type: DomainSecurity
+    url: security/escape-domain-security.yml
+  - type: Authentication
+    url: authentication/escape-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/escape-technologies
   - type: LinkedIn
