@@ -40,6 +40,8 @@ apis:
       - type: Authentication
         url: https://docs.escape.tech/documentation/automate/public-api/
 common:
+  - type: AgenticAccess
+    url: agentic-access/escape-agentic-access.yml
   - type: DomainSecurity
     url: security/escape-domain-security.yml
   - type: Authentication
