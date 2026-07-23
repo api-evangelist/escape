@@ -1,0 +1,1458 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Events API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Events
+  description: 'Manage events.
+
+
+    The public API provides basic CRUDs operations to manage events.'
+paths:
+  /events:
+    get:
+      tags:
+      - Events
+      summary: List events
+      operationId: listEvents
+      description: List and search events of the organization.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - DATE
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: string
+          description: Search term to filter events by name or description
+          example: event1
+        required: false
+        description: Search term to filter events by name or description
+        name: search
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by scan IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by scan IDs
+        name: scanIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by asset IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by asset IDs
+        name: assetIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by issue IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by issue IDs
+        name: issueIds
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - DEBUG
+            - ERROR
+            - INFO
+            - WARNING
+          description: Filter by level
+        required: false
+        description: Filter by level
+        name: levels
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AGENT_ACTION
+            - AGENT_REASONING
+            - CONFIGURATION
+            - EXECUTION
+          description: Filter by stage
+        required: false
+        description: Filter by stage
+        name: stages
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by attachments
+        required: false
+        description: Filter by attachments
+        name: hasAttachments
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ANY
+            - EXCHANGE
+            - GRAPH
+            - OPENAPI_SPEC
+            - SCREENSHOT
+            - SNIPPET
+          description: Filter by attachments
+        required: false
+        description: Filter by attachments
+        name: attachments
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the event
+                        createdAt:
+                          type: string
+                          description: The date and time the event was created
+                        title:
+                          type: string
+                          description: The title of the event
+                        level:
+                          type: string
+                          enum:
+                          - DEBUG
+                          - ERROR
+                          - INFO
+                          - WARNING
+                          description: The level of the event
+                        stage:
+                          type: string
+                          enum:
+                          - AGENT_ACTION
+                          - AGENT_REASONING
+                          - CONFIGURATION
+                          - EXECUTION
+                          description: The stage of the event
+                        attachments:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uuid
+                                description: The id of the attachment
+                              createdAt:
+                                type: string
+                                description: The date and time the attachment was created
+                              target:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uuid
+                                    description: The id of the target
+                                  createdAt:
+                                    type: string
+                                    description: The date and time the target was created
+                                  apiRoute:
+                                    type:
+                                    - object
+                                    - 'null'
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uuid
+                                        description: The id of the api route
+                                      createdAt:
+                                        type: string
+                                        description: The date and time the api route was created
+                                      name:
+                                        type: string
+                                        description: The name of the api route
+                                      displayName:
+                                        type: string
+                                        description: The display name of the api route
+                                    required:
+                                    - id
+                                    - createdAt
+                                    - name
+                                    - displayName
+                                    description: The api route of the target
+                                  codeFile:
+                                    type:
+                                    - object
+                                    - 'null'
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uuid
+                                        description: The id of the code file
+                                      language:
+                                        type: string
+                                        description: The language of the code file
+                                      path:
+                                        type: string
+                                        description: The path of the code file
+                                    required:
+                                    - id
+                                    - language
+                                    - path
+                                    description: The code file of the target
+                                  graphqlResolver:
+                                    type:
+                                    - object
+                                    - 'null'
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uuid
+                                        description: The id of the graphql resolver
+                                      displayName:
+                                        type: string
+                                        description: The display name of the graphql resolver
+                                      name:
+                                        type: string
+                                        description: The name of the graphql resolver
+                                    required:
+                                    - id
+                                    - displayName
+                                    - name
+                                    description: The graphql resolver of the target
+                                  port:
+                                    type:
+                                    - object
+                                    - 'null'
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uuid
+                                        description: The id of the port
+                                      port:
+                                        type: number
+                                        description: The port number
+                                      protocol:
+                                        type: string
+                                        description: The protocol
+                                    required:
+                                    - id
+                                    - port
+                                    - protocol
+                                    description: The port of the target
+                                required:
+                                - id
+                                - createdAt
+                                - apiRoute
+                                - codeFile
+                                - graphqlResolver
+                                - port
+                                description: The target of the attachment
+                            required:
+                            - id
+                            - createdAt
+                            - target
+                          description: The attachments of the event
+                      required:
+                      - id
+                      - createdAt
+                      - title
+                      - level
+                      - stage
+                      title: EventSummarized
+                      description: Summarized information about an event
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+  /events/{eventId}:
+    get:
+      tags:
+      - Events
+      summary: Get an event
+      operationId: getEvent
+      description: Get an event by ID (including attachments)
+      parameters:
+      - schema:
+          type: string
+          description: The event ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The event ID
+        name: eventId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the event
+                  createdAt:
+                    type: string
+                    description: The date and time the event was created
+                  description:
+                    type: string
+                    description: The description of the event
+                  attachments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the attachment
+                        createdAt:
+                          type: string
+                          description: The date and time the attachment was created
+                        exchange:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            createdAt:
+                              type: string
+                              description: The date and time the exchange was created
+                            curl:
+                              type: string
+                              description: The curl of the exchange
+                            duration:
+                              type: number
+                              description: The duration of the exchange
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the exchange
+                            inferredScalars:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  confidence:
+                                    type: number
+                                    description: The confidence of the inferred scalar
+                                  kind:
+                                    type: string
+                                    description: The kind of the inferred scalar
+                                  name:
+                                    type: string
+                                    description: The name of the inferred scalar
+                                required:
+                                - confidence
+                                - kind
+                                - name
+                                title: InferredScalarDetailed
+                                description: Detailed information about an inferred scalar
+                              description: The inferred scalars of the exchange
+                            responseBody:
+                              type: string
+                              description: The response body of the exchange
+                            responseHeaders:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  name:
+                                    type: string
+                                    description: The name of the http header
+                                  values:
+                                    type: array
+                                    items:
+                                      type: string
+                                    description: The values of the http header
+                                required:
+                                - name
+                                - values
+                                title: HttpHeaderDetailed
+                                description: Detailed information about a http header
+                              description: The response headers of the exchange
+                            responseStatusCode:
+                              type: number
+                              description: The response status code of the exchange
+                            url:
+                              type: string
+                              description: The url of the exchange
+                          required:
+                          - createdAt
+                          - curl
+                          - duration
+                          - id
+                          - inferredScalars
+                          - responseBody
+                          - responseHeaders
+                          - responseStatusCode
+                          - url
+                          title: ExchangeDetailed
+                          description: The exchange of the attachment
+                        generatedOpenapiSpec:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the generated openapi spec
+                            createdAt:
+                              type: string
+                              description: The date and time the generated openapi spec was created
+                            temporarySignedUrl:
+                              type: string
+                              description: The temporary signed url of the generated openapi spec
+                          required:
+                          - id
+                          - createdAt
+                          - temporarySignedUrl
+                          title: GeneratedOpenapiSpecDetailed
+                          description: The generated openapi spec of the attachment
+                        graph:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the graph
+                            createdAt:
+                              type: string
+                              description: The date and time the graph was created
+                            temporarySignedUrl:
+                              type: string
+                              description: The temporary signed url of the graph
+                          required:
+                          - id
+                          - createdAt
+                          - temporarySignedUrl
+                          title: GraphDetailed
+                          description: The graph of the attachment
+                        screenshot:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            alt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The alt of the screenshot
+                            createdAt:
+                              type: string
+                              description: The date and time the screenshot was created
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the screenshot
+                            temporarySignedUrl:
+                              type: string
+                              description: The temporary signed url of the screenshot
+                          required:
+                          - alt
+                          - createdAt
+                          - id
+                          - temporarySignedUrl
+                          title: ScreenshotDetailed
+                          description: The screenshot of the attachment
+                        snippet:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            createdAt:
+                              type: string
+                              description: The date and time the snippet was created
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the snippet
+                            language:
+                              type: string
+                              description: The language of the snippet
+                            name:
+                              type: string
+                              description: The name of the snippet
+                            snippet:
+                              type: string
+                              description: The snippet of the snippet
+                            url:
+                              type:
+                              - string
+                              - 'null'
+                              description: The url of the snippet
+                          required:
+                          - createdAt
+                          - id
+                          - language
+                          - name
+                          - snippet
+                          - url
+                          title: SnippetDetailed
+                          description: The snippet of the attachment
+                        target:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            createdAt:
+                              type: string
+                              description: The date and time the target was created
+                            apiRoute:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                blacklisted:
+                                  type: boolean
+                                  description: Whether the api route is blacklisted
+                                createdAt:
+                                  type: string
+                                  description: The date and time the api route was created
+                                displayName:
+                                  type: string
+                                  description: The display name of the api route
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the api route
+                                name:
+                                  type: string
+                                  description: The name of the api route
+                                operation:
+                                  type: string
+                                  description: The operation of the api route
+                                parameters:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  additionalProperties:
+                                    type: string
+                                  description: The parameters of the api route
+                                requestCount:
+                                  type: number
+                                  description: The request count of the api route
+                                meanDuration:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  description: Mean HTTP duration for this route in milliseconds, when available
+                                coverage:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  enum:
+                                  - BROKEN_PIPE
+                                  - NOT_FOUND
+                                  - OK
+                                  - RATE_LIMIT
+                                  - REDIRECTION
+                                  - REPEATER_ERROR
+                                  - SERVER_ERROR
+                                  - TIMEOUT
+                                  - UNAUTHORIZED
+                                  - UNKNOWN
+                                  - VALIDATION_ERROR
+                                  - null
+                                  description: Coverage status for this REST endpoint (e.g. OK, UNAUTHORIZED, BLOCKLISTED)
+                                coverageByUser:
+                                  type:
+                                  - array
+                                  - 'null'
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                        description: User or session label associated with this target entry
+                                      coverage:
+                                        type: string
+                                        enum:
+                                        - BROKEN_PIPE
+                                        - NOT_FOUND
+                                        - OK
+                                        - RATE_LIMIT
+                                        - REDIRECTION
+                                        - REPEATER_ERROR
+                                        - SERVER_ERROR
+                                        - TIMEOUT
+                                        - UNAUTHORIZED
+                                        - UNKNOWN
+                                        - VALIDATION_ERROR
+                                        description: Coverage status for that user/session
+                                    required:
+                                    - name
+                                    - coverage
+                                    title: CoverageByUserEntry
+                                  description: Per-user or per-session coverage breakdown when available
+                                returnType:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: The return type of the api route
+                                source:
+                                  type: string
+                                  enum:
+                                  - SOURCE_INFERRED
+                                  - SOURCE_SPECIFICATION
+                                  description: The source of the api route
+                              required:
+                              - blacklisted
+                              - createdAt
+                              - displayName
+                              - id
+                              - name
+                              - operation
+                              - requestCount
+                              - coverage
+                              - source
+                              title: ApiRouteDetailed
+                              description: The api route of the target
+                            codeFile:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the code file
+                                language:
+                                  type: string
+                                  description: The language of the code file
+                                path:
+                                  type: string
+                                  description: The path of the code file
+                              required:
+                              - id
+                              - language
+                              - path
+                              title: CodeFileDetailed
+                              description: The code file of the target
+                            graphqlResolver:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                blacklisted:
+                                  type: boolean
+                                  description: Whether the graphql resolver is blacklisted
+                                createdAt:
+                                  type: string
+                                  description: The date and time the graphql resolver was created
+                                displayName:
+                                  type: string
+                                  description: The display name of the graphql resolver
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the graphql resolver
+                                name:
+                                  type: string
+                                  description: The name of the graphql resolver
+                                parameters:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  additionalProperties:
+                                    type: string
+                                  description: The parameters of the graphql resolver
+                                requestCount:
+                                  type: number
+                                  description: The request count for this resolver
+                                meanDuration:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  description: Mean duration for this resolver in milliseconds, when available
+                                coverage:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  enum:
+                                  - BROKEN_PIPE
+                                  - NOT_FOUND
+                                  - OK
+                                  - RATE_LIMIT
+                                  - REDIRECTION
+                                  - REPEATER_ERROR
+                                  - SERVER_ERROR
+                                  - TIMEOUT
+                                  - UNAUTHORIZED
+                                  - UNKNOWN
+                                  - VALIDATION_ERROR
+                                  - null
+                                  description: Coverage status for this GraphQL field (e.g. OK, UNAUTHORIZED, BLOCKLISTED)
+                                coverageByUser:
+                                  type:
+                                  - array
+                                  - 'null'
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                        description: User or session label associated with this target entry
+                                      coverage:
+                                        type: string
+                                        enum:
+                                        - BROKEN_PIPE
+                                        - NOT_FOUND
+                                        - OK
+                                        - RATE_LIMIT
+                                        - REDIRECTION
+                                        - REPEATER_ERROR
+                                        - SERVER_ERROR
+                                        - TIMEOUT
+                                        - UNAUTHORIZED
+                                        - UNKNOWN
+                                        - VALIDATION_ERROR
+                                        description: Coverage status for that user/session
+                                    required:
+                                    - name
+                                    - coverage
+                                    title: CoverageByUserEntry
+                                  description: Per-user or per-session coverage breakdown when available
+                                parent:
+                                  type: string
+                                  description: GraphQL parent type (query, mutation, or subscription)
+                                returnType:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: The return type of the graphql resolver
+                                source:
+                                  type: string
+                                  enum:
+                                  - SOURCE_INFERRED
+                                  - SOURCE_SPECIFICATION
+                                  description: The source of the resolver (specification vs inferred)
+                              required:
+                              - blacklisted
+                              - createdAt
+                              - displayName
+                              - id
+                              - name
+                              - requestCount
+                              - coverage
+                              - parent
+                              - source
+                              title: GraphqlResolverDetailed
+                              description: The graphql resolver of the target
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the target
+                            port:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the port
+                                port:
+                                  type: number
+                                  description: The port of the port
+                                protocol:
+                                  type: string
+                                  description: The protocol of the port
+                              required:
+                              - id
+                              - port
+                              - protocol
+                              title: PortDetailed
+                              description: The port of the target
+                          required:
+                          - createdAt
+                          - id
+                          title: TargetDetailed
+                          description: The target of the attachment
+                      required:
+                      - id
+                      - createdAt
+                      title: AttachmentDetailed
+                      description: Detailed information about an attachment
+                    description: The attachments of the event
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the issue
+                        name:
+                          type: string
+                          description: The name of the issue
+                        fullName:
+                          type: string
+                          description: The full name of the issue
+                        category:
+                          type: string
+                          enum:
+                          - ACCESS_CONTROL
+                          - CONFIGURATION
+                          - CUSTOM
+                          - INFORMATION_DISCLOSURE
+                          - INJECTION
+                          - PROTOCOL
+                          - REQUEST_FORGERY
+                          - RESOURCE_LIMITATION
+                          - SCHEMA
+                          - SENSITIVE_DATA
+                          description: The category of the issue
+                        severity:
+                          type: string
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          description: The severity level of the issue
+                        status:
+                          type: string
+                          enum:
+                          - FALSE_POSITIVE
+                          - IGNORED
+                          - MANUAL_REVIEW
+                          - OPEN
+                          - RESOLVED
+                          description: The current status of the issue
+                        context:
+                          type: string
+                          description: The context of the issue
+                        risks:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - CRITICAL_FINDING
+                            - EXPOSED
+                            - OPEN_SCHEMA
+                            - PRIVATE
+                            - PROD_ONLY_MODE
+                            - SENSITIVE_DATA
+                            - UNAUTHENTICATED
+                          description: Array of risk types associated with the issue
+                        alertUid:
+                          type: string
+                          description: Unique identifier for the alert
+                        createdAt:
+                          type: string
+                          description: When the issue was first created
+                        asset:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the asset
+                            class:
+                              type: string
+                              enum:
+                              - API_SERVICE
+                              - CDN
+                              - CLOUD_COMPONENT
+                              - CLOUD_HOSTING
+                              - CODE_PROJECT
+                              - CSPM
+                              - DEV_TOOLS
+                              - FRONTEND
+                              - HOST
+                              - NETWORK
+                              - REPOSITORY
+                              - SCHEMA
+                              - SOURCE_CODE_MANAGEMENT
+                              - TECHNOLOGY
+                              description: The class of the asset
+                            type:
+                              type: string
+                              enum:
+                              - AKAMAI_ACCOUNT
+                              - AWS_ACCOUNT
+                              - AWS_LAMBDA
+                              - AZURE_TENANT
+                              - BITBUCKET_ORGANIZATION
+                              - BITBUCKET_REPOSITORY
+                              - BURPSUITE_EXPORT
+                              - CLOUDFLARE_ACCOUNT
+                              - CODE_PROJECT
+                              - DNS
+                              - GCP_PROJECT
+                              - GITHUB_ORGANIZATION
+                              - GITHUB_REPOSITORY
+                              - GITLAB_GROUP
+                              - GITLAB_REPOSITORY
+                              - GRAPHQL
+                              - GRAPHQL_SCHEMA
+                              - GRPC
+                              - HAR_EXPORT
+                              - INSOMNIA
+                              - IPV4
+                              - IPV4_RANGE
+                              - IPV6
+                              - KUBERNETES_CLUSTER
+                              - MCP
+                              - OPENAPI
+                              - PACKAGE
+                              - POSTMAN_COLLECTION
+                              - POSTMAN_ENVIRONMENT
+                              - POSTMAN_ORGANIZATION
+                              - REST
+                              - SOAP
+                              - SOFTWARE
+                              - WEBAPP
+                              - WEBSOCKET
+                              - WIZ_ACCOUNT
+                              - WP_JSON
+                              description: The type of the asset
+                            name:
+                              type: string
+                              description: The name of the asset
+                            externalUrl:
+                              type:
+                              - string
+                              - 'null'
+                              description: The external url of the asset
+                            faviconUrl:
+                              type:
+                              - string
+                              - 'null'
+                              description: The favicon url of the asset
+                            createdAt:
+                              type: string
+                              description: The date and time the asset was created
+                            lastSeenAt:
+                              type: string
+                              description: The date and time the asset was last seen
+                            scheduledForDeletionAt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The date and time the asset is scheduled for deletion
+                            status:
+                              type: string
+                              enum:
+                              - DEPRECATED
+                              - FALSE_POSITIVE
+                              - MONITORED
+                              - OUT_OF_SCOPE
+                              - THIRD_PARTY
+                              description: The status of the asset
+                            tags:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uuid
+                                    description: The id of the tag
+                                  name:
+                                    type: string
+                                    description: The name of the tag
+                                  color:
+                                    type: string
+                                    description: The color of the tag
+                                required:
+                                - id
+                                - name
+                                - color
+                                title: Tag
+                                description: Information about a tag
+                              description: The tags of the asset
+                            risks:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - CRITICAL_FINDING
+                                - EXPOSED
+                                - OPEN_SCHEMA
+                                - PRIVATE
+                                - PROD_ONLY_MODE
+                                - SENSITIVE_DATA
+                                - UNAUTHENTICATED
+                              description: The risks of the asset
+                            owners:
+                              type: array
+                              items:
+                                type: string
+                                format: email
+                              description: Email addresses of the owners of this asset.
+                            service:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                url:
+                                  type: string
+                                  description: The url of the asset service
+                                type:
+                                  type: string
+                                  enum:
+                                  - GRAPHQL
+                                  - GRPC
+                                  - MCP
+                                  - REST
+                                  - SOAP
+                                  - WEBSOCKET
+                                  description: The type of the asset service
+                              required:
+                              - url
+                              - type
+                              title: AssetServiceSummarized
+                              description: The service of the asset
+                            frontend:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                url:
+                                  type: string
+                                  description: The url of the asset frontend
+                                type:
+                                  type: string
+                                  enum:
+                                  - WEBAPP
+                                  description: The type of the asset frontend
+                              required:
+                              - url
+                              - type
+                              title: AssetFrontendSummarized
+                              description: The frontend of the asset
+                            host:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                address:
+                                  type: string
+                                  description: The address of the asset host
+                                type:
+                                  type: string
+                                  enum:
+                                  - DNS
+                                  - IPV4
+                                  - IPV6
+                                  description: The type of the asset host
+                              required:
+                              - address
+                              - type
+                              title: AssetHostSummarized
+                              description: The host of the asset
+                            links:
+                              type: object
+                              properties:
+                                assetOverview:
+                                  type: string
+                                  description: The url to view the asset overview in the platform
+                              required:
+                              - assetOverview
+                              description: The links of the asset
+                          required:
+                          - id
+                          - class
+                          - type
+                          - name
+                          - externalUrl
+                          - faviconUrl
+                          - createdAt
+                          - lastSeenAt
+                          - scheduledForDeletionAt
+                          - status
+                          - tags
+                          - risks
+                          - service
+                          - frontend
+                          - host
+                          - links
+                          title: AssetSummarized
+                          description: The asset of the issue
+                        lastSeenScanId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the last scan where this issue was seen
+                        lastSeenScan:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the scan
+                            status:
+                              type: string
+                              description: The status of the scan
+                            createdAt:
+                              type: string
+                              description: The date and time the scan was created
+                            finishedAt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The date and time the scan was finished
+                            score:
+                              type:
+                              - number
+                              - 'null'
+                              description: The score of the scan
+                            coverage:
+                              type:
+                              - number
+                              - 'null'
+                              description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                            duration:
+                              type: number
+                              description: The duration of the scan
+                            progressRatio:
+                              type: number
+                              description: The progress ratio of the scan
+                            initiator:
+                              type: string
+                              description: The initiator of the scan
+                            kind:
+                              type: string
+                              description: The kind of the scan
+                            commitHash:
+                              type:
+                              - string
+                              - 'null'
+                              description: The commit hash of the scan
+                            commitBranch:
+                              type:
+                              - string
+                              - 'null'
+                              description: The commit branch of the scan
+                            links:
+                              type: object
+                              properties:
+                                scanIssues:
+                                  type: string
+                                  description: The url to view the scan issues in the platform
+                              required:
+                              - scanIssues
+                              description: The links of the scan
+                          required:
+                          - id
+                          - status
+                          - createdAt
+                          - finishedAt
+                          - score
+                          - coverage
+                          - duration
+                          - progressRatio
+                          - initiator
+                          - kind
+                          - commitHash
+                          - commitBranch
+                          - links
+                          title: ScanSummarized
+                          description: The last scan in which this issue was observed
+                        firstSeenScanId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the first scan where this issue was seen
+                        customRuleId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the custom rule if this is a custom issue
+                        links:
+                          type: object
+                          properties:
+                            issueOverview:
+                              type: string
+                              description: URL to view the issue overview in the platform
+                          required:
+                          - issueOverview
+                      required:
+                      - id
+                      - name
+                      - fullName
+                      - category
+                      - severity
+                      - status
+                      - context
+                      - risks
+                      - alertUid
+                      - createdAt
+                      - asset
+                      - lastSeenScanId
+                      - lastSeenScan
+                      - firstSeenScanId
+                      - customRuleId
+                      - links
+                      title: IssueSummarized
+                      description: Summarized information about an issue
+                    description: The issues of the event (summarized). Hydrate with GET /v3/issues/:issueId for full payload (remediation, CVSS, compliances, full asset details).
+                  issuesCount:
+                    type: number
+                    description: The number of issues of the event
+                  level:
+                    type: string
+                    enum:
+                    - DEBUG
+                    - ERROR
+                    - INFO
+                    - WARNING
+                    description: The level of the event
+                  scan:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The id of the scan
+                      status:
+                        type: string
+                        description: The status of the scan
+                      createdAt:
+                        type: string
+                        description: The date and time the scan was created
+                      updatedAt:
+                        type: string
+                        description: The date and time the scan was updated
+                      finishedAt:
+                        type:
+                        - string
+                        - 'null'
+                        description: The date and time the scan was finished
+                      score:
+                        type:
+                        - number
+                        - 'null'
+                        description: The score of the scan
+                      coverage:
+                        type:
+                        - number
+                        - 'null'
+                        description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                      duration:
+                        type: number
+                        description: The duration of the scan
+                      progressRatio:
+                        type: number
+                        description: The progress ratio of the scan
+                      initiator:
+                        type: string
+                        description: The initiator of the scan
+                      kind:
+                        type: string
+                        description: The kind of the scan
+                      profileId:
+                        type: string
+                        description: The id of the profile of the scan
+                      organizationId:
+                        type: string
+                        description: The id of the organization of the scan
+                      commitHash:
+                        type:
+                        - string
+                        - 'null'
+                      commitBranch:
+                        type:
+                        - string
+                        - 'null'
+                      commitAuthor:
+                        type:
+                        - string
+                        - 'null'
+                      commitLink:
+                        type:
+                        - string
+                        - 'null'
+                      commitAuthorProfilePictureLink:
+                        type:
+                        - string
+                        - 'null'
+                      links:
+                        type: object
+                        properties:
+                          scanIssues:
+                            type: string
+                            description: URL to view the scan issues in the platform
+                        required:
+                        - scanIssues
+                    required:
+                    - id
+                    - status
+                    - createdAt
+                    - updatedAt
+                    - finishedAt
+                    - score
+                    - coverage
+                    - duration
+                    - progressRatio
+                    - initiator
+                    - kind
+                    - profileId
+                    - organizationId
+                    - commitHash
+                    - commitBranch
+                    - commitAuthor
+                    - commitLink
+                    - commitAuthorProfilePictureLink
+                    - links
+                    title: ScanDetailed
+                    description: The scan of the event
+                  scanId:
+                    type:
+                    - string
+                    - 'null'
+                    description: The id of the scan of the event
+                  stage:
+                    type: string
+                    enum:
+                    - AGENT_ACTION
+                    - AGENT_REASONING
+                    - CONFIGURATION
+                    - EXECUTION
+                    description: The stage of the event
+                  title:
+                    type: string
+                    description: The title of the event
+                required:
+                - id
+                - createdAt
+                - description
+                - issuesCount
+                - level
+                - scan
+                - scanId
+                - stage
+                - title
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

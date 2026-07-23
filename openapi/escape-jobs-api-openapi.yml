@@ -1,0 +1,302 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Jobs API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Jobs
+  description: 'Asynchronous jobs.
+
+
+    Trigger export jobs and poll for completion and artefacts.'
+paths:
+  /jobs:
+    post:
+      tags:
+      - Jobs
+      summary: Trigger a template export job
+      operationId: triggerExport
+      description: 'Schedules the same export job as the product UI (SAAS_EXPORT_TEMPLATE): PDF/report blocks, optional scan and issue scope. Use GET /jobs/{jobId} to read status and artefact download URLs when completed.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blocks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      kind:
+                        type: string
+                        enum:
+                        - AI_ANALYSIS
+                        - ASSETS_SUMMARY
+                        - COMPLIANCE_COVERAGE
+                        - COMPLIANCE_CRA
+                        - COMPLIANCE_CWE
+                        - COMPLIANCE_DORA
+                        - COMPLIANCE_FEDRAMP
+                        - COMPLIANCE_GDPR
+                        - COMPLIANCE_HIPAA
+                        - COMPLIANCE_HITRUST_CSF
+                        - COMPLIANCE_IEC62443
+                        - COMPLIANCE_ISO27001
+                        - COMPLIANCE_MITRE_ATTACK
+                        - COMPLIANCE_NIS2
+                        - COMPLIANCE_NIST
+                        - COMPLIANCE_OWASP
+                        - COMPLIANCE_OWASP_ASVS
+                        - COMPLIANCE_OWASP_LLM
+                        - COMPLIANCE_PCI_DSS
+                        - COMPLIANCE_PSD2
+                        - COMPLIANCE_SOC2
+                        - COMPLIANCE_WASC
+                        - ISSUE_DETAIL
+                        - ISSUE_LIST
+                        - ISSUE_SUMMARY
+                        - SCAN_HISTORY_TREND
+                        - SCAN_SUMMARY
+                      params:
+                        description: Block-specific JSON parameters (optional).
+                    required:
+                    - kind
+                  minItems: 1
+                  description: Report blocks to include, in order.
+                scanId:
+                  type: string
+                  format: uuid
+                  description: Restrict scope to a scan (optional).
+                dry:
+                  type: boolean
+                  description: If true, validates selection only and does not schedule a job.
+                assetWhere:
+                  description: GraphQL AssetWhereInput JSON (optional); narrows assets like the internal API.
+                profileWhere:
+                  description: GraphQL ProfilesWhereInput JSON (optional).
+                issueWhere:
+                  description: GraphQL IssueWhereInput JSON (optional); defaults if omitted when using scan/profile scope.
+              required:
+              - blocks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: ID of the scheduled export job (template generation).
+                required:
+                - id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /jobs/{jobId}:
+    get:
+      tags:
+      - Jobs
+      summary: Get a job
+      operationId: getJob
+      description: Returns job status, parameters, and artefacts (including signedUrl download links for completed export outputs).
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The job ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The job ID
+        name: jobId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  status:
+                    type: string
+                    enum:
+                    - COMPLETED
+                    - FAILED
+                    - PENDING
+                    - RUNNING
+                  kind:
+                    type: string
+                    enum:
+                    - INTEGRATION_WIZ_RESEND_ISSUES
+                    - MAINTENANCE_MIGRATE_PROFILE
+                    - MAINTENANCE_RECOMPUTE_ISSUES_FULLNAME
+                    - SAAS_AI_FALSE_POSITIVE_DETECTION
+                    - SAAS_AI_FALSE_POSITIVE_DETECTION_ON_ISSUE
+                    - SAAS_ARCHIVE_SCAN
+                    - SAAS_ARTEFACTS_S3_MIGRATION
+                    - SAAS_ASSET_FILES_S3_MIGRATION
+                    - SAAS_ASSET_SCHEMA_S3_MIGRATION
+                    - SAAS_ATTACHMENTS_S3_MIGRATION
+                    - SAAS_BATCHED_SCHEDULE_ASM_SCANS
+                    - SAAS_BATCHED_UPDATE_CACHED_DATA
+                    - SAAS_BATCHED_UPDATE_ISSUE_COUNTS
+                    - SAAS_BULK_CREATE_ASSETS
+                    - SAAS_CANCEL_RUNNING_SCANS
+                    - SAAS_CHECK_LOCATION_DOWN
+                    - SAAS_DELETE_APPLICATION
+                    - SAAS_DELETE_ASSETS
+                    - SAAS_DELETE_INTEGRATION
+                    - SAAS_DELETE_ORGANIZATION
+                    - SAAS_DELETE_PROJECT
+                    - SAAS_END_SCAN_ROUTINE
+                    - SAAS_EVENTS_ARCHIVE_GENERATION
+                    - SAAS_EXCHANGES_ARCHIVE_GENERATION
+                    - SAAS_EXECUTE_WORKFLOW
+                    - SAAS_EXPORT_TEMPLATE
+                    - SAAS_GENERATE_ISSUE_REMEDIATION
+                    - SAAS_MIGRATE_WORKFLOWS_FILTERS
+                    - SAAS_POPULATE_ISSUE_SCAN_MTM
+                    - SAAS_PROCESS_AGENTIC_LOGS
+                    - SAAS_PROCESS_FILE_UPLOAD
+                    - SAAS_REBUILD_ASSET_LINKS
+                    - SAAS_RECOMPUTE_ASSET_RISKS
+                    - SAAS_SCHEDULE_DEFAULT_VIEWS_SEED
+                    - SAAS_SCHEDULE_ISSUE_SCAN_MTM_POPULATION
+                    - SAAS_SCHEDULE_WORKFLOWS
+                    - SAAS_SCHEDULE_WORKFLOWS_FILTERS_MIGRATION
+                    - SAAS_SEED_DEFAULT_VIEWS
+                    - SAAS_START_ASM_SCAN
+                    - SAAS_TEMPORARY_SYNC_SCHEMAS_AND_SERVICES
+                    - SAAS_UPSERT_ASM_PROFILES
+                    - SEND_JOB_ARTEFACTS_BY_EMAIL
+                    - TEST_KIND
+                  createdAt:
+                    type: string
+                  scheduledAt:
+                    type:
+                    - string
+                    - 'null'
+                  triggeredAt:
+                    type:
+                    - string
+                    - 'null'
+                  completedAt:
+                    type:
+                    - string
+                    - 'null'
+                  parameters: {}
+                  artefacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        kind:
+                          type: string
+                          enum:
+                          - AUDITOR_REPORT
+                          - EVENTS_ARCHIVE
+                          - EXCHANGES_ARCHIVE
+                          - EXECUTIVE_REPORT
+                          - EXPORT_JOB_RESULT
+                        name:
+                          type: string
+                        signedUrl:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                      required:
+                      - id
+                      - kind
+                      - name
+                      - signedUrl
+                      - createdAt
+                      - updatedAt
+                      title: JobArtefact
+                      description: An artefact produced by a job; signedUrl is a time-limited download link.
+                required:
+                - id
+                - status
+                - kind
+                - createdAt
+                - scheduledAt
+                - triggeredAt
+                - completedAt
+                - artefacts
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

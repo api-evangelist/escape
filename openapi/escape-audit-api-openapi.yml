@@ -1,0 +1,198 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Audit API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Audit
+  description: 'List audit logs.
+
+
+    The public API provides endpoints to list audit logs.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/enterprise/audit-logs/) for more details.'
+paths:
+  /audit/logs:
+    get:
+      tags:
+      - Audit
+      summary: List audit logs
+      operationId: listAuditLogs
+      description: List audit logs of the organization.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - ACTION
+          - ACTOR
+          - DATE
+          - TARGET
+          - TITLE
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: string
+          description: An ISO 8601 timestamp to filter audit logs after
+          example: '2025-01-01T00:00:00Z'
+        required: false
+        description: An ISO 8601 timestamp to filter audit logs after
+        name: startTime
+        in: query
+      - schema:
+          type: string
+          description: An ISO 8601 timestamp to filter audit logs before
+          example: '2025-01-01T00:00:00Z'
+        required: false
+        description: An ISO 8601 timestamp to filter audit logs before
+        name: endTime
+        in: query
+      - schema:
+          type: string
+          description: Filter by action type
+          example: user.confirmed
+        required: false
+        description: Filter by action type
+        name: action
+        in: query
+      - schema:
+          type: string
+          description: Filter by actor
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Filter by actor
+        name: actor
+        in: query
+      - schema:
+          type: string
+          description: Filter by search term
+          example: Scan Started
+        required: false
+        description: Filter by search term
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the audit log
+                        date:
+                          type: string
+                          description: The date of the audit log
+                        title:
+                          type: string
+                          description: The title of the audit log
+                        action:
+                          type: string
+                          description: The action of the audit log
+                        actor:
+                          type:
+                          - string
+                          - 'null'
+                          description: The actor of the audit log
+                        actorEmail:
+                          type:
+                          - string
+                          - 'null'
+                          description: The email of the actor
+                      required:
+                      - id
+                      - date
+                      - title
+                      - action
+                      - actor
+                      - actorEmail
+                      title: AuditLogSummarized
+                      description: Summarized information about an audit log
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

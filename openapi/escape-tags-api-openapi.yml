@@ -1,0 +1,378 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Tags API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Tags
+  description: 'Manage tags.
+
+
+    The public API provides basic CRUDs operations to manage tags.'
+paths:
+  /tags:
+    get:
+      tags:
+      - Tags
+      summary: List tags
+      operationId: listTags
+      description: List and search tags of the organization.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The id of the tag
+                    name:
+                      type: string
+                      description: The name of the tag
+                    color:
+                      type: string
+                      description: The color of the tag
+                  required:
+                  - id
+                  - name
+                  - color
+                  title: TagDetail
+                  description: Detailed information about a tag
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+    post:
+      tags:
+      - Tags
+      summary: Create a tag
+      operationId: createTag
+      description: Create a tag for the organization.
+      requestBody:
+        description: Body of the request to create a tag
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 40
+                  description: The name of the tag
+                  example: tag1
+                color:
+                  type: string
+                  description: The color of the tag (hexadecimal color code)
+                  example: '000000'
+              required:
+              - name
+              - color
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the tag
+                  name:
+                    type: string
+                    description: The name of the tag
+                  color:
+                    type: string
+                    description: The color of the tag
+                required:
+                - id
+                - name
+                - color
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /tags/{tagId}:
+    get:
+      tags:
+      - Tags
+      summary: Get a tag
+      operationId: getTag
+      description: Get a tag by ID.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The tag ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The tag ID
+        name: tagId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the tag
+                  name:
+                    type: string
+                    description: The name of the tag
+                  color:
+                    type: string
+                    description: The color of the tag
+                required:
+                - id
+                - name
+                - color
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+    delete:
+      tags:
+      - Tags
+      summary: Delete a tag
+      operationId: deleteTag
+      description: Delete a tag from the organization.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The tag ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The tag ID
+        name: tagId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '409':
+          description: Tag is bound and cannot be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /tags/{tagId}/{tagId}:
+    put:
+      tags:
+      - Tags
+      summary: Update a tag
+      operationId: updateTag
+      description: Update a tag name and/or color.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The tag ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The tag ID
+        name: tagId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 40
+                  description: The new name of the tag
+                  example: production
+                color:
+                  type: string
+                  pattern: ^[\da-f]{6}$/i
+                  description: 'The new color of the tag (hex without #)'
+                  example: e03d3d
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the tag
+                  name:
+                    type: string
+                    description: The name of the tag
+                  color:
+                    type: string
+                    description: The color of the tag
+                required:
+                - id
+                - name
+                - color
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

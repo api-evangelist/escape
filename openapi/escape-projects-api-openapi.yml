@@ -1,0 +1,664 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Projects API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Projects
+  description: 'Projects Management
+
+
+    The public API provides CRUDs operations to manage projects.'
+paths:
+  /projects:
+    get:
+      tags:
+      - Projects
+      summary: List projects
+      operationId: listProjects
+      description: List and search projects of the organization.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - NAME
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: string
+          description: Search term to filter projects by name
+          example: My Super Project
+        required: false
+        description: Search term to filter projects by name
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the project
+                        name:
+                          type: string
+                          description: The name of the project
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the project was created
+                        bindings:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uuid
+                                description: The id of the role binding
+                              createdAt:
+                                type: string
+                                format: date-time
+                                description: The date and time the role binding was created
+                              roleId:
+                                type: string
+                                format: uuid
+                                description: The id of the role bound by the role binding
+                              projectId:
+                                type:
+                                - string
+                                - 'null'
+                                format: uuid
+                                description: The id of the project bound by the role binding
+                              userId:
+                                type: string
+                                format: uuid
+                                description: The id of the user bound by the role binding
+                            required:
+                            - id
+                            - createdAt
+                            - roleId
+                            - userId
+                          description: The bindings of the project
+                      required:
+                      - id
+                      - name
+                      - createdAt
+                      - bindings
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+    post:
+      tags:
+      - Projects
+      summary: Create a project
+      operationId: createProject
+      description: Create a project for the organization.
+      requestBody:
+        description: Body of the request to create a project
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the project
+                  example: My super project
+                slug:
+                  type: string
+                  description: The slug of the project
+                  example: my-super-project
+                bindings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      roleId:
+                        type: string
+                        description: The role ID
+                        example: 00000000-0000-0000-0000-000000000000
+                      userId:
+                        type: string
+                        description: The user ID
+                        example: 00000000-0000-0000-0000-000000000000
+                    required:
+                    - roleId
+                    - userId
+                  description: An optional list of role bindings to create for the project
+                  example:
+                  - roleId: 00000000-0000-0000-0000-000000000000
+                    userId: 00000000-0000-0000-0000-000000000000
+              required:
+              - name
+              - slug
+              - bindings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the project
+                  name:
+                    type: string
+                    description: The name of the project
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the project was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the project
+                required:
+                - id
+                - name
+                - createdAt
+                - bindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /projects/{projectId}:
+    get:
+      tags:
+      - Projects
+      summary: Get a project
+      operationId: getProject
+      description: Get a project by ID.
+      parameters:
+      - schema:
+          type: string
+          description: The project ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The project ID
+        name: projectId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the project
+                  name:
+                    type: string
+                    description: The name of the project
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the project was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the project
+                required:
+                - id
+                - name
+                - createdAt
+                - bindings
+    put:
+      tags:
+      - Projects
+      summary: Update a project
+      operationId: updateProject
+      description: Update a project.
+      parameters:
+      - schema:
+          type: string
+          description: The project ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The project ID
+        name: projectId
+        in: path
+      requestBody:
+        required: true
+        description: Body of the request to update a project
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the project
+                      example: My updated super project
+                slug:
+                  type: string
+                  description: The slug of the project
+                  example: my-updated-super-project
+              required:
+              - project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the project
+                  name:
+                    type: string
+                    description: The name of the project
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the project was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the project
+                required:
+                - id
+                - name
+                - createdAt
+                - bindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

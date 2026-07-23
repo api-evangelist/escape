@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Upload API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Upload
+  description: 'Upload helper for Escape Platform.
+
+
+    The public API provides endpoints to upload files to the platform.'
+paths:
+  /upload/signed-url:
+    post:
+      tags:
+      - Upload
+      summary: Create signed URL
+      operationId: createUploadSignedUrl
+      description: "Retrieve a signed URL link to upload a file to the Escape Platform.\n\nBy running a query with this endpoint, you will receive a signed URL that you can use to upload a file to the Escape Platform.\n\n```json\n{\n  \"url\": \"[SIGNED URL]\",\n  \"id\": \"[SIGNED URL ID]\"\n}\n```\n\nWith the url, you are able to upload one file:\n\n```bash\ncurl -X PUT --data-binary '@./schema.json' \"[SIGNED URL]\"\n```\n\nNow, you are able to use the previously received id in another query.\nFor example to update a schema of your application.\n"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    maxLength: 1024
+                    format: uri
+                    description: The signed URL to upload a file to the Escape Platform.
+                  id:
+                    type: string
+                    format: uuid
+                    description: The signed URL ID to upload a file to the Escape Platform.
+                required:
+                - url
+                - id
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

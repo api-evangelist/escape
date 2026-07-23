@@ -1,0 +1,408 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Users API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Users
+  description: 'Users Management
+
+
+    The public API provides CRUDs operations to manage users.'
+paths:
+  /me:
+    get:
+      tags:
+      - Users
+      summary: Get current user context
+      operationId: getMe
+      description: Get basic information about the authenticated user and current organization.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The id of the current user
+                      email:
+                        type: string
+                        format: email
+                        description: The email of the current user
+                    required:
+                    - id
+                    - email
+                  organization:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The id of the current organization
+                      name:
+                        type: string
+                        description: The name of the current organization
+                    required:
+                    - id
+                    - name
+                required:
+                - user
+                - organization
+  /users:
+    get:
+      tags:
+      - Users
+      summary: List users
+      operationId: listUsers
+      description: List users of the organization.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The id of the user
+                    email:
+                      type: string
+                      format: email
+                      description: The email of the user
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: The date and time the user was created
+                    activatedAt:
+                      type:
+                      - string
+                      - 'null'
+                      format: date-time
+                      description: The date and time the user was activated
+                    roleBindings:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the role binding
+                          createdAt:
+                            type: string
+                            format: date-time
+                            description: The date and time the role binding was created
+                          roleId:
+                            type: string
+                            format: uuid
+                            description: The id of the role bound by the role binding
+                          projectId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the project bound by the role binding
+                          userId:
+                            type: string
+                            format: uuid
+                            description: The id of the user bound by the role binding
+                        required:
+                        - id
+                        - createdAt
+                        - roleId
+                        - userId
+                      description: The role bindings of the user
+                  required:
+                  - id
+                  - email
+                  - createdAt
+                  - activatedAt
+                  - roleBindings
+  /users/invite:
+    post:
+      tags:
+      - Users
+      summary: Invite users
+      operationId: inviteUser
+      description: Invite users to the organization, and give them roles.
+      requestBody:
+        description: Body of the request to invite users
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+                  description: The emails of the users to invite
+                bindings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      roleId:
+                        type: string
+                        description: The role ID
+                        example: 00000000-0000-0000-0000-000000000000
+                      projectId:
+                        type:
+                        - string
+                        - 'null'
+                        description: An optional project ID
+                        example: 00000000-0000-0000-0000-000000000000
+                    required:
+                    - roleId
+                  description: An optional list of role bindings to create for the users
+                  example:
+                  - roleId: 00000000-0000-0000-0000-000000000000
+                    projectId: 00000000-0000-0000-0000-000000000000
+              required:
+              - emails
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The id of the user
+                    email:
+                      type: string
+                      format: email
+                      description: The email of the user
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: The date and time the user was created
+                    activatedAt:
+                      type:
+                      - string
+                      - 'null'
+                      format: date-time
+                      description: The date and time the user was activated
+                    roleBindings:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the role binding
+                          createdAt:
+                            type: string
+                            format: date-time
+                            description: The date and time the role binding was created
+                          roleId:
+                            type: string
+                            format: uuid
+                            description: The id of the role bound by the role binding
+                          projectId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the project bound by the role binding
+                          userId:
+                            type: string
+                            format: uuid
+                            description: The id of the user bound by the role binding
+                        required:
+                        - id
+                        - createdAt
+                        - roleId
+                        - userId
+                      description: The role bindings of the user
+                  required:
+                  - id
+                  - email
+                  - createdAt
+                  - activatedAt
+                  - roleBindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /users/{userId}:
+    get:
+      tags:
+      - Users
+      summary: Get a user
+      operationId: getUser
+      description: Get a user by ID.
+      parameters:
+      - schema:
+          type: string
+          description: The user ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The user ID
+        name: userId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the user
+                  email:
+                    type: string
+                    format: email
+                    description: The email of the user
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the user was created
+                  activatedAt:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    description: The date and time the user was activated
+                  roleBindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the user
+                required:
+                - id
+                - email
+                - createdAt
+                - activatedAt
+                - roleBindings
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

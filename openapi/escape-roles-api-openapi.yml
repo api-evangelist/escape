@@ -1,0 +1,838 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Roles API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Roles
+  description: 'Roles Management
+
+
+    The public API provides CRUDs operations to manage roles.'
+paths:
+  /roles:
+    get:
+      tags:
+      - Roles
+      summary: List roles
+      operationId: listRoles
+      description: List and search roles of the organization.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The id of the role
+                    name:
+                      type: string
+                      description: The name of the role
+                    permissions:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ADMIN
+                        - EDIT_ASSETS
+                        - EDIT_CUSTOM_RULES
+                        - EDIT_INTEGRATIONS
+                        - EDIT_PROFILES
+                        - EDIT_TAGS
+                        - EDIT_WORKFLOWS
+                        - MANAGE_REPORTING
+                        - VIEW_ONLY
+                      description: The permissions of the role
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: The date and time the role was created
+                    bindings:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the role binding
+                          createdAt:
+                            type: string
+                            format: date-time
+                            description: The date and time the role binding was created
+                          roleId:
+                            type: string
+                            format: uuid
+                            description: The id of the role bound by the role binding
+                          projectId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the project bound by the role binding
+                          userId:
+                            type: string
+                            format: uuid
+                            description: The id of the user bound by the role binding
+                        required:
+                        - id
+                        - createdAt
+                        - roleId
+                        - userId
+                      description: The bindings of the role
+                  required:
+                  - id
+                  - name
+                  - permissions
+                  - createdAt
+                  - bindings
+    post:
+      tags:
+      - Roles
+      summary: Create a role
+      operationId: createRole
+      description: Create a role for the organization.
+      requestBody:
+        description: Body of the request to create a role
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the role
+                  example: My super role
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - ADMIN
+                    - EDIT_ASSETS
+                    - EDIT_CUSTOM_RULES
+                    - EDIT_INTEGRATIONS
+                    - EDIT_PROFILES
+                    - EDIT_TAGS
+                    - EDIT_WORKFLOWS
+                    - MANAGE_REPORTING
+                    - VIEW_ONLY
+                  description: The permissions of the role
+                  example:
+                  - EDIT_ASSETS
+                bindings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      roleId:
+                        type: string
+                        description: The role ID
+                        example: 00000000-0000-0000-0000-000000000000
+                      userId:
+                        type: string
+                        description: The user ID
+                        example: 00000000-0000-0000-0000-000000000000
+                    required:
+                    - roleId
+                    - userId
+                  description: An optional list of role bindings to create for the role
+                  example:
+                  - roleId: 00000000-0000-0000-0000-000000000000
+                    userId: 00000000-0000-0000-0000-000000000000
+              required:
+              - name
+              - permissions
+              - bindings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the role
+                  name:
+                    type: string
+                    description: The name of the role
+                  permissions:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - ADMIN
+                      - EDIT_ASSETS
+                      - EDIT_CUSTOM_RULES
+                      - EDIT_INTEGRATIONS
+                      - EDIT_PROFILES
+                      - EDIT_TAGS
+                      - EDIT_WORKFLOWS
+                      - MANAGE_REPORTING
+                      - VIEW_ONLY
+                    description: The permissions of the role
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the role was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the role
+                required:
+                - id
+                - name
+                - permissions
+                - createdAt
+                - bindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /roles/bindings:
+    post:
+      tags:
+      - Roles
+      summary: Create role bindings
+      operationId: createRoleBindings
+      description: Create role bindings.
+      requestBody:
+        description: Body of the request to create a role binding
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bindings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      roleId:
+                        type: string
+                        format: uuid
+                        description: The role ID
+                        example: 00000000-0000-0000-0000-000000000000
+                      projectId:
+                        type:
+                        - string
+                        - 'null'
+                        format: uuid
+                        description: The project ID
+                        example: 00000000-0000-0000-0000-000000000000
+                      userId:
+                        type: string
+                        format: uuid
+                        description: The user ID
+                        example: 00000000-0000-0000-0000-000000000000
+                    required:
+                    - roleId
+                    - userId
+                  description: The role bindings to create
+                  example:
+                  - roleId: 00000000-0000-0000-0000-000000000000
+                    projectId: 00000000-0000-0000-0000-000000000000
+                    userId: 00000000-0000-0000-0000-000000000000
+                  - roleId: 11111111-1111-1111-1111-111111111111
+                    userId: 11111111-1111-1111-1111-111111111111
+              required:
+              - bindings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The id of the role binding
+                    userId:
+                      type: string
+                      format: uuid
+                      description: The id of the user
+                    projectId:
+                      type: string
+                      format: uuid
+                      description: The id of the project
+                    roleId:
+                      type: string
+                      format: uuid
+                      description: The id of the role
+                  required:
+                  - id
+                  - userId
+                  - projectId
+                  - roleId
+                description: The created role bindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /roles/bindings/{bindingId}:
+    delete:
+      tags:
+      - Roles
+      summary: Delete a role binding
+      operationId: deleteRoleBinding
+      description: Delete a role binding.
+      parameters:
+      - schema:
+          type: string
+          description: The role binding ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The role binding ID
+        name: bindingId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted:
+                    type: boolean
+                required:
+                - deleted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /roles/{roleId}:
+    get:
+      tags:
+      - Roles
+      summary: Get a role
+      operationId: getRole
+      description: Get a role by ID.
+      parameters:
+      - schema:
+          type: string
+          description: The role ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The role ID
+        name: roleId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the role
+                  name:
+                    type: string
+                    description: The name of the role
+                  permissions:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - ADMIN
+                      - EDIT_ASSETS
+                      - EDIT_CUSTOM_RULES
+                      - EDIT_INTEGRATIONS
+                      - EDIT_PROFILES
+                      - EDIT_TAGS
+                      - EDIT_WORKFLOWS
+                      - MANAGE_REPORTING
+                      - VIEW_ONLY
+                    description: The permissions of the role
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the role was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the role
+                required:
+                - id
+                - name
+                - permissions
+                - createdAt
+                - bindings
+    put:
+      tags:
+      - Roles
+      summary: Update a role
+      operationId: updateRole
+      description: Update a role.
+      parameters:
+      - schema:
+          type: string
+          description: The role ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The role ID
+        name: roleId
+        in: path
+      requestBody:
+        required: true
+        description: Body of the request to update a role
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the role
+                      example: My super role
+                    permissions:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ADMIN
+                        - EDIT_ASSETS
+                        - EDIT_CUSTOM_RULES
+                        - EDIT_INTEGRATIONS
+                        - EDIT_PROFILES
+                        - EDIT_TAGS
+                        - EDIT_WORKFLOWS
+                        - MANAGE_REPORTING
+                        - VIEW_ONLY
+                      description: The permissions of the role
+                      example:
+                      - EDIT_ASSETS
+                      - EDIT_CUSTOM_RULES
+              required:
+              - role
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the role
+                  name:
+                    type: string
+                    description: The name of the role
+                  permissions:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - ADMIN
+                      - EDIT_ASSETS
+                      - EDIT_CUSTOM_RULES
+                      - EDIT_INTEGRATIONS
+                      - EDIT_PROFILES
+                      - EDIT_TAGS
+                      - EDIT_WORKFLOWS
+                      - MANAGE_REPORTING
+                      - VIEW_ONLY
+                    description: The permissions of the role
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the role was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the role
+                required:
+                - id
+                - name
+                - permissions
+                - createdAt
+                - bindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

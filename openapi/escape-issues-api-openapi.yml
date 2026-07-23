@@ -1,0 +1,2542 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Issues API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Issues
+  description: 'Manage issues.
+
+
+    Identify, prioritize, and remediate the security issues and sensitive data exposures uncovered during ASM and DAST scanning
+
+
+    See [our documentation](https://docs.escape.tech/documentation/governance/vulnerability-management/) for more details.'
+paths:
+  /issues:
+    get:
+      tags:
+      - Issues
+      summary: List issues
+      operationId: listIssues
+      description: List and search issues of the organization.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - ASSET
+          - LAST_SEEN
+          - SEVERITY
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by application IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by application IDs
+        name: profileIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by asset IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by asset IDs
+        name: assetIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by domain
+          example: example.com,example.org
+        required: false
+        description: Filter by domain
+        name: domains
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by specific issue IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by specific issue IDs
+        name: ids
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by issue names
+          example: issue1,issue2
+        required: false
+        description: Filter by issue names
+        name: names
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by scan IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by scan IDs
+        name: scanIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by tag IDs
+        required: false
+        description: Filter by tag IDs
+        name: tagIds
+        in: query
+      - schema:
+          type: string
+          description: Search term to filter issues by name or description
+          example: issue1
+        required: false
+        description: Search term to filter issues by name or description
+        name: search
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by issues with Jira tickets
+        required: false
+        description: Filter by issues with Jira tickets
+        name: jiraTicket
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CRITICAL_FINDING
+            - EXPOSED
+            - OPEN_SCHEMA
+            - PRIVATE
+            - PROD_ONLY_MODE
+            - SENSITIVE_DATA
+            - UNAUTHENTICATED
+          description: Filter by risk types
+        required: false
+        description: Filter by risk types
+        name: risks
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - API_SERVICE
+            - CDN
+            - CLOUD_COMPONENT
+            - CLOUD_HOSTING
+            - CODE_PROJECT
+            - CSPM
+            - DEV_TOOLS
+            - FRONTEND
+            - HOST
+            - NETWORK
+            - REPOSITORY
+            - SCHEMA
+            - SOURCE_CODE_MANAGEMENT
+            - TECHNOLOGY
+          description: Filter by asset classes
+        required: false
+        description: Filter by asset classes
+        name: assetClasses
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ASM_AKAMAI_ACCOUNT
+            - ASM_AWS_ACCOUNT
+            - ASM_AWS_LAMBDA
+            - ASM_AZURE_TENANT
+            - ASM_BITBUCKET_ORGANIZATION
+            - ASM_BITBUCKET_REPOSITORY
+            - ASM_BURPSUITE_EXPORT
+            - ASM_CLOUDFLARE_ACCOUNT
+            - ASM_CODE_PROJECT
+            - ASM_DNS
+            - ASM_GCP_PROJECT
+            - ASM_GITHUB_ORGANIZATION
+            - ASM_GITHUB_REPOSITORY
+            - ASM_GITLAB_GROUP
+            - ASM_GITLAB_REPOSITORY
+            - ASM_GRAPHQL
+            - ASM_GRAPHQL_SCHEMA
+            - ASM_GRPC
+            - ASM_HAR_EXPORT
+            - ASM_INSOMNIA
+            - ASM_IPV4
+            - ASM_IPV4_RANGE
+            - ASM_IPV6
+            - ASM_KUBERNETES_CLUSTER
+            - ASM_MCP
+            - ASM_OPENAPI
+            - ASM_PACKAGE
+            - ASM_POSTMAN_COLLECTION
+            - ASM_POSTMAN_ENVIRONMENT
+            - ASM_POSTMAN_ORGANIZATION
+            - ASM_REST
+            - ASM_SOAP
+            - ASM_SOFTWARE
+            - ASM_WEBAPP
+            - ASM_WEBSOCKET
+            - ASM_WIZ_ACCOUNT
+            - ASM_WP_JSON
+            - AUTOMATED_PENTEST_GRAPHQL
+            - AUTOMATED_PENTEST_REST
+            - AUTOMATED_PENTEST_WEBAPP
+            - BLST_GRAPHQL
+            - BLST_REST
+            - FRONTEND_DAST
+          description: Filter by scanner kinds
+        required: false
+        description: Filter by scanner kinds
+        name: scannerKinds
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CRITICAL
+            - HIGH
+            - INFO
+            - LOW
+            - MEDIUM
+          description: Filter by issue severities
+        required: false
+        description: Filter by issue severities
+        name: severities
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - FALSE_POSITIVE
+            - IGNORED
+            - MANUAL_REVIEW
+            - OPEN
+            - RESOLVED
+          description: Filter by issue status
+        required: false
+        description: Filter by issue status
+        name: status
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the issue
+                        name:
+                          type: string
+                          description: The name of the issue
+                        fullName:
+                          type: string
+                          description: The full name of the issue
+                        category:
+                          type: string
+                          enum:
+                          - ACCESS_CONTROL
+                          - CONFIGURATION
+                          - CUSTOM
+                          - INFORMATION_DISCLOSURE
+                          - INJECTION
+                          - PROTOCOL
+                          - REQUEST_FORGERY
+                          - RESOURCE_LIMITATION
+                          - SCHEMA
+                          - SENSITIVE_DATA
+                          description: The category of the issue
+                        severity:
+                          type: string
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          description: The severity level of the issue
+                        status:
+                          type: string
+                          enum:
+                          - FALSE_POSITIVE
+                          - IGNORED
+                          - MANUAL_REVIEW
+                          - OPEN
+                          - RESOLVED
+                          description: The current status of the issue
+                        context:
+                          type: string
+                          description: The context of the issue
+                        risks:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - CRITICAL_FINDING
+                            - EXPOSED
+                            - OPEN_SCHEMA
+                            - PRIVATE
+                            - PROD_ONLY_MODE
+                            - SENSITIVE_DATA
+                            - UNAUTHENTICATED
+                          description: Array of risk types associated with the issue
+                        alertUid:
+                          type: string
+                          description: Unique identifier for the alert
+                        createdAt:
+                          type: string
+                          description: When the issue was first created
+                        asset:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the asset
+                            class:
+                              type: string
+                              enum:
+                              - API_SERVICE
+                              - CDN
+                              - CLOUD_COMPONENT
+                              - CLOUD_HOSTING
+                              - CODE_PROJECT
+                              - CSPM
+                              - DEV_TOOLS
+                              - FRONTEND
+                              - HOST
+                              - NETWORK
+                              - REPOSITORY
+                              - SCHEMA
+                              - SOURCE_CODE_MANAGEMENT
+                              - TECHNOLOGY
+                              description: The class of the asset
+                            type:
+                              type: string
+                              enum:
+                              - AKAMAI_ACCOUNT
+                              - AWS_ACCOUNT
+                              - AWS_LAMBDA
+                              - AZURE_TENANT
+                              - BITBUCKET_ORGANIZATION
+                              - BITBUCKET_REPOSITORY
+                              - BURPSUITE_EXPORT
+                              - CLOUDFLARE_ACCOUNT
+                              - CODE_PROJECT
+                              - DNS
+                              - GCP_PROJECT
+                              - GITHUB_ORGANIZATION
+                              - GITHUB_REPOSITORY
+                              - GITLAB_GROUP
+                              - GITLAB_REPOSITORY
+                              - GRAPHQL
+                              - GRAPHQL_SCHEMA
+                              - GRPC
+                              - HAR_EXPORT
+                              - INSOMNIA
+                              - IPV4
+                              - IPV4_RANGE
+                              - IPV6
+                              - KUBERNETES_CLUSTER
+                              - MCP
+                              - OPENAPI
+                              - PACKAGE
+                              - POSTMAN_COLLECTION
+                              - POSTMAN_ENVIRONMENT
+                              - POSTMAN_ORGANIZATION
+                              - REST
+                              - SOAP
+                              - SOFTWARE
+                              - WEBAPP
+                              - WEBSOCKET
+                              - WIZ_ACCOUNT
+                              - WP_JSON
+                              description: The type of the asset
+                            name:
+                              type: string
+                              description: The name of the asset
+                            externalUrl:
+                              type:
+                              - string
+                              - 'null'
+                              description: The external url of the asset
+                            faviconUrl:
+                              type:
+                              - string
+                              - 'null'
+                              description: The favicon url of the asset
+                            createdAt:
+                              type: string
+                              description: The date and time the asset was created
+                            lastSeenAt:
+                              type: string
+                              description: The date and time the asset was last seen
+                            scheduledForDeletionAt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The date and time the asset is scheduled for deletion
+                            status:
+                              type: string
+                              enum:
+                              - DEPRECATED
+                              - FALSE_POSITIVE
+                              - MONITORED
+                              - OUT_OF_SCOPE
+                              - THIRD_PARTY
+                              description: The status of the asset
+                            tags:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uuid
+                                    description: The id of the tag
+                                  name:
+                                    type: string
+                                    description: The name of the tag
+                                  color:
+                                    type: string
+                                    description: The color of the tag
+                                required:
+                                - id
+                                - name
+                                - color
+                                title: Tag
+                                description: Information about a tag
+                              description: The tags of the asset
+                            risks:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - CRITICAL_FINDING
+                                - EXPOSED
+                                - OPEN_SCHEMA
+                                - PRIVATE
+                                - PROD_ONLY_MODE
+                                - SENSITIVE_DATA
+                                - UNAUTHENTICATED
+                              description: The risks of the asset
+                            owners:
+                              type: array
+                              items:
+                                type: string
+                                format: email
+                              description: Email addresses of the owners of this asset.
+                            service:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                url:
+                                  type: string
+                                  description: The url of the asset service
+                                type:
+                                  type: string
+                                  enum:
+                                  - GRAPHQL
+                                  - GRPC
+                                  - MCP
+                                  - REST
+                                  - SOAP
+                                  - WEBSOCKET
+                                  description: The type of the asset service
+                              required:
+                              - url
+                              - type
+                              title: AssetServiceSummarized
+                              description: The service of the asset
+                            frontend:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                url:
+                                  type: string
+                                  description: The url of the asset frontend
+                                type:
+                                  type: string
+                                  enum:
+                                  - WEBAPP
+                                  description: The type of the asset frontend
+                              required:
+                              - url
+                              - type
+                              title: AssetFrontendSummarized
+                              description: The frontend of the asset
+                            host:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                address:
+                                  type: string
+                                  description: The address of the asset host
+                                type:
+                                  type: string
+                                  enum:
+                                  - DNS
+                                  - IPV4
+                                  - IPV6
+                                  description: The type of the asset host
+                              required:
+                              - address
+                              - type
+                              title: AssetHostSummarized
+                              description: The host of the asset
+                            links:
+                              type: object
+                              properties:
+                                assetOverview:
+                                  type: string
+                                  description: The url to view the asset overview in the platform
+                              required:
+                              - assetOverview
+                              description: The links of the asset
+                          required:
+                          - id
+                          - class
+                          - type
+                          - name
+                          - externalUrl
+                          - faviconUrl
+                          - createdAt
+                          - lastSeenAt
+                          - scheduledForDeletionAt
+                          - status
+                          - tags
+                          - risks
+                          - service
+                          - frontend
+                          - host
+                          - links
+                          title: AssetSummarized
+                          description: The asset of the issue
+                        lastSeenScanId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the last scan where this issue was seen
+                        lastSeenScan:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the scan
+                            status:
+                              type: string
+                              description: The status of the scan
+                            createdAt:
+                              type: string
+                              description: The date and time the scan was created
+                            finishedAt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The date and time the scan was finished
+                            score:
+                              type:
+                              - number
+                              - 'null'
+                              description: The score of the scan
+                            coverage:
+                              type:
+                              - number
+                              - 'null'
+                              description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                            duration:
+                              type: number
+                              description: The duration of the scan
+                            progressRatio:
+                              type: number
+                              description: The progress ratio of the scan
+                            initiator:
+                              type: string
+                              description: The initiator of the scan
+                            kind:
+                              type: string
+                              description: The kind of the scan
+                            commitHash:
+                              type:
+                              - string
+                              - 'null'
+                              description: The commit hash of the scan
+                            commitBranch:
+                              type:
+                              - string
+                              - 'null'
+                              description: The commit branch of the scan
+                            links:
+                              type: object
+                              properties:
+                                scanIssues:
+                                  type: string
+                                  description: The url to view the scan issues in the platform
+                              required:
+                              - scanIssues
+                              description: The links of the scan
+                          required:
+                          - id
+                          - status
+                          - createdAt
+                          - finishedAt
+                          - score
+                          - coverage
+                          - duration
+                          - progressRatio
+                          - initiator
+                          - kind
+                          - commitHash
+                          - commitBranch
+                          - links
+                          title: ScanSummarized
+                          description: The last scan in which this issue was observed
+                        firstSeenScanId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the first scan where this issue was seen
+                        customRuleId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the custom rule if this is a custom issue
+                        links:
+                          type: object
+                          properties:
+                            issueOverview:
+                              type: string
+                              description: URL to view the issue overview in the platform
+                          required:
+                          - issueOverview
+                      required:
+                      - id
+                      - name
+                      - fullName
+                      - category
+                      - severity
+                      - status
+                      - context
+                      - risks
+                      - alertUid
+                      - createdAt
+                      - asset
+                      - lastSeenScanId
+                      - lastSeenScan
+                      - firstSeenScanId
+                      - customRuleId
+                      - links
+                      title: IssueSummarized
+                      description: Summarized information about an issue
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+  /issues/funnel:
+    get:
+      tags:
+      - Issues
+      summary: Get issue funnel
+      operationId: getIssueFunnel
+      description: 'Get issue funnel data showing how issues distribute across severity/exposure steps: ALL → OPEN_ISSUES → EXPOSED → UNAUTHENTICATED → HIGH_BUSINESS_IMPACT → CRITICAL.'
+      parameters:
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by project IDs
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Filter by project IDs
+        name: projectIds
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      description: Issue category
+                    step:
+                      type: string
+                      description: Funnel step name
+                    count:
+                      type: number
+                      description: Number of issues at this step
+                  required:
+                  - category
+                  - step
+                  - count
+                title: IssueFunnel
+                description: Issue funnel breakdown by category and step
+  /issues/trends:
+    get:
+      tags:
+      - Issues
+      summary: Get issue severity trends
+      operationId: getIssueTrends
+      description: Get time-bucketed issue counts by severity. Useful for tracking security posture over time.
+      parameters:
+      - schema:
+          type: string
+          description: Start date (ISO 8601)
+          example: '2026-01-01T00:00:00Z'
+        required: true
+        description: Start date (ISO 8601)
+        name: after
+        in: query
+      - schema:
+          type: string
+          description: End date (ISO 8601)
+          example: '2026-04-01T00:00:00Z'
+        required: true
+        description: End date (ISO 8601)
+        name: before
+        in: query
+      - schema:
+          type: string
+          default: 1 day
+          description: Time bucket interval (e.g. "1 day", "1 week")
+          example: 1 day
+        required: false
+        description: Time bucket interval (e.g. "1 day", "1 week")
+        name: interval
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by application IDs
+        required: false
+        description: Filter by application IDs
+        name: applicationIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by project IDs
+        required: false
+        description: Filter by project IDs
+        name: projectIds
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      description: Time bucket start date
+                    HIGH:
+                      type: number
+                      description: Number of HIGH severity issues
+                    MEDIUM:
+                      type: number
+                      description: Number of MEDIUM severity issues
+                    LOW:
+                      type: number
+                      description: Number of LOW severity issues
+                    INFO:
+                      type: number
+                      description: Number of INFO severity issues
+                  required:
+                  - date
+                  - HIGH
+                  - MEDIUM
+                  - LOW
+                  - INFO
+                title: IssueTrends
+                description: Time-series of issue counts by severity
+  /issues/bulk-update:
+    post:
+      tags:
+      - Issues
+      summary: Bulk update issues
+      operationId: bulkUpdateIssues
+      description: Update the status of multiple issues matching a filter predicate. For example, mark all LOW severity issues on a given asset as IGNORED.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                  - FALSE_POSITIVE
+                  - IGNORED
+                  - MANUAL_REVIEW
+                  - OPEN
+                  - RESOLVED
+                  description: The new status to apply
+                where:
+                  type: object
+                  properties:
+                    ids:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by specific issue IDs
+                    assetIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by asset IDs
+                    severities:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - CRITICAL
+                        - HIGH
+                        - INFO
+                        - LOW
+                        - MEDIUM
+                      description: Filter by severities
+                    profileIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by profile IDs
+                    tagIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by tag IDs
+                    scannerKinds:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ASM_AKAMAI_ACCOUNT
+                        - ASM_AWS_ACCOUNT
+                        - ASM_AWS_LAMBDA
+                        - ASM_AZURE_TENANT
+                        - ASM_BITBUCKET_ORGANIZATION
+                        - ASM_BITBUCKET_REPOSITORY
+                        - ASM_BURPSUITE_EXPORT
+                        - ASM_CLOUDFLARE_ACCOUNT
+                        - ASM_CODE_PROJECT
+                        - ASM_DNS
+                        - ASM_GCP_PROJECT
+                        - ASM_GITHUB_ORGANIZATION
+                        - ASM_GITHUB_REPOSITORY
+                        - ASM_GITLAB_GROUP
+                        - ASM_GITLAB_REPOSITORY
+                        - ASM_GRAPHQL
+                        - ASM_GRAPHQL_SCHEMA
+                        - ASM_GRPC
+                        - ASM_HAR_EXPORT
+                        - ASM_INSOMNIA
+                        - ASM_IPV4
+                        - ASM_IPV4_RANGE
+                        - ASM_IPV6
+                        - ASM_KUBERNETES_CLUSTER
+                        - ASM_MCP
+                        - ASM_OPENAPI
+                        - ASM_PACKAGE
+                        - ASM_POSTMAN_COLLECTION
+                        - ASM_POSTMAN_ENVIRONMENT
+                        - ASM_POSTMAN_ORGANIZATION
+                        - ASM_REST
+                        - ASM_SOAP
+                        - ASM_SOFTWARE
+                        - ASM_WEBAPP
+                        - ASM_WEBSOCKET
+                        - ASM_WIZ_ACCOUNT
+                        - ASM_WP_JSON
+                        - AUTOMATED_PENTEST_GRAPHQL
+                        - AUTOMATED_PENTEST_REST
+                        - AUTOMATED_PENTEST_WEBAPP
+                        - BLST_GRAPHQL
+                        - BLST_REST
+                        - FRONTEND_DAST
+                      description: Filter by scanner kinds
+                  description: Filter predicate; omit to match all issues
+              required:
+              - status
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ids:
+                    type: array
+                    items:
+                      type: string
+                    description: IDs of the updated issues
+                required:
+                - ids
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /issues/{issueId}:
+    get:
+      tags:
+      - Issues
+      summary: Get an issue
+      operationId: getIssue
+      description: Get an issue by ID
+      parameters:
+      - schema:
+          type: string
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the issue
+                  name:
+                    type: string
+                    description: The name of the issue
+                  fullName:
+                    type: string
+                    description: The full name of the issue
+                  category:
+                    type: string
+                    enum:
+                    - ACCESS_CONTROL
+                    - CONFIGURATION
+                    - CUSTOM
+                    - INFORMATION_DISCLOSURE
+                    - INJECTION
+                    - PROTOCOL
+                    - REQUEST_FORGERY
+                    - RESOURCE_LIMITATION
+                    - SCHEMA
+                    - SENSITIVE_DATA
+                    description: The category of the issue
+                  severity:
+                    type: string
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    description: The severity level of the issue
+                  status:
+                    type: string
+                    enum:
+                    - FALSE_POSITIVE
+                    - IGNORED
+                    - MANUAL_REVIEW
+                    - OPEN
+                    - RESOLVED
+                    description: The current status of the issue
+                  context:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated contextual overview for the issue
+                  risks:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - CRITICAL_FINDING
+                      - EXPOSED
+                      - OPEN_SCHEMA
+                      - PRIVATE
+                      - PROD_ONLY_MODE
+                      - SENSITIVE_DATA
+                      - UNAUTHENTICATED
+                    description: Array of risk types associated with the issue
+                  alertUid:
+                    type: string
+                    description: Unique identifier for the alert
+                  createdAt:
+                    type: string
+                    description: When the issue was first created
+                  asset:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The id of the asset
+                      class:
+                        type: string
+                        enum:
+                        - API_SERVICE
+                        - CDN
+                        - CLOUD_COMPONENT
+                        - CLOUD_HOSTING
+                        - CODE_PROJECT
+                        - CSPM
+                        - DEV_TOOLS
+                        - FRONTEND
+                        - HOST
+                        - NETWORK
+                        - REPOSITORY
+                        - SCHEMA
+                        - SOURCE_CODE_MANAGEMENT
+                        - TECHNOLOGY
+                      type:
+                        type: string
+                        enum:
+                        - AKAMAI_ACCOUNT
+                        - AWS_ACCOUNT
+                        - AWS_LAMBDA
+                        - AZURE_TENANT
+                        - BITBUCKET_ORGANIZATION
+                        - BITBUCKET_REPOSITORY
+                        - BURPSUITE_EXPORT
+                        - CLOUDFLARE_ACCOUNT
+                        - CODE_PROJECT
+                        - DNS
+                        - GCP_PROJECT
+                        - GITHUB_ORGANIZATION
+                        - GITHUB_REPOSITORY
+                        - GITLAB_GROUP
+                        - GITLAB_REPOSITORY
+                        - GRAPHQL
+                        - GRAPHQL_SCHEMA
+                        - GRPC
+                        - HAR_EXPORT
+                        - INSOMNIA
+                        - IPV4
+                        - IPV4_RANGE
+                        - IPV6
+                        - KUBERNETES_CLUSTER
+                        - MCP
+                        - OPENAPI
+                        - PACKAGE
+                        - POSTMAN_COLLECTION
+                        - POSTMAN_ENVIRONMENT
+                        - POSTMAN_ORGANIZATION
+                        - REST
+                        - SOAP
+                        - SOFTWARE
+                        - WEBAPP
+                        - WEBSOCKET
+                        - WIZ_ACCOUNT
+                        - WP_JSON
+                      name:
+                        type: string
+                        description: The name of the asset
+                      externalUrl:
+                        type:
+                        - string
+                        - 'null'
+                        description: The external url of the asset
+                      faviconUrl:
+                        type:
+                        - string
+                        - 'null'
+                        description: The favicon url of the asset
+                      description:
+                        type:
+                        - string
+                        - 'null'
+                        description: The description of the asset
+                      createdAt:
+                        type: string
+                        description: The date and time the asset was created
+                      lastSeenAt:
+                        type: string
+                        description: The date and time the asset was last seen
+                      scheduledForDeletionAt:
+                        type:
+                        - string
+                        - 'null'
+                        description: The date and time the asset is scheduled for deletion
+                      status:
+                        type: string
+                        enum:
+                        - DEPRECATED
+                        - FALSE_POSITIVE
+                        - MONITORED
+                        - OUT_OF_SCOPE
+                        - THIRD_PARTY
+                        description: The status of the asset
+                      owners:
+                        type: array
+                        items:
+                          type: string
+                        description: The owners of the asset
+                      tags:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the tag
+                            name:
+                              type: string
+                              description: The name of the tag
+                            color:
+                              type: string
+                              description: The color of the tag
+                          required:
+                          - id
+                          - name
+                          - color
+                          title: Tag
+                          description: Information about a tag
+                        description: The tags of the asset
+                      risks:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - CRITICAL_FINDING
+                          - EXPOSED
+                          - OPEN_SCHEMA
+                          - PRIVATE
+                          - PROD_ONLY_MODE
+                          - SENSITIVE_DATA
+                          - UNAUTHENTICATED
+                        description: The risks of the asset
+                      firstSeenScan:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the scan
+                          status:
+                            type: string
+                            description: The status of the scan
+                          createdAt:
+                            type: string
+                            description: The date and time the scan was created
+                          finishedAt:
+                            type:
+                            - string
+                            - 'null'
+                            description: The date and time the scan was finished
+                          score:
+                            type:
+                            - number
+                            - 'null'
+                            description: The score of the scan
+                          coverage:
+                            type:
+                            - number
+                            - 'null'
+                            description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                          duration:
+                            type: number
+                            description: The duration of the scan
+                          progressRatio:
+                            type: number
+                            description: The progress ratio of the scan
+                          initiator:
+                            type: string
+                            description: The initiator of the scan
+                          kind:
+                            type: string
+                            description: The kind of the scan
+                          commitHash:
+                            type:
+                            - string
+                            - 'null'
+                            description: The commit hash of the scan
+                          commitBranch:
+                            type:
+                            - string
+                            - 'null'
+                            description: The commit branch of the scan
+                          links:
+                            type: object
+                            properties:
+                              scanIssues:
+                                type: string
+                                description: The url to view the scan issues in the platform
+                            required:
+                            - scanIssues
+                            description: The links of the scan
+                        required:
+                        - id
+                        - status
+                        - createdAt
+                        - finishedAt
+                        - score
+                        - coverage
+                        - duration
+                        - progressRatio
+                        - initiator
+                        - kind
+                        - commitHash
+                        - commitBranch
+                        - links
+                        title: ScanSummarized
+                        description: The first seen scan of the asset
+                      lastSeenScan:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the scan
+                          status:
+                            type: string
+                            description: The status of the scan
+                          createdAt:
+                            type: string
+                            description: The date and time the scan was created
+                          finishedAt:
+                            type:
+                            - string
+                            - 'null'
+                            description: The date and time the scan was finished
+                          score:
+                            type:
+                            - number
+                            - 'null'
+                            description: The score of the scan
+                          coverage:
+                            type:
+                            - number
+                            - 'null'
+                            description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                          duration:
+                            type: number
+                            description: The duration of the scan
+                          progressRatio:
+                            type: number
+                            description: The progress ratio of the scan
+                          initiator:
+                            type: string
+                            description: The initiator of the scan
+                          kind:
+                            type: string
+                            description: The kind of the scan
+                          commitHash:
+                            type:
+                            - string
+                            - 'null'
+                            description: The commit hash of the scan
+                          commitBranch:
+                            type:
+                            - string
+                            - 'null'
+                            description: The commit branch of the scan
+                          links:
+                            type: object
+                            properties:
+                              scanIssues:
+                                type: string
+                                description: The url to view the scan issues in the platform
+                            required:
+                            - scanIssues
+                            description: The links of the scan
+                        required:
+                        - id
+                        - status
+                        - createdAt
+                        - finishedAt
+                        - score
+                        - coverage
+                        - duration
+                        - progressRatio
+                        - initiator
+                        - kind
+                        - commitHash
+                        - commitBranch
+                        - links
+                        title: ScanSummarized
+                        description: The last seen scan of the asset
+                      service:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - GRAPHQL
+                            - GRPC
+                            - MCP
+                            - REST
+                            - SOAP
+                            - WEBSOCKET
+                          url:
+                            type: string
+                          framework:
+                            type:
+                            - string
+                            - 'null'
+                          authProtocol:
+                            type:
+                            - string
+                            - 'null'
+                          authTechnology:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - AUTH0
+                            - AWS_IAM
+                            - AZURE_ACTIVE_DIRECTORY
+                            - COGNITO
+                            - KEYCLOAK
+                            - UNKNOWN
+                            - null
+                          cloudProvider:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - AKAMAI
+                            - ALIBABA
+                            - AWS
+                            - AZURE
+                            - CLOUDFLARE
+                            - DIGITALOCEAN
+                            - FASTLY
+                            - GCP
+                            - GRAVITEE
+                            - HEROKU
+                            - IBM
+                            - LINODE
+                            - ORACLE
+                            - OVH
+                            - SCALEWAY
+                            - TENCENT
+                            - UCLOUD
+                            - UNKNOWN
+                            - VERCEL
+                            - null
+                          wafProvider:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - ACE_XML_GATEWAY
+                            - AESECURE
+                            - AIREECDN
+                            - AIRLOCK
+                            - ALERT_LOGIC
+                            - ALIYUNDUN
+                            - ANQUANBAO
+                            - ANYU
+                            - APPROACH
+                            - APPWALL
+                            - ARMOR_DEFENSE
+                            - ARVANCLOUD
+                            - ASPA_FIREWALL
+                            - ASP_NET_GENERIC
+                            - ASP_NET_WAF
+                            - ASTRA
+                            - AWS_ELASTIC_LOAD_BALANCER
+                            - AZIONCDN
+                            - AZURE_FRONT_DOOR
+                            - BARIKODE
+                            - BARRACUDA
+                            - BEKCHY
+                            - BELUGA_CDN
+                            - BINARYSEC
+                            - BITNINJA
+                            - BLOCKDOS
+                            - BLUEDON
+                            - BULLETPROOF_SECURITY_PRO
+                            - CACHEFLY_CDN
+                            - CACHEWALL
+                            - CDNNS_APPLICATION_GATEWAY
+                            - CHINACACHE_LOAD_BALANCER
+                            - CHUANG_YU_SHIELD
+                            - CLOUDBRIC
+                            - CLOUDFLARE
+                            - CLOUDFLOOR
+                            - CLOUDFRONT
+                            - COMODO_CWATCH
+                            - CRAWLPROTECT
+                            - DATADOME
+                            - DATAPOWER
+                            - DENYALL
+                            - DISTIL
+                            - DOSARREST
+                            - DOTDEFENDER
+                            - DYNAMICWEB_INJECTION_CHECK
+                            - EDGECAST
+                            - EEYE_SECUREIIS
+                            - EISOO_CLOUD_FIREWALL
+                            - EXPRESSION_ENGINE
+                            - F5_NETWORKS
+                            - FASTLY
+                            - FIREPASS
+                            - FORTIWEB
+                            - GODADDY_WEBSITE_PROTECTION
+                            - GOOGLE_CLOUD_APP_ARMOR
+                            - GREYWIZARD
+                            - HUAWEI_CLOUD_FIREWALL
+                            - HYPERGUARD
+                            - IMUNIFY360
+                            - INCAPSULA
+                            - INDUSGUARD
+                            - INSTART_DX
+                            - ISA_SERVER
+                            - JANUSEC_APPLICATION_GATEWAY
+                            - JIASULE
+                            - KEYCDN
+                            - KONA_SITEDEFENDER
+                            - KS_WAF
+                            - LIMELIGHT_CDN
+                            - LITESPEED
+                            - MALCARE
+                            - MAXCDN
+                            - MISSION_CONTROL_SHIELD
+                            - MODSECURITY
+                            - NAXSI
+                            - NEMESIDA
+                            - NETCONTINUUM
+                            - NETSCALER_APPFIREWALL
+                            - NEVISPROXY
+                            - NEWDEFEND
+                            - NEXUSGUARD_FIREWALL
+                            - NINJAFIREWALL
+                            - NSFOCUS
+                            - NULLDDOS_PROTECTION
+                            - ONMESSAGE_SHIELD
+                            - OPEN_RESTY_LUA_NGINX
+                            - ORACLE_CLOUD
+                            - PALO_ALTO_NEXT_GEN_FIREWALL
+                            - PENTAWAF
+                            - PERIMETERX
+                            - PKSECURITY_IDS
+                            - POWERCDN
+                            - PROFENSE
+                            - PT_APPLICATION_FIREWALL
+                            - PUHUI
+                            - QCLOUD
+                            - QINIU
+                            - RAYWAF
+                            - REBLAZE
+                            - RSFIREWALL
+                            - SABRE_FIREWALL
+                            - SAFE3_WEB_FIREWALL
+                            - SAFEDOG
+                            - SAFELINE
+                            - SECKING
+                            - SECUPRESS_WP_SECURITY
+                            - SECURESPHERE
+                            - SECURE_ENTRY
+                            - SENGINX
+                            - SERVERDEFENDER_VP
+                            - SHADOW_DAEMON
+                            - SHIELD_SECURITY
+                            - SITEGROUND
+                            - SITEGUARD
+                            - SITELOCK
+                            - SONICWALL
+                            - SQUARESPACE
+                            - SQUIDPROXY_IDS
+                            - STACKPATH
+                            - SUCURI_CLOUDPROXY
+                            - TENCENT_CLOUD_FIREWALL
+                            - TEROS
+                            - TRAFFICSHIELD
+                            - TRANSIP_WEB_FIREWALL
+                            - UEWAF
+                            - UNKNOWN
+                            - URLMASTER_SECURITYCHECK
+                            - URLSCAN
+                            - UTM_WEB_PROTECTION
+                            - VARNISH
+                            - VIETTEL
+                            - VIRUSDIE
+                            - WALLARM
+                            - WATCHGUARD
+                            - WEBARX
+                            - WEBKNIGHT
+                            - WEBLAND
+                            - WEBSEAL
+                            - WEBTOTEM
+                            - WEST263_CDN
+                            - WORDFENCE
+                            - WPMUDEV_WAF
+                            - WP_CERBER_SECURITY
+                            - WTS_WAF
+                            - XLABS_SECURITY_WAF
+                            - XUANWUDUN
+                            - YUNDUN
+                            - YUNJIASU
+                            - YUNSUO
+                            - YXLINK
+                            - ZENEDGE
+                            - ZSCALER
+                            - null
+                          environment:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - DEVELOPMENT
+                            - PRODUCTION
+                            - STAGING
+                            - UNKNOWN
+                            - null
+                          tls:
+                            type: boolean
+                          ips:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - type
+                        - url
+                        - framework
+                        - authProtocol
+                        - authTechnology
+                        - cloudProvider
+                        - wafProvider
+                        - environment
+                        - tls
+                        - ips
+                        title: AssetServiceDetailed
+                        description: The service of the asset
+                      frontend:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - WEBAPP
+                          url:
+                            type: string
+                          framework:
+                            type:
+                            - string
+                            - 'null'
+                          APIFramework:
+                            type:
+                            - string
+                            - 'null'
+                          authProtocol:
+                            type:
+                            - string
+                            - 'null'
+                          authTechnology:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - AUTH0
+                            - AWS_IAM
+                            - AZURE_ACTIVE_DIRECTORY
+                            - COGNITO
+                            - KEYCLOAK
+                            - UNKNOWN
+                            - null
+                          cloudProvider:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - AKAMAI
+                            - ALIBABA
+                            - AWS
+                            - AZURE
+                            - CLOUDFLARE
+                            - DIGITALOCEAN
+                            - FASTLY
+                            - GCP
+                            - GRAVITEE
+                            - HEROKU
+                            - IBM
+                            - LINODE
+                            - ORACLE
+                            - OVH
+                            - SCALEWAY
+                            - TENCENT
+                            - UCLOUD
+                            - UNKNOWN
+                            - VERCEL
+                            - null
+                          wafProvider:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - ACE_XML_GATEWAY
+                            - AESECURE
+                            - AIREECDN
+                            - AIRLOCK
+                            - ALERT_LOGIC
+                            - ALIYUNDUN
+                            - ANQUANBAO
+                            - ANYU
+                            - APPROACH
+                            - APPWALL
+                            - ARMOR_DEFENSE
+                            - ARVANCLOUD
+                            - ASPA_FIREWALL
+                            - ASP_NET_GENERIC
+                            - ASP_NET_WAF
+                            - ASTRA
+                            - AWS_ELASTIC_LOAD_BALANCER
+                            - AZIONCDN
+                            - AZURE_FRONT_DOOR
+                            - BARIKODE
+                            - BARRACUDA
+                            - BEKCHY
+                            - BELUGA_CDN
+                            - BINARYSEC
+                            - BITNINJA
+                            - BLOCKDOS
+                            - BLUEDON
+                            - BULLETPROOF_SECURITY_PRO
+                            - CACHEFLY_CDN
+                            - CACHEWALL
+                            - CDNNS_APPLICATION_GATEWAY
+                            - CHINACACHE_LOAD_BALANCER
+                            - CHUANG_YU_SHIELD
+                            - CLOUDBRIC
+                            - CLOUDFLARE
+                            - CLOUDFLOOR
+                            - CLOUDFRONT
+                            - COMODO_CWATCH
+                            - CRAWLPROTECT
+                            - DATADOME
+                            - DATAPOWER
+                            - DENYALL
+                            - DISTIL
+                            - DOSARREST
+                            - DOTDEFENDER
+                            - DYNAMICWEB_INJECTION_CHECK
+                            - EDGECAST
+                            - EEYE_SECUREIIS
+                            - EISOO_CLOUD_FIREWALL
+                            - EXPRESSION_ENGINE
+                            - F5_NETWORKS
+                            - FASTLY
+                            - FIREPASS
+                            - FORTIWEB
+                            - GODADDY_WEBSITE_PROTECTION
+                            - GOOGLE_CLOUD_APP_ARMOR
+                            - GREYWIZARD
+                            - HUAWEI_CLOUD_FIREWALL
+                            - HYPERGUARD
+                            - IMUNIFY360
+                            - INCAPSULA
+                            - INDUSGUARD
+                            - INSTART_DX
+                            - ISA_SERVER
+                            - JANUSEC_APPLICATION_GATEWAY
+                            - JIASULE
+                            - KEYCDN
+                            - KONA_SITEDEFENDER
+                            - KS_WAF
+                            - LIMELIGHT_CDN
+                            - LITESPEED
+                            - MALCARE
+                            - MAXCDN
+                            - MISSION_CONTROL_SHIELD
+                            - MODSECURITY
+                            - NAXSI
+                            - NEMESIDA
+                            - NETCONTINUUM
+                            - NETSCALER_APPFIREWALL
+                            - NEVISPROXY
+                            - NEWDEFEND
+                            - NEXUSGUARD_FIREWALL
+                            - NINJAFIREWALL
+                            - NSFOCUS
+                            - NULLDDOS_PROTECTION
+                            - ONMESSAGE_SHIELD
+                            - OPEN_RESTY_LUA_NGINX
+                            - ORACLE_CLOUD
+                            - PALO_ALTO_NEXT_GEN_FIREWALL
+                            - PENTAWAF
+                            - PERIMETERX
+                            - PKSECURITY_IDS
+                            - POWERCDN
+                            - PROFENSE
+                            - PT_APPLICATION_FIREWALL
+                            - PUHUI
+                            - QCLOUD
+                            - QINIU
+                            - RAYWAF
+                            - REBLAZE
+                            - RSFIREWALL
+                            - SABRE_FIREWALL
+                            - SAFE3_WEB_FIREWALL
+                            - SAFEDOG
+                            - SAFELINE
+                            - SECKING
+                            - SECUPRESS_WP_SECURITY
+                            - SECURESPHERE
+                            - SECURE_ENTRY
+                            - SENGINX
+                            - SERVERDEFENDER_VP
+                            - SHADOW_DAEMON
+                            - SHIELD_SECURITY
+                            - SITEGROUND
+                            - SITEGUARD
+                            - SITELOCK
+                            - SONICWALL
+                            - SQUARESPACE
+                            - SQUIDPROXY_IDS
+                            - STACKPATH
+                            - SUCURI_CLOUDPROXY
+                            - TENCENT_CLOUD_FIREWALL
+                            - TEROS
+                            - TRAFFICSHIELD
+                            - TRANSIP_WEB_FIREWALL
+                            - UEWAF
+                            - UNKNOWN
+                            - URLMASTER_SECURITYCHECK
+                            - URLSCAN
+                            - UTM_WEB_PROTECTION
+                            - VARNISH
+                            - VIETTEL
+                            - VIRUSDIE
+                            - WALLARM
+                            - WATCHGUARD
+                            - WEBARX
+                            - WEBKNIGHT
+                            - WEBLAND
+                            - WEBSEAL
+                            - WEBTOTEM
+                            - WEST263_CDN
+                            - WORDFENCE
+                            - WPMUDEV_WAF
+                            - WP_CERBER_SECURITY
+                            - WTS_WAF
+                            - XLABS_SECURITY_WAF
+                            - XUANWUDUN
+                            - YUNDUN
+                            - YUNJIASU
+                            - YUNSUO
+                            - YXLINK
+                            - ZENEDGE
+                            - ZSCALER
+                            - null
+                          environment:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - DEVELOPMENT
+                            - PRODUCTION
+                            - STAGING
+                            - UNKNOWN
+                            - null
+                          ips:
+                            type: array
+                            items:
+                              type: string
+                          tls:
+                            type: boolean
+                        required:
+                        - type
+                        - url
+                        - framework
+                        - APIFramework
+                        - authProtocol
+                        - authTechnology
+                        - cloudProvider
+                        - wafProvider
+                        - environment
+                        - ips
+                        - tls
+                        title: AssetFrontendDetailed
+                        description: The frontend of the asset
+                      host:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - DNS
+                            - IPV4
+                            - IPV6
+                          address:
+                            type: string
+                          ips:
+                            type: array
+                            items:
+                              type: string
+                          ports:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                port:
+                                  type: number
+                              required:
+                              - port
+                          records:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                value:
+                                  type: string
+                              required:
+                              - type
+                              - value
+                        required:
+                        - type
+                        - address
+                        - ips
+                        - ports
+                        - records
+                        title: AssetHostDetailed
+                        description: The host of the asset
+                      schemaUrl:
+                        type:
+                        - string
+                        - 'null'
+                        description: Time-limited HTTPS URL for schema-class assets; null for other asset classes
+                      links:
+                        type: object
+                        properties:
+                          assetOverview:
+                            type: string
+                            description: The url to view the asset overview in the platform
+                        required:
+                        - assetOverview
+                        description: The links of the asset
+                    required:
+                    - id
+                    - class
+                    - type
+                    - name
+                    - externalUrl
+                    - faviconUrl
+                    - description
+                    - createdAt
+                    - lastSeenAt
+                    - scheduledForDeletionAt
+                    - status
+                    - tags
+                    - risks
+                    - firstSeenScan
+                    - lastSeenScan
+                    - service
+                    - frontend
+                    - host
+                    - schemaUrl
+                    - links
+                    title: AssetDetailed
+                    description: The asset of the issue
+                  lastSeenScanId:
+                    type:
+                    - string
+                    - 'null'
+                    description: ID of the last scan where this issue was seen
+                  lastSeenScan:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The id of the scan
+                      status:
+                        type: string
+                        description: The status of the scan
+                      createdAt:
+                        type: string
+                        description: The date and time the scan was created
+                      finishedAt:
+                        type:
+                        - string
+                        - 'null'
+                        description: The date and time the scan was finished
+                      score:
+                        type:
+                        - number
+                        - 'null'
+                        description: The score of the scan
+                      coverage:
+                        type:
+                        - number
+                        - 'null'
+                        description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                      duration:
+                        type: number
+                        description: The duration of the scan
+                      progressRatio:
+                        type: number
+                        description: The progress ratio of the scan
+                      initiator:
+                        type: string
+                        description: The initiator of the scan
+                      kind:
+                        type: string
+                        description: The kind of the scan
+                      commitHash:
+                        type:
+                        - string
+                        - 'null'
+                        description: The commit hash of the scan
+                      commitBranch:
+                        type:
+                        - string
+                        - 'null'
+                        description: The commit branch of the scan
+                      links:
+                        type: object
+                        properties:
+                          scanIssues:
+                            type: string
+                            description: The url to view the scan issues in the platform
+                        required:
+                        - scanIssues
+                        description: The links of the scan
+                    required:
+                    - id
+                    - status
+                    - createdAt
+                    - finishedAt
+                    - score
+                    - coverage
+                    - duration
+                    - progressRatio
+                    - initiator
+                    - kind
+                    - commitHash
+                    - commitBranch
+                    - links
+                    title: ScanSummarized
+                    description: The last scan in which this issue was observed
+                  firstSeenScanId:
+                    type:
+                    - string
+                    - 'null'
+                    description: ID of the first scan where this issue was seen
+                  customRuleId:
+                    type:
+                    - string
+                    - 'null'
+                    description: ID of the custom rule if this is a custom issue
+                  aiRemediationFramework:
+                    type: string
+                    description: Framework used for AI remediation
+                  remediation:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated remediation for the issue
+                  cvss:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      score:
+                        type:
+                        - number
+                        - 'null'
+                        description: CVSS score of the issue
+                      vector:
+                        type:
+                        - string
+                        - 'null'
+                        description: CVSS vector of the issue
+                    required:
+                    - score
+                    - vector
+                    description: CVSS information for the issue
+                  compliances:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        framework:
+                          type: string
+                          description: The compliance framework name
+                        item:
+                          type: string
+                          description: The compliance item identifier
+                      required:
+                      - framework
+                      - item
+                    description: Compliances associated with the issue
+                  links:
+                    type: object
+                    properties:
+                      issueOverview:
+                        type: string
+                        description: URL to view the issue overview in the platform
+                    required:
+                    - issueOverview
+                  latestEventIds:
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 5
+                    description: IDs of up to 5 events from the issue's last-seen scan, newest-first. Hydrate with GET /v3/events/:id for full payload (Exchange, etc.). Only populated by GET /v3/issues/:issueId. IDs are opaque strings (GraphQL `ID` scalars), not guaranteed UUIDs.
+                  latestEventsTruncated:
+                    type: boolean
+                    description: True when the last-seen scan has more than 5 events. Use GET /v3/events?issueIds=<id>&scanIds=<lastSeenScanId> for the full list.
+                required:
+                - id
+                - name
+                - fullName
+                - category
+                - severity
+                - status
+                - context
+                - risks
+                - alertUid
+                - createdAt
+                - asset
+                - lastSeenScanId
+                - lastSeenScan
+                - firstSeenScanId
+                - customRuleId
+                - aiRemediationFramework
+                - remediation
+                - cvss
+                - links
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    put:
+      tags:
+      - Issues
+      summary: Update an issue
+      operationId: updateIssue
+      description: Update an issue by ID
+      parameters:
+      - schema:
+          type: string
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      requestBody:
+        description: Body of the request to update an issue
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                  - FALSE_POSITIVE
+                  - IGNORED
+                  - MANUAL_REVIEW
+                  - OPEN
+                  - RESOLVED
+                  description: The issue status
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ids:
+                    type: array
+                    items:
+                      type: string
+                    description: The IDs of the updated issues
+                required:
+                - ids
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /issues/{issueId}/activities:
+    get:
+      tags:
+      - Issues
+      summary: List activities of an issue
+      operationId: listIssueActivities
+      description: List activities related to a specific issue.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    author:
+                      type:
+                      - object
+                      - 'null'
+                      properties:
+                        id:
+                          type: string
+                          description: The id of the author
+                        email:
+                          type: string
+                          description: The email of the author
+                      required:
+                      - id
+                      - email
+                      title: AuthorSummarized
+                      description: Summarized information about an author
+                    id:
+                      type: string
+                      format: uuid
+                      description: The id of the activity
+                    createdAt:
+                      type: string
+                      description: The date and time the activity was created
+                    kind:
+                      type: string
+                      enum:
+                      - ASSET_FOUND
+                      - ASSET_IGNORED
+                      - ASSET_UPDATED
+                      - COMMENT
+                      - ISSUE_FOUND
+                      - ISSUE_STATUS_CHANGED
+                      - OWNERS_NOTIFIED
+                      - SCHEMA_LINKED
+                      - SCHEMA_UNLINKED
+                  required:
+                  - author
+                  - id
+                  - createdAt
+                  - kind
+                  title: ActivitySummarized
+                  description: Summarized information about an activity
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    post:
+      tags:
+      - Issues
+      summary: Comment on an issue
+      operationId: createIssueComment
+      description: Add a comment to an issue.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      requestBody:
+        description: Body of the request to add a comment
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  minLength: 1
+                  maxLength: 512
+                  description: Comment text; maximum 512 characters
+              required:
+              - comment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        description: The id of the author
+                      email:
+                        type: string
+                        description: The email of the author
+                    required:
+                    - id
+                    - email
+                    title: AuthorSummarized
+                    description: Summarized information about an author
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the activity
+                  createdAt:
+                    type: string
+                    description: The date and time the activity was created
+                  kind:
+                    type: string
+                    enum:
+                    - ASSET_FOUND
+                    - ASSET_IGNORED
+                    - ASSET_UPDATED
+                    - COMMENT
+                    - ISSUE_FOUND
+                    - ISSUE_STATUS_CHANGED
+                    - OWNERS_NOTIFIED
+                    - SCHEMA_LINKED
+                    - SCHEMA_UNLINKED
+                required:
+                - author
+                - id
+                - createdAt
+                - kind
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /issues/{issueId}/notify:
+    post:
+      tags:
+      - Issues
+      summary: Notify issue owners
+      operationId: notifyIssueOwners
+      description: Send an email notification to the owners of the asset associated with this issue.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scanId:
+                  type: string
+                  format: uuid
+                  description: The scan ID to reference in the notification
+                  example: 00000000-0000-0000-0000-000000000000
+              required:
+              - scanId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notified:
+                    type: boolean
+                    description: Whether owners were found and notified
+                required:
+                - notified
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Statistics API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Statistics
+  description: 'Organization Statistics
+
+
+    High-level organization security posture statistics.'
+paths:
+  /statistics:
+    get:
+      tags:
+      - Statistics
+      summary: Get organization statistics
+      operationId: getStatistics
+      description: 'Get a high-level overview of the organization security posture: application count, asset count, and open issue counts by severity.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applications:
+                    type: object
+                    properties:
+                      count:
+                        type: number
+                        description: Total number of applications with scans
+                    required:
+                    - count
+                  assets:
+                    type: object
+                    properties:
+                      total:
+                        type: number
+                        description: Total number of monitored assets
+                    required:
+                    - total
+                  issues:
+                    type: object
+                    properties:
+                      high:
+                        type: number
+                        description: Number of HIGH severity open issues
+                      medium:
+                        type: number
+                        description: Number of MEDIUM severity open issues
+                      low:
+                        type: number
+                        description: Number of LOW severity open issues
+                      info:
+                        type: number
+                        description: Number of INFO severity open issues
+                    required:
+                    - high
+                    - medium
+                    - low
+                    - info
+                required:
+                - applications
+                - assets
+                - issues
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

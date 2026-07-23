@@ -1,0 +1,140 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Asm
+  description: 'Attack Surface Management
+
+
+    Trigger and manage ASM discovery scans on your attack surface.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/asm/) for more details.'
+paths:
+  /asm/scans:
+    post:
+      tags:
+      - Asm
+      summary: Trigger ASM scans
+      operationId: triggerAsmScans
+      description: Trigger Attack Surface Management scans on assets matching the given filter. If no filter is provided, scans all monitored assets.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                where:
+                  type: object
+                  properties:
+                    assetIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by specific asset IDs
+                    types:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - AKAMAI_ACCOUNT
+                        - AWS_ACCOUNT
+                        - AWS_LAMBDA
+                        - AZURE_TENANT
+                        - BITBUCKET_ORGANIZATION
+                        - BITBUCKET_REPOSITORY
+                        - BURPSUITE_EXPORT
+                        - CLOUDFLARE_ACCOUNT
+                        - CODE_PROJECT
+                        - DNS
+                        - GCP_PROJECT
+                        - GITHUB_ORGANIZATION
+                        - GITHUB_REPOSITORY
+                        - GITLAB_GROUP
+                        - GITLAB_REPOSITORY
+                        - GRAPHQL
+                        - GRAPHQL_SCHEMA
+                        - GRPC
+                        - HAR_EXPORT
+                        - INSOMNIA
+                        - IPV4
+                        - IPV4_RANGE
+                        - IPV6
+                        - KUBERNETES_CLUSTER
+                        - MCP
+                        - OPENAPI
+                        - PACKAGE
+                        - POSTMAN_COLLECTION
+                        - POSTMAN_ENVIRONMENT
+                        - POSTMAN_ORGANIZATION
+                        - REST
+                        - SOAP
+                        - SOFTWARE
+                        - WEBAPP
+                        - WEBSOCKET
+                        - WIZ_ACCOUNT
+                        - WP_JSON
+                      description: Filter by asset types
+                    statuses:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - DEPRECATED
+                        - FALSE_POSITIVE
+                        - MONITORED
+                        - OUT_OF_SCOPE
+                        - THIRD_PARTY
+                      description: Filter by asset statuses
+                  description: Asset filter predicate; omit to scan all monitored assets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  triggered:
+                    type: boolean
+                    description: Whether ASM scans were successfully triggered
+                required:
+                - triggered
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

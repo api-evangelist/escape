@@ -1,0 +1,261 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Emails API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Emails
+  description: 'Read scan inbox emails.
+
+
+    The public API provides endpoints to list inbox emails and read their raw content without exposing storage links.'
+paths:
+  /scans/emails:
+    get:
+      tags:
+      - Emails
+      summary: List inbox emails
+      operationId: listInboxEmails
+      description: Given a target email address, list inbox emails with cursor pagination.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Filter by email IDs
+          example:
+          - 00000000-0000-0000-0000-000000000000
+          - 00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by email IDs
+        name: ids
+        in: query
+      - schema:
+          type: string
+          format: date-time
+          description: Filter by before date
+          example: '2025-03-15T09:00:00Z'
+        required: false
+        description: Filter by before date
+        name: before
+        in: query
+      - schema:
+          type: string
+          format: date-time
+          description: Filter by after date
+          example: '2025-03-15T09:00:00Z'
+        required: false
+        description: Filter by after date
+        name: after
+        in: query
+      - schema:
+          type: string
+          format: email
+          description: Inbox email address used as `to` filter
+          example: demo.0100519e@scan.escape.tech
+        required: true
+        description: Inbox email address used as `to` filter
+        name: email
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The email identifier
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the email was created
+                        from:
+                          type: string
+                          description: The sender email address
+                        subject:
+                          type: string
+                          description: The email subject
+                      required:
+                      - id
+                      - createdAt
+                      - from
+                      - subject
+                      title: ScanEmailSummary
+                      description: Summarized information about an inbox email
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /scans/emails/{id}:
+    get:
+      tags:
+      - Emails
+      summary: Read inbox email content
+      operationId: readInboxEmail
+      description: Given an email id, fetch and return its full raw content.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The inbox email ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The inbox email ID
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Inbox email details with body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The email identifier
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the email was created
+                  from:
+                    type: string
+                    description: The sender email address
+                  subject:
+                    type: string
+                    description: The email subject
+                  body:
+                    type: string
+                    description: The email body
+                required:
+                - id
+                - createdAt
+                - from
+                - subject
+                - body
+                title: ScanEmailDetails
+                description: Detailed information about an inbox email including body
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

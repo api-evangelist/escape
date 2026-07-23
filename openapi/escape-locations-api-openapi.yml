@@ -1,0 +1,566 @@
+openapi: 3.1.0
+info:
+  version: 3.0.0
+  title: Escape Public Asm Locations API
+  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Locations
+  description: 'A Location is a proxy environment through which Escape sends requests.
+
+
+    The public API provide basic CRUDs operations for your private locations.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/tooling/private-location/) for more details.'
+paths:
+  /locations:
+    get:
+      tags:
+      - Locations
+      summary: List locations
+      operationId: listLocations
+      description: List and search locations of the organization.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - LAST_SEEN
+          - NAME
+          - TYPE
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: string
+          example: location1
+        required: false
+        name: search
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+        required: false
+        name: enabled
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ESCAPE
+            - PRIVATE
+        required: false
+        name: type
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The location ID.
+                        name:
+                          type: string
+                          description: The name of the location.
+                        type:
+                          type: string
+                          description: The type of the location.
+                        enabled:
+                          type: boolean
+                          description: Whether the location is enabled.
+                        lastSeenAt:
+                          type:
+                          - string
+                          - 'null'
+                          description: The date and time the location agent last connected.
+                        links:
+                          type: object
+                          properties:
+                            locationOverview:
+                              type: string
+                              description: The URL of the location overview.
+                          required:
+                          - locationOverview
+                      required:
+                      - id
+                      - name
+                      - type
+                      - enabled
+                      - links
+                      title: LocationSummarized
+                      description: Summarized information about a location
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied
+    post:
+      tags:
+      - Locations
+      summary: Create a location
+      operationId: createLocation
+      description: Create a Private Location.
+      x-scalar-ignore: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the location.
+                  example: location1
+                sshPublicKey:
+                  type: string
+                  description: The SSH public key of the location.
+                  example: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+              required:
+              - name
+              - sshPublicKey
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    default: 00000000-0000-0000-0000-000000000000
+                    description: The location ID.
+                  name:
+                    type: string
+                    default: Location Name
+                    description: The name of the location.
+                  type:
+                    type: string
+                    default: Location Type
+                    description: The type of the location.
+                  enabled:
+                    type: boolean
+                    default: true
+                    description: Whether the location is enabled.
+                  createdAt:
+                    type: string
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was created.
+                  lastSeenAt:
+                    type:
+                    - string
+                    - 'null'
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was last seen.
+                  links:
+                    type: object
+                    properties:
+                      locationOverview:
+                        type: string
+                        description: The URL of the location overview.
+                    required:
+                    - locationOverview
+                required:
+                - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Conflict on the following field
+                  field:
+                    type: string
+                  instanceId:
+                    type: string
+                    format: uuid
+                required:
+                - message
+                - field
+                - instanceId
+                title: Conflict
+                description: Returned when the request conflicts with an existing resource
+  /locations/{locationId}:
+    get:
+      tags:
+      - Locations
+      summary: Get a location
+      operationId: getLocation
+      description: Retrieve a Private Location details.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the location to get
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the location to get
+        name: locationId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    default: 00000000-0000-0000-0000-000000000000
+                    description: The location ID.
+                  name:
+                    type: string
+                    default: Location Name
+                    description: The name of the location.
+                  type:
+                    type: string
+                    default: Location Type
+                    description: The type of the location.
+                  enabled:
+                    type: boolean
+                    default: true
+                    description: Whether the location is enabled.
+                  createdAt:
+                    type: string
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was created.
+                  lastSeenAt:
+                    type:
+                    - string
+                    - 'null'
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was last seen.
+                  links:
+                    type: object
+                    properties:
+                      locationOverview:
+                        type: string
+                        description: The URL of the location overview.
+                    required:
+                    - locationOverview
+                required:
+                - links
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    put:
+      tags:
+      - Locations
+      summary: Update a location
+      operationId: updateLocation
+      description: Update a Private Location details.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the location to update
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the location to update
+        name: locationId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the location.
+                  example: location1
+                enabled:
+                  type: boolean
+                  description: Whether the location is enabled.
+                  example: true
+                sshPublicKey:
+                  type: string
+                  description: The SSH public key of the location.
+                  example: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    default: 00000000-0000-0000-0000-000000000000
+                    description: The location ID.
+                  name:
+                    type: string
+                    default: Location Name
+                    description: The name of the location.
+                  type:
+                    type: string
+                    default: Location Type
+                    description: The type of the location.
+                  enabled:
+                    type: boolean
+                    default: true
+                    description: Whether the location is enabled.
+                  createdAt:
+                    type: string
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was created.
+                  lastSeenAt:
+                    type:
+                    - string
+                    - 'null'
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was last seen.
+                  links:
+                    type: object
+                    properties:
+                      locationOverview:
+                        type: string
+                        description: The URL of the location overview.
+                    required:
+                    - locationOverview
+                required:
+                - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Conflict on the following field
+                  field:
+                    type: string
+                  instanceId:
+                    type: string
+                    format: uuid
+                required:
+                - message
+                - field
+                - instanceId
+                title: Conflict
+                description: Returned when the request conflicts with an existing resource
+    delete:
+      tags:
+      - Locations
+      summary: Delete a location
+      operationId: deleteLocation
+      description: Delete a Private Location.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the location to delete
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the location to delete
+        name: locationId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Location deleted successfully
+                required:
+                - message
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY
