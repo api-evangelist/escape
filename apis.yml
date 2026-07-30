@@ -8,7 +8,20 @@ description: >-
   Application Security Testing) platform that helps you document all your APIs, detect complex business logic flaws
   across modern applications like APIs, SPAs, and Microservices, and seamlessly integrate security into your CI/CD
   pipeline.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/escape.png
 kind: contract
 position: Consumer
 access: 3rd-Party
@@ -19,26 +32,402 @@ created: '2025-01-08'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: escape:escape-public-api
-    name: Escape Public API
-    description: >-
-      The Escape Public API (V3) provides programmatic access to DAST scanning profiles, assets, integrations, scan
-      results, authentications, issues, and job/report exports. Endpoints support automation of API security testing
-      workflows and CI/CD pipeline integration.
-    humanURL: https://docs.escape.tech/documentation/automate/public-api/
-    baseURL: https://public.escape.tech/v3
-    tags:
-      - API Security
-      - DAST
-      - Security
-      - Vulnerability Scanning
-    properties:
-      - type: Documentation
-        url: https://docs.escape.tech/documentation/automate/public-api/
-      - type: OpenAPI
-        url: openapi/escape-openapi.yml
-      - type: Authentication
-        url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-asm-api
+  name: Escape Asm API
+  description: >-
+    Attack Surface Management
+
+
+    Trigger and manage ASM discovery scans on your attack surface.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/asm/) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Asm
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-asm-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-assets-api
+  name: Escape Assets API
+  description: >-
+    Manage every discovered Assets.
+
+
+    The public API provide basic CRUDs operations for all available assets.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/asm/asset-management/) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-assets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-audit-api
+  name: Escape Audit API
+  description: >-
+    List audit logs.
+
+
+    The public API provides endpoints to list audit logs.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/enterprise/audit-logs/) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-audit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-beta-api
+  name: Escape Beta API
+  description: >-
+    Beta
+
+
+    These endpoints are in beta and are subject to change.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Beta
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-beta-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-customrules-api
+  name: Escape CustomRules API
+  description: >-
+    Manage your custom rules.
+
+
+    The public API provides basic CRUDs operations to manage custom rules.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/dast/custom-rules/) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - CustomRules
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-customrules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-emails-api
+  name: Escape Emails API
+  description: >-
+    Read scan inbox emails.
+
+
+    The public API provides endpoints to list inbox emails and read their raw content without exposing
+    storage links.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-emails-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-events-api
+  name: Escape Events API
+  description: >-
+    Manage events.
+
+
+    The public API provides basic CRUDs operations to manage events.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-integrations-api
+  name: Escape Integrations API
+  description: >-
+    Manage 3rd party integrations.
+
+
+    The public API provide basic CRUDs operations for all available integrations.
+
+
+    See [our documentation](https://https://docs.escape.tech/documentation/asm/integrations/) for more
+    details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-issues-api
+  name: Escape Issues API
+  description: >-
+    Manage issues.
+
+
+    Identify, prioritize, and remediate the security issues and sensitive data exposures uncovered during
+    ASM and DAST scanning
+
+
+    See [our documentation](https://docs.escape.tech/documentation/governance/vulnerability-management/)
+    for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Issues
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-issues-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-jobs-api
+  name: Escape Jobs API
+  description: >-
+    Asynchronous jobs.
+
+
+    Trigger export jobs and poll for completion and artefacts.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-locations-api
+  name: Escape Locations API
+  description: >-
+    A Location is a proxy environment through which Escape sends requests.
+
+
+    The public API provide basic CRUDs operations for your private locations.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/tooling/private-location/) for more
+    details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-locations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-profiles-api
+  name: Escape Profiles API
+  description: >-
+    A Profile is a configuration for the DAST scanning feature.
+
+
+    It includes various parameters such as authentication details, environment settings, a schema...
+
+    Profiles allow you to start scans on an endpoint and will keep track of the scan history.
+
+    This ensures consistency in repeated scans and helps track changes or improvements over time.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/#profile) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-projects-api
+  name: Escape Projects API
+  description: >-
+    Projects Management
+
+
+    The public API provides CRUDs operations to manage projects.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-roles-api
+  name: Escape Roles API
+  description: >-
+    Roles Management
+
+
+    The public API provides CRUDs operations to manage roles.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-roles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-scans-api
+  name: Escape Scans API
+  description: >-
+    A Scan is a run of the DAST or ASM scanning feature on an profile (DAST/ASM).
+
+
+    With the public API, you can trigger scans, track their status, and retrieve their results.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/dast/) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Scans
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-scans-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-statistics-api
+  name: Escape Statistics API
+  description: >-
+    Organization Statistics
+
+
+    High-level organization security posture statistics.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-tags-api
+  name: Escape Tags API
+  description: >-
+    Manage tags.
+
+
+    The public API provides basic CRUDs operations to manage tags.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-upload-api
+  name: Escape Upload API
+  description: >-
+    Upload helper for Escape Platform.
+
+
+    The public API provides endpoints to upload files to the platform.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Upload
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-upload-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-users-api
+  name: Escape Users API
+  description: >-
+    Users Management
+
+
+    The public API provides CRUDs operations to manage users.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-workflows-api
+  name: Escape Workflows API
+  description: >-
+    Workflows Management
+
+
+    The public API provides CRUDs operations to manage workflows.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
 common:
   - type: AgenticAccess
     url: agentic-access/escape-agentic-access.yml
