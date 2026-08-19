@@ -1,0 +1,1141 @@
+{
+  "item": [
+    {
+      "id": "181cba70-0f10-4311-8963-fb303821fc9b",
+      "name": "Workflows",
+      "description": {
+        "content": "Workflows Management\n\nThe public API provides CRUDs operations to manage workflows.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82d23466-35a8-4ff0-83a9-caff68d64a97",
+          "name": "List workflows.",
+          "request": {
+            "name": "List workflows.",
+            "description": {
+              "content": "List and search workflows of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workflows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "workflowIds",
+                  "value": "<uuid>",
+                  "description": "Filter by workflow IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "workflowIds",
+                  "value": "<uuid>",
+                  "description": "Filter by workflow IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<uuid>",
+                  "description": "Filter by project IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<uuid>",
+                  "description": "Filter by project IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "integrationIds",
+                  "value": "<uuid>",
+                  "description": "Filter by integration IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "integrationIds",
+                  "value": "<uuid>",
+                  "description": "Filter by integration IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "triggers",
+                  "value": "<string>",
+                  "description": "Filter by triggers"
+                },
+                {
+                  "disabled": false,
+                  "key": "triggers",
+                  "value": "<string>",
+                  "description": "Filter by triggers"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search term to filter integrations by name or description"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92503615-e794-4345-8697-55c75f028996",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "workflowIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "workflowIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "integrationIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "integrationIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "triggers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "triggers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "my integration"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"trigger\": \"ISSUE_UPDATED\",\n      \"throttleMs\": 9452.062277877989,\n      \"filters\": [\n        {\n          \"id\": \"d0d3fc59-7edc-763d-bd6a-a9bce21b60d0\",\n          \"type\": \"INTEGRATIONS\",\n          \"view\": {\n            \"id\": \"2dae58f6-f198-311c-cb86-3e741706e55b\",\n            \"name\": \"string\",\n            \"target\": \"PROFILES\",\n            \"data\": \"\"\n          },\n          \"filter\": \"\"\n        },\n        {\n          \"id\": \"64c03c70-01ea-34b3-a2c4-5d95d2784579\",\n          \"type\": \"ISSUES\",\n          \"view\": {\n            \"id\": \"ab12cb2b-e267-1ae3-f82e-d43bdd0a1c7d\",\n            \"name\": \"string\",\n            \"target\": \"ASSETS\",\n            \"data\": \"\"\n          },\n          \"filter\": \"\"\n        }\n      ],\n      \"actions\": [\n        {\n          \"id\": \"61ee9b13-9d4e-e186-4f0b-f4c6180970ee\",\n          \"type\": \"ACT\",\n          \"internalAction\": \"UPDATE_ASSET\",\n          \"integration\": {\n            \"id\": \"1cf601f6-b8bc-dcfc-7312-b0a409a7fcbe\",\n            \"name\": \"string\",\n            \"kind\": \"AKAMAI\"\n          },\n          \"parameters\": \"\"\n        },\n        {\n          \"id\": \"f7f42655-3cfa-3cee-4869-106f97303870\",\n          \"type\": \"ACT\",\n          \"internalAction\": \"UPDATE_ISSUE\",\n          \"integration\": {\n            \"id\": \"eef307cf-f99f-2c3b-364d-a4100bc932d8\",\n            \"name\": \"string\",\n            \"kind\": \"BITBUCKET_REPO\"\n          },\n          \"parameters\": \"\"\n        }\n      ],\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"Workflow Name\"\n    },\n    {\n      \"trigger\": \"MANUAL\",\n      \"throttleMs\": 4375.105793612398,\n      \"filters\": [\n        {\n          \"id\": \"55385152-cc3b-5380-4b27-1f1d9bf84082\",\n          \"type\": \"PROFILES\",\n          \"view\": {\n            \"id\": \"325fd19f-daaa-3c80-0cc2-05575532d2d4\",\n            \"name\": \"string\",\n            \"target\": \"INTEGRATIONS\",\n            \"data\": \"\"\n          },\n          \"filter\": \"\"\n        },\n        {\n          \"id\": \"7eb73bd3-4ab8-08ab-7735-6d0db987c173\",\n          \"type\": \"PROFILES\",\n          \"view\": {\n            \"id\": \"c314d11f-5dd4-0774-0b67-9d40e2eca517\",\n            \"name\": \"string\",\n            \"target\": \"ISSUES\",\n            \"data\": \"\"\n          },\n          \"filter\": \"\"\n        }\n      ],\n      \"actions\": [\n        {\n          \"id\": \"a7960e8a-8bfb-6995-c7b0-e45fab6f444d\",\n          \"type\": \"NOTIFY\",\n          \"internalAction\": \"null\",\n          \"integration\": {\n            \"id\": \"c05467a7-c852-bae4-c1f1-b32e68b8dfb1\",\n            \"name\": \"string\",\n            \"kind\": \"EMAIL\"\n          },\n          \"parameters\": \"\"\n        },\n        {\n          \"id\": \"f3818d70-4c0a-8700-3857-6a2590c352db\",\n          \"type\": \"NOTIFY\",\n          \"internalAction\": \"null\",\n          \"integration\": {\n            \"id\": \"051c4ae0-43a8-67a8-720f-5b1266e35c2e\",\n            \"name\": \"string\",\n            \"kind\": \"EMAIL\"\n          },\n          \"parameters\": \"\"\n        }\n      ],\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"Workflow Name\"\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89744d69-28eb-4705-9c7d-b8d44f15c6f3",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "workflowIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "workflowIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "integrationIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "integrationIds",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "triggers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "triggers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "my integration"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c2513a1-7c9b-4ecd-8ef4-0116affa1907",
+          "name": "Create workflows.",
+          "request": {
+            "name": "Create workflows.",
+            "description": {
+              "content": "Create a workflow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workflows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizationId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"trigger\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8fb9114e-770d-4297-8769-ba0d3a9c82be",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organizationId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"trigger\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"00000000-0000-0000-0000-000000000000\",\n    \"00000000-0000-0000-0000-000000000001\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trigger\": \"SCAN_STARTED\",\n  \"throttleMs\": 8043.25121788405,\n  \"filters\": [\n    {\n      \"id\": \"11e7078d-0f8e-ce33-7770-511fe305dcde\",\n      \"type\": \"ASSETS\",\n      \"view\": {\n        \"id\": \"edfc6803-13dc-9283-259f-1c5e877128eb\",\n        \"name\": \"string\",\n        \"target\": \"EVENTS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    },\n    {\n      \"id\": \"56d8b379-a0c1-adc4-f332-23838fd3d6a5\",\n      \"type\": \"INTEGRATIONS\",\n      \"view\": {\n        \"id\": \"91f6cf59-eadf-379e-cce4-3ff66d3e42bf\",\n        \"name\": \"string\",\n        \"target\": \"LOCATIONS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"id\": \"0dc296f8-fde1-4573-1dbc-bb065d819b73\",\n      \"type\": \"EXPORT\",\n      \"internalAction\": \"null\",\n      \"integration\": {\n        \"id\": \"c075eb9f-e2c1-ca86-0f0d-5d0f42c5c0c8\",\n        \"name\": \"string\",\n        \"kind\": \"AKAMAI\"\n      },\n      \"parameters\": \"\"\n    },\n    {\n      \"id\": \"b52fc608-a2a7-9440-daf6-03ba332a8b85\",\n      \"type\": \"NOTIFY\",\n      \"internalAction\": \"UPDATE_ISSUE\",\n      \"integration\": {\n        \"id\": \"ed4e3b05-67fb-e462-a0cd-aac2cedf28a0\",\n        \"name\": \"string\",\n        \"kind\": \"SLACK_WEBHOOK\"\n      },\n      \"parameters\": \"\"\n    }\n  ],\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"Workflow Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5b5697a-d037-4b5f-8092-7cc88511bc4c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organizationId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"trigger\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"00000000-0000-0000-0000-000000000000\",\n    \"00000000-0000-0000-0000-000000000001\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c6f3dfd-996c-4ec0-8f06-64155e176f72",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organizationId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"trigger\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"00000000-0000-0000-0000-000000000000\",\n    \"00000000-0000-0000-0000-000000000001\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "394069e4-3104-4a0a-b994-85fce3280ba0",
+          "name": "Get workflow.",
+          "request": {
+            "name": "Get workflow.",
+            "description": {
+              "content": "Get a workflow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workflows",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The workflow ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9e2bb55-aa5f-4c3d-ac0d-b9cd2a4b6061",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trigger\": \"SCAN_STARTED\",\n  \"throttleMs\": 8043.25121788405,\n  \"filters\": [\n    {\n      \"id\": \"11e7078d-0f8e-ce33-7770-511fe305dcde\",\n      \"type\": \"ASSETS\",\n      \"view\": {\n        \"id\": \"edfc6803-13dc-9283-259f-1c5e877128eb\",\n        \"name\": \"string\",\n        \"target\": \"EVENTS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    },\n    {\n      \"id\": \"56d8b379-a0c1-adc4-f332-23838fd3d6a5\",\n      \"type\": \"INTEGRATIONS\",\n      \"view\": {\n        \"id\": \"91f6cf59-eadf-379e-cce4-3ff66d3e42bf\",\n        \"name\": \"string\",\n        \"target\": \"LOCATIONS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"id\": \"0dc296f8-fde1-4573-1dbc-bb065d819b73\",\n      \"type\": \"EXPORT\",\n      \"internalAction\": \"null\",\n      \"integration\": {\n        \"id\": \"c075eb9f-e2c1-ca86-0f0d-5d0f42c5c0c8\",\n        \"name\": \"string\",\n        \"kind\": \"AKAMAI\"\n      },\n      \"parameters\": \"\"\n    },\n    {\n      \"id\": \"b52fc608-a2a7-9440-daf6-03ba332a8b85\",\n      \"type\": \"NOTIFY\",\n      \"internalAction\": \"UPDATE_ISSUE\",\n      \"integration\": {\n        \"id\": \"ed4e3b05-67fb-e462-a0cd-aac2cedf28a0\",\n        \"name\": \"string\",\n        \"kind\": \"SLACK_WEBHOOK\"\n      },\n      \"parameters\": \"\"\n    }\n  ],\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"Workflow Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08f30f98-47dd-4158-9f54-39748b44fc3e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10d1aa22-3c9e-4515-b4aa-a7cf494ee134",
+          "name": "Update workflow.",
+          "request": {
+            "name": "Update workflow.",
+            "description": {
+              "content": "Update a workflow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workflows",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The workflow ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trigger\": \"<string>\",\n  \"name\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94289fec-a1d1-4970-a922-a317ee3ed84c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trigger\": \"<string>\",\n  \"name\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"00000000-0000-0000-0000-000000000000\",\n    \"00000000-0000-0000-0000-000000000001\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trigger\": \"SCAN_STARTED\",\n  \"throttleMs\": 8043.25121788405,\n  \"filters\": [\n    {\n      \"id\": \"11e7078d-0f8e-ce33-7770-511fe305dcde\",\n      \"type\": \"ASSETS\",\n      \"view\": {\n        \"id\": \"edfc6803-13dc-9283-259f-1c5e877128eb\",\n        \"name\": \"string\",\n        \"target\": \"EVENTS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    },\n    {\n      \"id\": \"56d8b379-a0c1-adc4-f332-23838fd3d6a5\",\n      \"type\": \"INTEGRATIONS\",\n      \"view\": {\n        \"id\": \"91f6cf59-eadf-379e-cce4-3ff66d3e42bf\",\n        \"name\": \"string\",\n        \"target\": \"LOCATIONS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"id\": \"0dc296f8-fde1-4573-1dbc-bb065d819b73\",\n      \"type\": \"EXPORT\",\n      \"internalAction\": \"null\",\n      \"integration\": {\n        \"id\": \"c075eb9f-e2c1-ca86-0f0d-5d0f42c5c0c8\",\n        \"name\": \"string\",\n        \"kind\": \"AKAMAI\"\n      },\n      \"parameters\": \"\"\n    },\n    {\n      \"id\": \"b52fc608-a2a7-9440-daf6-03ba332a8b85\",\n      \"type\": \"NOTIFY\",\n      \"internalAction\": \"UPDATE_ISSUE\",\n      \"integration\": {\n        \"id\": \"ed4e3b05-67fb-e462-a0cd-aac2cedf28a0\",\n        \"name\": \"string\",\n        \"kind\": \"SLACK_WEBHOOK\"\n      },\n      \"parameters\": \"\"\n    }\n  ],\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"Workflow Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c1c0a74-891d-4541-bcce-d4d71ee3b4a6",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trigger\": \"<string>\",\n  \"name\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"00000000-0000-0000-0000-000000000000\",\n    \"00000000-0000-0000-0000-000000000001\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f8e01ba-d150-4604-9fff-386028c89b22",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trigger\": \"<string>\",\n  \"name\": \"<string>\",\n  \"throttleMs\": \"<number,null>\",\n  \"filters\": [\n    {\n      \"viewId\": \"<uuid>\"\n    },\n    {\n      \"viewId\": \"<uuid>\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"parameters\": {\n        \"url\": \"<string>\",\n        \"format\": \"<string>\"\n      },\n      \"integrationKind\": \"<string>\"\n    }\n  ],\n  \"projectIds\": [\n    \"00000000-0000-0000-0000-000000000000\",\n    \"00000000-0000-0000-0000-000000000001\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6102897-7ad7-4ff2-848e-5c307667bdd9",
+          "name": "Delete workflow.",
+          "request": {
+            "name": "Delete workflow.",
+            "description": {
+              "content": "Delete a workflow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workflows",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The workflow ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6fa0d1eb-04aa-4afe-bf72-054c83687f19",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trigger\": \"SCAN_STARTED\",\n  \"throttleMs\": 8043.25121788405,\n  \"filters\": [\n    {\n      \"id\": \"11e7078d-0f8e-ce33-7770-511fe305dcde\",\n      \"type\": \"ASSETS\",\n      \"view\": {\n        \"id\": \"edfc6803-13dc-9283-259f-1c5e877128eb\",\n        \"name\": \"string\",\n        \"target\": \"EVENTS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    },\n    {\n      \"id\": \"56d8b379-a0c1-adc4-f332-23838fd3d6a5\",\n      \"type\": \"INTEGRATIONS\",\n      \"view\": {\n        \"id\": \"91f6cf59-eadf-379e-cce4-3ff66d3e42bf\",\n        \"name\": \"string\",\n        \"target\": \"LOCATIONS\",\n        \"data\": \"\"\n      },\n      \"filter\": \"\"\n    }\n  ],\n  \"actions\": [\n    {\n      \"id\": \"0dc296f8-fde1-4573-1dbc-bb065d819b73\",\n      \"type\": \"EXPORT\",\n      \"internalAction\": \"null\",\n      \"integration\": {\n        \"id\": \"c075eb9f-e2c1-ca86-0f0d-5d0f42c5c0c8\",\n        \"name\": \"string\",\n        \"kind\": \"AKAMAI\"\n      },\n      \"parameters\": \"\"\n    },\n    {\n      \"id\": \"b52fc608-a2a7-9440-daf6-03ba332a8b85\",\n      \"type\": \"NOTIFY\",\n      \"internalAction\": \"UPDATE_ISSUE\",\n      \"integration\": {\n        \"id\": \"ed4e3b05-67fb-e462-a0cd-aac2cedf28a0\",\n        \"name\": \"string\",\n        \"kind\": \"SLACK_WEBHOOK\"\n      },\n      \"parameters\": \"\"\n    }\n  ],\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"Workflow Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "416183c7-e583-4918-a251-5e150f3da881",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d71b3794-babd-4f16-8279-1e18dd9714c7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workflows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The workflow ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2e911949-35d0-483b-b834-edb69e9f4649",
+    "name": "Escape Public Asm Workflows API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm CustomRules API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CustomRules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List custom rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/custom-rules",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Filter by custom rule context"
+              }
+            ]
+          },
+          "docs": "List and search custom rules of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/custom-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a custom rule for the organization."
+        },
+        {
+          "info": {
+            "name": "Get a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/custom-rules/:customRuleId",
+            "params": [
+              {
+                "name": "customRuleId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a custom rule of the organization."
+        },
+        {
+          "info": {
+            "name": "Update a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/custom-rules/:customRuleId",
+            "params": [
+              {
+                "name": "customRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the custom rule to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a custom rule for the organization."
+        },
+        {
+          "info": {
+            "name": "Delete a custom rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/custom-rules/:customRuleId",
+            "params": [
+              {
+                "name": "customRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the custom rule to delete"
+              }
+            ]
+          },
+          "docs": "Delete a custom rule for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,531 @@
+{
+  "item": [
+    {
+      "id": "5fad73a0-6996-4c50-8fe4-03f6d62a9e6e",
+      "name": "Events",
+      "description": {
+        "content": "Manage events.\n\nThe public API provides basic CRUDs operations to manage events.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5eb8d32a-1de6-4079-8a2c-7a5a0d85fb76",
+          "name": "List events",
+          "request": {
+            "name": "List events",
+            "description": {
+              "content": "List and search events of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search term to filter events by name or description"
+                },
+                {
+                  "disabled": false,
+                  "key": "scanIds",
+                  "value": "<string>",
+                  "description": "Filter by scan IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetIds",
+                  "value": "<string>",
+                  "description": "Filter by asset IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "issueIds",
+                  "value": "<string>",
+                  "description": "Filter by issue IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "levels",
+                  "value": "<string>",
+                  "description": "Filter by level"
+                },
+                {
+                  "disabled": false,
+                  "key": "levels",
+                  "value": "<string>",
+                  "description": "Filter by level"
+                },
+                {
+                  "disabled": false,
+                  "key": "stages",
+                  "value": "<string>",
+                  "description": "Filter by stage"
+                },
+                {
+                  "disabled": false,
+                  "key": "stages",
+                  "value": "<string>",
+                  "description": "Filter by stage"
+                },
+                {
+                  "disabled": false,
+                  "key": "hasAttachments",
+                  "value": "<string>",
+                  "description": "Filter by attachments"
+                },
+                {
+                  "disabled": false,
+                  "key": "attachments",
+                  "value": "<string>",
+                  "description": "Filter by attachments"
+                },
+                {
+                  "disabled": false,
+                  "key": "attachments",
+                  "value": "<string>",
+                  "description": "Filter by attachments"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f1a61e7-ceff-41b6-a7a2-e23dd6c56667",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "search",
+                      "value": "event1"
+                    },
+                    {
+                      "key": "scanIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "issueIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "levels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "levels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stages",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stages",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hasAttachments",
+                      "value": "true"
+                    },
+                    {
+                      "key": "attachments",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attachments",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"4785c46a-baec-53f3-a627-2983de4268bd\",\n      \"createdAt\": \"string\",\n      \"title\": \"string\",\n      \"level\": \"INFO\",\n      \"stage\": \"CONFIGURATION\",\n      \"attachments\": [\n        {\n          \"id\": \"9ba53b31-dff2-f471-1051-25cd68a634f1\",\n          \"createdAt\": \"string\",\n          \"target\": {\n            \"id\": \"9d87e68b-2d56-fdd8-1ec4-7f666a81f2a7\",\n            \"createdAt\": \"string\",\n            \"apiRoute\": {\n              \"id\": \"fe0f7b10-c690-a76d-984f-35bfab82e397\",\n              \"createdAt\": \"string\",\n              \"name\": \"string\",\n              \"displayName\": \"string\"\n            },\n            \"codeFile\": {\n              \"id\": \"6d1c0742-9242-36b4-41ab-7a2e51b5d830\",\n              \"language\": \"string\",\n              \"path\": \"string\"\n            },\n            \"graphqlResolver\": {\n              \"id\": \"56f279d2-2cd5-d76f-dd70-0555b7995c32\",\n              \"displayName\": \"string\",\n              \"name\": \"string\"\n            },\n            \"port\": {\n              \"id\": \"4c8a5d3a-5e56-d47e-2d1d-db12a63de305\",\n              \"port\": 1223.7559019612897,\n              \"protocol\": \"string\"\n            }\n          }\n        },\n        {\n          \"id\": \"eae5d7a8-7292-8617-d70b-380a29a6785d\",\n          \"createdAt\": \"string\",\n          \"target\": {\n            \"id\": \"cce76298-f2d7-01e3-8bcd-610fec104cc7\",\n            \"createdAt\": \"string\",\n            \"apiRoute\": {\n              \"id\": \"56b86ce4-3632-f14f-aeec-ad71b9c536d7\",\n              \"createdAt\": \"string\",\n              \"name\": \"string\",\n              \"displayName\": \"string\"\n            },\n            \"codeFile\": {\n              \"id\": \"6c05c414-9d06-82d7-586e-1d96a57c94f1\",\n              \"language\": \"string\",\n              \"path\": \"string\"\n            },\n            \"graphqlResolver\": {\n              \"id\": \"453b6fbc-8f8f-f413-f59b-e3be9358c06b\",\n              \"displayName\": \"string\",\n              \"name\": \"string\"\n            },\n            \"port\": {\n              \"id\": \"dba93e3a-5f75-5638-c4c0-850eac5088a7\",\n              \"port\": 8736.369544213678,\n              \"protocol\": \"string\"\n            }\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"9963e331-4ed0-899e-9d91-27ffe5a62f8b\",\n      \"createdAt\": \"string\",\n      \"title\": \"string\",\n      \"level\": \"ERROR\",\n      \"stage\": \"EXECUTION\",\n      \"attachments\": [\n        {\n          \"id\": \"fd527639-f95b-8b62-d195-d925dc98e1d9\",\n          \"createdAt\": \"string\",\n          \"target\": {\n            \"id\": \"c4472e58-3cba-e447-2570-fd709ca30ed8\",\n            \"createdAt\": \"string\",\n            \"apiRoute\": {\n              \"id\": \"4471b898-fa94-a0ef-c9a4-cca5d79ff6dd\",\n              \"createdAt\": \"string\",\n              \"name\": \"string\",\n              \"displayName\": \"string\"\n            },\n            \"codeFile\": {\n              \"id\": \"6d7d1ea7-c206-7ba0-b5c3-06dabc951913\",\n              \"language\": \"string\",\n              \"path\": \"string\"\n            },\n            \"graphqlResolver\": {\n              \"id\": \"a28f0b60-085b-5d0a-6b30-1f26d4be8535\",\n              \"displayName\": \"string\",\n              \"name\": \"string\"\n            },\n            \"port\": {\n              \"id\": \"0869e721-3c9a-df19-d08a-a582a76bcb80\",\n              \"port\": 5466.04117594084,\n              \"protocol\": \"string\"\n            }\n          }\n        },\n        {\n          \"id\": \"1dfdfd45-1070-2dea-56f1-3a6f6072b134\",\n          \"createdAt\": \"string\",\n          \"target\": {\n            \"id\": \"c58ca50b-d5f8-9653-125f-a5cf34f68225\",\n            \"createdAt\": \"string\",\n            \"apiRoute\": {\n              \"id\": \"112a217e-eafd-b2ac-a832-ab5f595c29b3\",\n              \"createdAt\": \"string\",\n              \"name\": \"string\",\n              \"displayName\": \"string\"\n            },\n            \"codeFile\": {\n              \"id\": \"d1350cee-fc5d-9574-787c-a4592b197b7a\",\n              \"language\": \"string\",\n              \"path\": \"string\"\n            },\n            \"graphqlResolver\": {\n              \"id\": \"daa71c6c-1bf4-435e-defe-f37d6a29abaf\",\n              \"displayName\": \"string\",\n              \"name\": \"string\"\n            },\n            \"port\": {\n              \"id\": \"891a08dc-5eb5-9573-c6f7-8ef919693165\",\n              \"port\": 4820.685296454006,\n              \"protocol\": \"string\"\n            }\n          }\n        }\n      ]\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abab5178-cbf5-488f-969e-3787323d41d8",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "search",
+                      "value": "event1"
+                    },
+                    {
+                      "key": "scanIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "issueIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "levels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "levels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stages",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stages",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hasAttachments",
+                      "value": "true"
+                    },
+                    {
+                      "key": "attachments",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attachments",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92f54c04-a077-4949-8301-6c0bcfd0ed85",
+          "name": "Get an event",
+          "request": {
+            "name": "Get an event",
+            "description": {
+              "content": "Get an event by ID (including attachments)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                ":eventId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventId",
+                  "description": "(Required) The event ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e0cb832-3284-432e-8ca9-c526813c34de",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The event ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"222b7223-7b35-07e4-ab0c-7369afbc95d6\",\n  \"createdAt\": \"string\",\n  \"description\": \"string\",\n  \"issuesCount\": 4259.316339467179,\n  \"level\": \"ERROR\",\n  \"scan\": {\n    \"id\": \"087f321f-40ab-80da-7337-ac3c7f9ebf85\",\n    \"status\": \"string\",\n    \"createdAt\": \"string\",\n    \"updatedAt\": \"string\",\n    \"finishedAt\": \"string\",\n    \"score\": 5859.9698574471795,\n    \"coverage\": 5714.13228215813,\n    \"duration\": 3267.7953502450428,\n    \"progressRatio\": 7194.993171685398,\n    \"initiator\": \"string\",\n    \"kind\": \"string\",\n    \"profileId\": \"string\",\n    \"organizationId\": \"string\",\n    \"commitHash\": \"string\",\n    \"commitBranch\": \"string\",\n    \"commitAuthor\": \"string\",\n    \"commitLink\": \"string\",\n    \"commitAuthorProfilePictureLink\": \"string\",\n    \"links\": {\n      \"scanIssues\": \"string\"\n    }\n  },\n  \"scanId\": \"string\",\n  \"stage\": \"AGENT_ACTION\",\n  \"title\": \"string\",\n  \"attachments\": [\n    {\n      \"id\": \"84eaf240-c4a9-f9cc-7e3c-f4b56d1b5017\",\n      \"createdAt\": \"string\",\n      \"exchange\": {\n        \"createdAt\": \"string\",\n        \"curl\": \"string\",\n        \"duration\": 6802.34209704763,\n        \"id\": \"2495fd54-43fe-9f4b-5e96-982f58181c4f\",\n        \"inferredScalars\": [\n          {\n            \"confidence\": 9945.238536334511,\n            \"kind\": \"string\",\n            \"name\": \"string\"\n          },\n          {\n            \"confidence\": 1565.3680036055007,\n            \"kind\": \"string\",\n            \"name\": \"string\"\n          }\n        ],\n        \"responseBody\": \"string\",\n        \"responseHeaders\": [\n          {\n            \"name\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"name\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"responseStatusCode\": 2538.3111275554206,\n        \"url\": \"string\"\n      },\n      \"generatedOpenapiSpec\": {\n        \"id\": \"055915a0-3dc3-03ef-7759-483ead27686e\",\n        \"createdAt\": \"string\",\n        \"temporarySignedUrl\": \"string\"\n      },\n      \"graph\": {\n        \"id\": \"14fbb534-3098-e090-acca-c6e9c0181172\",\n        \"createdAt\": \"string\",\n        \"temporarySignedUrl\": \"string\"\n      },\n      \"screenshot\": {\n        \"alt\": \"string\",\n        \"createdAt\": \"string\",\n        \"id\": \"5e55c585-46be-7d2b-0085-4ef3c1aacf17\",\n        \"temporarySignedUrl\": \"string\"\n      },\n      \"snippet\": {\n        \"createdAt\": \"string\",\n        \"id\": \"9778d77e-2603-46cd-97b4-3640bb207832\",\n        \"language\": \"string\",\n        \"name\": \"string\",\n        \"snippet\": \"string\",\n        \"url\": \"string\"\n      },\n      \"target\": {\n        \"createdAt\": \"string\",\n        \"id\": \"fa35f169-a918-1f26-f9c3-da769db05228\",\n        \"apiRoute\": {\n          \"blacklisted\": false,\n          \"createdAt\": \"string\",\n          \"displayName\": \"string\",\n          \"id\": \"6e08a98e-8829-955d-b89a-25e145a1f5ce\",\n          \"name\": \"string\",\n          \"operation\": \"string\",\n          \"requestCount\": 2147.351707653514,\n          \"coverage\": \"BROKEN_PIPE\",\n          \"source\": \"SOURCE_INFERRED\",\n          \"parameters\": {\n            \"key_0\": \"string\"\n          },\n          \"meanDuration\": 5388.897215588,\n          \"coverageByUser\": [\n            {\n              \"name\": \"string\",\n              \"coverage\": \"NOT_FOUND\"\n            },\n            {\n              \"name\": \"string\",\n              \"coverage\": \"SERVER_ERROR\"\n            }\n          ],\n          \"returnType\": \"string\"\n        },\n        \"codeFile\": {\n          \"id\": \"2f0d4b8e-4b9b-93f7-9a6b-b232331c51c5\",\n          \"language\": \"string\",\n          \"path\": \"string\"\n        },\n        \"graphqlResolver\": {\n          \"blacklisted\": false,\n          \"createdAt\": \"string\",\n          \"displayName\": \"string\",\n          \"id\": \"6c6afaf8-9eb9-b524-c04b-eab608e9d216\",\n          \"name\": \"string\",\n          \"requestCount\": 5111.403310066993,\n          \"coverage\": \"TIMEOUT\",\n          \"parent\": \"string\",\n          \"source\": \"SOURCE_INFERRED\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"meanDuration\": 727.2362579173574,\n          \"coverageByUser\": [\n            {\n              \"name\": \"string\",\n              \"coverage\": \"SERVER_ERROR\"\n            },\n            {\n              \"name\": \"string\",\n              \"coverage\": \"NOT_FOUND\"\n            }\n          ],\n          \"returnType\": \"string\"\n        },\n        \"port\": {\n          \"id\": \"998bfb47-2b6c-8437-dbee-4437b0af0b38\",\n          \"port\": 8127.793412293979,\n          \"protocol\": \"string\"\n        }\n      }\n    },\n    {\n      \"id\": \"7c11baeb-7309-3f30-e895-444a520a8a79\",\n      \"createdAt\": \"string\",\n      \"exchange\": {\n        \"createdAt\": \"string\",\n        \"curl\": \"string\",\n        \"duration\": 7404.628946329047,\n        \"id\": \"c0478e4e-ae17-4f6f-3ae6-34f77dfe9323\",\n        \"inferredScalars\": [\n          {\n            \"confidence\": 7386.395620772774,\n            \"kind\": \"string\",\n            \"name\": \"string\"\n          },\n          {\n            \"confidence\": 5798.963631177576,\n            \"kind\": \"string\",\n            \"name\": \"string\"\n          }\n        ],\n        \"responseBody\": \"string\",\n        \"responseHeaders\": [\n          {\n            \"name\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"name\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"responseStatusCode\": 7393.5039281413765,\n        \"url\": \"string\"\n      },\n      \"generatedOpenapiSpec\": {\n        \"id\": \"c7395e95-6fc2-466a-db80-7fb4267c4599\",\n        \"createdAt\": \"string\",\n        \"temporarySignedUrl\": \"string\"\n      },\n      \"graph\": {\n        \"id\": \"f74d9cc5-5c5b-dc33-c152-f334ccd77af5\",\n        \"createdAt\": \"string\",\n        \"temporarySignedUrl\": \"string\"\n      },\n      \"screenshot\": {\n        \"alt\": \"string\",\n        \"createdAt\": \"string\",\n        \"id\": \"41d86e70-920b-9ec2-124d-a009781387bb\",\n        \"temporarySignedUrl\": \"string\"\n      },\n      \"snippet\": {\n        \"createdAt\": \"string\",\n        \"id\": \"08c55030-7f0f-23ff-f1ef-332b342bc3c9\",\n        \"language\": \"string\",\n        \"name\": \"string\",\n        \"snippet\": \"string\",\n        \"url\": \"string\"\n      },\n      \"target\": {\n        \"createdAt\": \"string\",\n        \"id\": \"bf1fab87-df8b-c18b-a7d0-95da343ff619\",\n        \"apiRoute\": {\n          \"blacklisted\": true,\n          \"createdAt\": \"string\",\n          \"displayName\": \"string\",\n          \"id\": \"10c9f313-d047-c849-fcf2-5a66ca39dcc5\",\n          \"name\": \"string\",\n          \"operation\": \"string\",\n          \"requestCount\": 7712.259734888851,\n          \"coverage\": \"null\",\n          \"source\": \"SOURCE_INFERRED\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          },\n          \"meanDuration\": 3451.7848112234997,\n          \"coverageByUser\": [\n            {\n              \"name\": \"string\",\n              \"coverage\": \"OK\"\n            },\n            {\n              \"name\": \"string\",\n              \"coverage\": \"UNKNOWN\"\n            }\n          ],\n          \"returnType\": \"string\"\n        },\n        \"codeFile\": {\n          \"id\": \"57b1d94e-8dfa-e2eb-52f9-50e2e710cf97\",\n          \"language\": \"string\",\n          \"path\": \"string\"\n        },\n        \"graphqlResolver\": {\n          \"blacklisted\": false,\n          \"createdAt\": \"string\",\n          \"displayName\": \"string\",\n          \"id\": \"ca0a131f-c619-cb3e-3ae5-3efb33e7bb45\",\n          \"name\": \"string\",\n          \"requestCount\": 6455.978482321163,\n          \"coverage\": \"NOT_FOUND\",\n          \"parent\": \"string\",\n          \"source\": \"SOURCE_INFERRED\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"meanDuration\": 8576.493781263816,\n          \"coverageByUser\": [\n            {\n              \"name\": \"string\",\n              \"coverage\": \"RATE_LIMIT\"\n            },\n            {\n              \"name\": \"string\",\n              \"coverage\": \"NOT_FOUND\"\n            }\n          ],\n          \"returnType\": \"string\"\n        },\n        \"port\": {\n          \"id\": \"0cdadeac-a301-1295-b089-ceccce8dbf91\",\n          \"port\": 2659.126594728557,\n          \"protocol\": \"string\"\n        }\n      }\n    }\n  ],\n  \"issues\": [\n    {\n      \"id\": \"88b0ba9f-78be-78e8-06ab-fdeade377d30\",\n      \"name\": \"string\",\n      \"fullName\": \"string\",\n      \"category\": \"INFORMATION_DISCLOSURE\",\n      \"severity\": \"HIGH\",\n      \"status\": \"FALSE_POSITIVE\",\n      \"context\": \"string\",\n      \"risks\": [\n        \"OPEN_SCHEMA\",\n        \"CRITICAL_FINDING\"\n      ],\n      \"alertUid\": \"string\",\n      \"createdAt\": \"string\",\n      \"asset\": {\n        \"id\": \"bf90ef4c-ce82-02bb-d3e0-e3e6d66fc024\",\n        \"class\": \"CODE_PROJECT\",\n        \"type\": \"AZURE_TENANT\",\n        \"name\": \"string\",\n        \"externalUrl\": \"string\",\n        \"faviconUrl\": \"string\",\n        \"createdAt\": \"string\",\n        \"lastSeenAt\": \"string\",\n        \"scheduledForDeletionAt\": \"string\",\n        \"status\": \"FALSE_POSITIVE\",\n        \"tags\": [\n          {\n            \"id\": \"16d85063-0274-492e-4f6c-4e172a787298\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          },\n          {\n            \"id\": \"df68b45e-d8b7-54e1-716b-b3746b3000bb\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          }\n        ],\n        \"risks\": [\n          \"PRIVATE\",\n          \"PRIVATE\"\n        ],\n        \"service\": {\n          \"url\": \"string\",\n          \"type\": \"WEBSOCKET\"\n        },\n        \"frontend\": {\n          \"url\": \"string\",\n          \"type\": \"WEBAPP\"\n        },\n        \"host\": {\n          \"address\": \"string\",\n          \"type\": \"DNS\"\n        },\n        \"links\": {\n          \"assetOverview\": \"string\"\n        },\n        \"owners\": [\n          \"kQtaW9S7@SUgHVuppiHROLdYS.lqk\",\n          \"qNHDX@GpAsCpKDycHUR.qmjt\"\n        ]\n      },\n      \"lastSeenScanId\": \"string\",\n      \"lastSeenScan\": {\n        \"id\": \"f30c953a-00aa-d481-5df4-b996bc198772\",\n        \"status\": \"string\",\n        \"createdAt\": \"string\",\n        \"finishedAt\": \"string\",\n        \"score\": 4371.804468010012,\n        \"coverage\": 2811.2677461167223,\n        \"duration\": 7445.178840255318,\n        \"progressRatio\": 7077.299826488032,\n        \"initiator\": \"string\",\n        \"kind\": \"string\",\n        \"commitHash\": \"string\",\n        \"commitBranch\": \"string\",\n        \"links\": {\n          \"scanIssues\": \"string\"\n        }\n      },\n      \"firstSeenScanId\": \"string\",\n      \"customRuleId\": \"string\",\n      \"links\": {\n        \"issueOverview\": \"string\"\n      }\n    },\n    {\n      \"id\": \"3e8c4554-95ff-46af-33be-8dde7ef39e0d\",\n      \"name\": \"string\",\n      \"fullName\": \"string\",\n      \"category\": \"CUSTOM\",\n      \"severity\": \"LOW\",\n      \"status\": \"FALSE_POSITIVE\",\n      \"context\": \"string\",\n      \"risks\": [\n        \"EXPOSED\",\n        \"SENSITIVE_DATA\"\n      ],\n      \"alertUid\": \"string\",\n      \"createdAt\": \"string\",\n      \"asset\": {\n        \"id\": \"c2de6ea7-6a19-91aa-5a72-53e90b8e3f76\",\n        \"class\": \"SOURCE_CODE_MANAGEMENT\",\n        \"type\": \"OPENAPI\",\n        \"name\": \"string\",\n        \"externalUrl\": \"string\",\n        \"faviconUrl\": \"string\",\n        \"createdAt\": \"string\",\n        \"lastSeenAt\": \"string\",\n        \"scheduledForDeletionAt\": \"string\",\n        \"status\": \"MONITORED\",\n        \"tags\": [\n          {\n            \"id\": \"65058a82-652b-956c-adc2-528534b28de0\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          },\n          {\n            \"id\": \"f251ed63-337e-a36c-1f7a-060cac7dfffd\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          }\n        ],\n        \"risks\": [\n          \"EXPOSED\",\n          \"PRIVATE\"\n        ],\n        \"service\": {\n          \"url\": \"string\",\n          \"type\": \"WEBSOCKET\"\n        },\n        \"frontend\": {\n          \"url\": \"string\",\n          \"type\": \"WEBAPP\"\n        },\n        \"host\": {\n          \"address\": \"string\",\n          \"type\": \"DNS\"\n        },\n        \"links\": {\n          \"assetOverview\": \"string\"\n        },\n        \"owners\": [\n          \"xpd@YxnHtlrqapNtCRKKFmzhyYjmiphQmbbJ.kojn\",\n          \"bO2np@NQIpfYXMQBDyqSMsfStzwvxBao.mcp\"\n        ]\n      },\n      \"lastSeenScanId\": \"string\",\n      \"lastSeenScan\": {\n        \"id\": \"df5f089b-a93d-19ef-36ab-8489a0c06d27\",\n        \"status\": \"string\",\n        \"createdAt\": \"string\",\n        \"finishedAt\": \"string\",\n        \"score\": 4936.574989636459,\n        \"coverage\": 5990.721771074567,\n        \"duration\": 5629.033001676665,\n        \"progressRatio\": 7753.869893863258,\n        \"initiator\": \"string\",\n        \"kind\": \"string\",\n        \"commitHash\": \"string\",\n        \"commitBranch\": \"string\",\n        \"links\": {\n          \"scanIssues\": \"string\"\n        }\n      },\n      \"firstSeenScanId\": \"string\",\n      \"customRuleId\": \"string\",\n      \"links\": {\n        \"issueOverview\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efad97f3-8a3c-4717-b1c1-e9379f80a10a",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The event ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1c5bf20a-a4cc-43a4-96a4-bade3525f415",
+    "name": "Escape Public Asm Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

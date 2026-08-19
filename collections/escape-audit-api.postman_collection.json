@@ -1,0 +1,302 @@
+{
+  "item": [
+    {
+      "id": "abd6b65d-bc57-4d80-8c48-215c19ece57d",
+      "name": "Audit",
+      "description": {
+        "content": "List audit logs.\n\nThe public API provides endpoints to list audit logs.\n\nSee [our documentation](https://docs.escape.tech/documentation/enterprise/audit-logs/) for more details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f2edfa31-8058-4f87-897e-cb2f4b15f82f",
+          "name": "List audit logs",
+          "request": {
+            "name": "List audit logs",
+            "description": {
+              "content": "List audit logs of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audit",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<string>",
+                  "description": "An ISO 8601 timestamp to filter audit logs after"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<string>",
+                  "description": "An ISO 8601 timestamp to filter audit logs before"
+                },
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>",
+                  "description": "Filter by action type"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor",
+                  "value": "<string>",
+                  "description": "Filter by actor"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Filter by search term"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "73561371-f1b9-40e4-89dc-0bc41171f70e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "startTime",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "action",
+                      "value": "user.confirmed"
+                    },
+                    {
+                      "key": "actor",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "search",
+                      "value": "Scan Started"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"fdb02bd3-6ebb-6a58-8998-45b8d2581dbd\",\n      \"date\": \"string\",\n      \"title\": \"string\",\n      \"action\": \"string\",\n      \"actor\": \"string\",\n      \"actorEmail\": \"string\"\n    },\n    {\n      \"id\": \"05778b2e-2135-b8ef-18ad-2765e04d1cd1\",\n      \"date\": \"string\",\n      \"title\": \"string\",\n      \"action\": \"string\",\n      \"actor\": \"string\",\n      \"actorEmail\": \"string\"\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1be17678-c54a-46c6-98de-b45d92d95733",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "startTime",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "action",
+                      "value": "user.confirmed"
+                    },
+                    {
+                      "key": "actor",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "search",
+                      "value": "Scan Started"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a67d4d9a-d6df-4193-af5e-e7fb1165cf8a",
+    "name": "Escape Public Asm Audit API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

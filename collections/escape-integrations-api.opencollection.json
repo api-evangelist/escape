@@ -1,0 +1,1807 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Integrations API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Akamai integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/akamai",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Akamai integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Akamai integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/akamai",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "Get Akamai integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/akamai/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "Update Akamai integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/akamai/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "Delete Akamai integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/akamai/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Akamai integration."
+        },
+        {
+          "info": {
+            "name": "List AWS integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/aws",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search AWS integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create AWS integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a AWS integration."
+        },
+        {
+          "info": {
+            "name": "Get AWS integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/aws/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a AWS integration."
+        },
+        {
+          "info": {
+            "name": "Update AWS integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/aws/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a AWS integration."
+        },
+        {
+          "info": {
+            "name": "Delete AWS integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/aws/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a AWS integration."
+        },
+        {
+          "info": {
+            "name": "List Azure integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/azure",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Azure integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Azure integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/azure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Azure integration."
+        },
+        {
+          "info": {
+            "name": "Get Azure integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/azure/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Azure integration."
+        },
+        {
+          "info": {
+            "name": "Update Azure integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/azure/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Azure integration."
+        },
+        {
+          "info": {
+            "name": "Delete Azure integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/azure/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Azure integration."
+        },
+        {
+          "info": {
+            "name": "List Bitbucket integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Bitbucket integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Bitbucket integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "Get Bitbucket integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "Update Bitbucket integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "Delete Bitbucket integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/bitbucket/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Bitbucket integration."
+        },
+        {
+          "info": {
+            "name": "List Cloudflare integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Cloudflare integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Cloudflare integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "Get Cloudflare integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "Update Cloudflare integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "Delete Cloudflare integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/cloudflare/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Cloudflare integration."
+        },
+        {
+          "info": {
+            "name": "List Custom Integration integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/custom",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Custom Integration integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Custom Integration integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "Get Custom Integration integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/custom/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "Update Custom Integration integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/custom/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "Delete Custom Integration integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/custom/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Custom Integration integration."
+        },
+        {
+          "info": {
+            "name": "List GCP integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gcp",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search GCP integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create GCP integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/gcp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a GCP integration."
+        },
+        {
+          "info": {
+            "name": "Get GCP integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a GCP integration."
+        },
+        {
+          "info": {
+            "name": "Update GCP integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/gcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GCP integration."
+        },
+        {
+          "info": {
+            "name": "Delete GCP integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/gcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a GCP integration."
+        },
+        {
+          "info": {
+            "name": "List GitHub integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/github",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search GitHub integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create GitHub integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/github",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "Get GitHub integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/github/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "Update GitHub integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/github/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "Delete GitHub integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/github/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a GitHub integration."
+        },
+        {
+          "info": {
+            "name": "List GitLab integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gitlab",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search GitLab integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create GitLab integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/gitlab",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "Get GitLab integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/gitlab/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "Update GitLab integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/gitlab/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "Delete GitLab integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/gitlab/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a GitLab integration."
+        },
+        {
+          "info": {
+            "name": "List Jira integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/jira",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Jira integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Jira integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/jira",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Jira integration."
+        },
+        {
+          "info": {
+            "name": "Get Jira integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/jira/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Jira integration."
+        },
+        {
+          "info": {
+            "name": "Update Jira integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/jira/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Jira integration."
+        },
+        {
+          "info": {
+            "name": "Delete Jira integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/jira/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Jira integration."
+        },
+        {
+          "info": {
+            "name": "List Kubernetes integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Kubernetes integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Kubernetes integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "Get Kubernetes integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "Update Kubernetes integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "Delete Kubernetes integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/kubernetes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Kubernetes integration."
+        },
+        {
+          "info": {
+            "name": "List Postman integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/postman",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Postman integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Postman integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/postman",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Postman integration."
+        },
+        {
+          "info": {
+            "name": "Get Postman integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/postman/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Postman integration."
+        },
+        {
+          "info": {
+            "name": "Update Postman integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/postman/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Postman integration."
+        },
+        {
+          "info": {
+            "name": "Delete Postman integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/postman/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Postman integration."
+        },
+        {
+          "info": {
+            "name": "List Wiz integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/wiz",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by location IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search Wiz integrations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Wiz integrations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/integrations/wiz",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Wiz integration."
+        },
+        {
+          "info": {
+            "name": "Get Wiz integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/integrations/wiz/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Get a Wiz integration."
+        },
+        {
+          "info": {
+            "name": "Update Wiz integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/integrations/wiz/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Wiz integration."
+        },
+        {
+          "info": {
+            "name": "Delete Wiz integration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/integrations/wiz/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a Wiz integration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

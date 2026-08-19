@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Locations API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/locations",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "enabled",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List and search locations of the organization."
+        },
+        {
+          "info": {
+            "name": "Create a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/locations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Private Location."
+        },
+        {
+          "info": {
+            "name": "Get a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the location to get"
+              }
+            ]
+          },
+          "docs": "Retrieve a Private Location details."
+        },
+        {
+          "info": {
+            "name": "Update a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the location to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Private Location details."
+        },
+        {
+          "info": {
+            "name": "Delete a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the location to delete"
+              }
+            ]
+          },
+          "docs": "Delete a Private Location."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

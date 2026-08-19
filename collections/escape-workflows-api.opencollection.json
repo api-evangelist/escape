@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Workflows API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workflows.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/workflows",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "workflowIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workflow IDs"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "integrationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration IDs"
+              },
+              {
+                "name": "triggers",
+                "value": "",
+                "type": "query",
+                "description": "Filter by triggers"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter integrations by name or description"
+              }
+            ]
+          },
+          "docs": "List and search workflows of the organization."
+        },
+        {
+          "info": {
+            "name": "Create workflows.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/workflows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a workflow."
+        },
+        {
+          "info": {
+            "name": "Get workflow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The workflow ID"
+              }
+            ]
+          },
+          "docs": "Get a workflow."
+        },
+        {
+          "info": {
+            "name": "Update workflow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The workflow ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a workflow."
+        },
+        {
+          "info": {
+            "name": "Delete workflow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The workflow ID"
+              }
+            ]
+          },
+          "docs": "Delete a workflow."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

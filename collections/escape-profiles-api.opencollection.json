@@ -1,0 +1,427 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Profiles API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/profiles",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain"
+              },
+              {
+                "name": "issueIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue IDs"
+              },
+              {
+                "name": "tagIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter profiles by name or description"
+              },
+              {
+                "name": "initiators",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "risks",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk"
+              }
+            ]
+          },
+          "docs": "List and search profiles of the organization."
+        },
+        {
+          "info": {
+            "name": "List all scan statuses and problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/profiles/problems",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain"
+              },
+              {
+                "name": "issueIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue IDs"
+              },
+              {
+                "name": "tagIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter profiles by name or description"
+              },
+              {
+                "name": "initiators",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "risks",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk"
+              }
+            ]
+          },
+          "docs": "List all scan statuses and problems"
+        },
+        {
+          "info": {
+            "name": "Get a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ]
+          },
+          "docs": "Get a profile by ID"
+        },
+        {
+          "info": {
+            "name": "Update a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a profile of a given scanner kind"
+        },
+        {
+          "info": {
+            "name": "Delete a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public.escape.tech/v3/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ]
+          },
+          "docs": "Delete a profile by ID"
+        },
+        {
+          "info": {
+            "name": "Update profile configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/profiles/:profileId/configuration",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of a profile"
+        },
+        {
+          "info": {
+            "name": "Update profile schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/profiles/:profileId/schema",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The profile ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n*This route is deprecated, use the [PUT /profiles/:profileId](#tag/profiles/PUT/profiles/:profileId) endpoint instead.*\n\nUpdate the schema used to scan this profile.\nThe schema ID is the ID of a schema uploaded to the Escape Platform using the [POST /assets/schema](#tag/assets/POST/assets/schema) endpoint.\n\n"
+        },
+        {
+          "info": {
+            "name": "Create a DAST REST profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a DAST REST profile."
+        },
+        {
+          "info": {
+            "name": "Create a DAST GraphQL profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a DAST GraphQL profile."
+        },
+        {
+          "info": {
+            "name": "Create a DAST WebApp profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/webapp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a DAST WebApp profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest REST profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest REST profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest GraphQL profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest GraphQL profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest WebApp profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/webapp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest WebApp profile."
+        },
+        {
+          "info": {
+            "name": "Start an authentication configuration check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/authentications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates authentication credentials without running a full scan. Provide `authentication` directly, or pass a `profileId` to reuse its saved authentication (optionally overriding it). Poll `GET /authentications/{id}` until `status` is FINISHED, FAILED, or CANCELED."
+        },
+        {
+          "info": {
+            "name": "Get authentication configuration check status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/authentications/:authenticationId",
+            "params": [
+              {
+                "name": "authenticationId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier returned by the start endpoint"
+              }
+            ]
+          },
+          "docs": "Returns the current status, chronological log messages, and (when finished) structured authentication results for a check started via `POST /authentications`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

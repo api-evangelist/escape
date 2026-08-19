@@ -1,0 +1,1977 @@
+{
+  "item": [
+    {
+      "id": "54d4ec14-8525-46d5-bdbb-30bd3ae38951",
+      "name": "Scans",
+      "description": {
+        "content": "A Scan is a run of the DAST or ASM scanning feature on an profile (DAST/ASM).\n\nWith the public API, you can trigger scans, track their status, and retrieve their results.\n\nSee [our documentation](https://docs.escape.tech/documentation/dast/) for more details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "073a7c85-fb44-4767-9af0-88f90f81b3a1",
+          "name": "List scans",
+          "request": {
+            "name": "List scans",
+            "description": {
+              "content": "List and search scans of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Filter by after date"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Filter by before date"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetIds",
+                  "value": "<string>",
+                  "description": "Filter by asset IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "profileIds",
+                  "value": "<string>",
+                  "description": "Filter by profile IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignored",
+                  "value": "<string>",
+                  "description": "Filter by ignored status"
+                },
+                {
+                  "disabled": false,
+                  "key": "initiator",
+                  "value": "<string>",
+                  "description": "Filter by initiator"
+                },
+                {
+                  "disabled": false,
+                  "key": "initiator",
+                  "value": "<string>",
+                  "description": "Filter by initiator"
+                },
+                {
+                  "disabled": false,
+                  "key": "kinds",
+                  "value": "<string>",
+                  "description": "Filter by kind"
+                },
+                {
+                  "disabled": false,
+                  "key": "kinds",
+                  "value": "<string>",
+                  "description": "Filter by kind"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<string>",
+                  "description": "Filter by project IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a79a13b0-0981-4e7f-a55f-bea6905aa669",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignored",
+                      "value": "true"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"2ef00ca8-89ad-08ec-3f2c-5758cba3c868\",\n      \"status\": \"string\",\n      \"createdAt\": \"string\",\n      \"finishedAt\": \"string\",\n      \"score\": 5536.239219130454,\n      \"coverage\": 9677.768000053951,\n      \"duration\": 4966.359188542021,\n      \"progressRatio\": 5625.929418230672,\n      \"initiator\": \"string\",\n      \"kind\": \"string\",\n      \"commitHash\": \"string\",\n      \"commitBranch\": \"string\",\n      \"links\": {\n        \"scanIssues\": \"string\"\n      }\n    },\n    {\n      \"id\": \"dc614d5a-3b51-f23b-bbb6-97bbce3afa2a\",\n      \"status\": \"string\",\n      \"createdAt\": \"string\",\n      \"finishedAt\": \"string\",\n      \"score\": 1920.6884283810832,\n      \"coverage\": 1575.2225705907351,\n      \"duration\": 783.5646340360659,\n      \"progressRatio\": 7095.780217088685,\n      \"initiator\": \"string\",\n      \"kind\": \"string\",\n      \"commitHash\": \"string\",\n      \"commitBranch\": \"string\",\n      \"links\": {\n        \"scanIssues\": \"string\"\n      }\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d60ad01-9b55-4c28-bb2b-b64f708f2b8e",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignored",
+                      "value": "true"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81c77fdc-5577-45f0-8c48-197f87ecd8a0",
+          "name": "Start a new scan",
+          "request": {
+            "name": "Start a new scan",
+            "description": {
+              "content": "Start a new scan",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profileId\": \"<string>\",\n  \"commitHash\": \"<string>\",\n  \"commitLink\": \"<string>\",\n  \"commitBranch\": \"<string>\",\n  \"commitAuthor\": \"<string>\",\n  \"commitAuthorProfilePictureLink\": \"<string>\",\n  \"configurationOverride\": {},\n  \"initiator\": \"CI\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5672c76d-eb0c-4c41-a935-6780760ef65f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"profileId\": \"00000000-0000-0000-0000-000000000000\",\n  \"initiator\": \"MANUAL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"5211688f-a32f-fc9a-fd9a-fe6ca19e9a90\",\n  \"status\": \"string\",\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\",\n  \"finishedAt\": \"string\",\n  \"score\": 2613.331821438326,\n  \"coverage\": 504.6399350374575,\n  \"duration\": 8988.940327133436,\n  \"progressRatio\": 4207.22301616688,\n  \"initiator\": \"string\",\n  \"kind\": \"string\",\n  \"profileId\": \"string\",\n  \"organizationId\": \"string\",\n  \"commitHash\": \"string\",\n  \"commitBranch\": \"string\",\n  \"commitAuthor\": \"string\",\n  \"commitLink\": \"string\",\n  \"commitAuthorProfilePictureLink\": \"string\",\n  \"links\": {\n    \"scanIssues\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aafa8a4a-ed5f-4208-bf6d-540e03cbbd66",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"profileId\": \"00000000-0000-0000-0000-000000000000\",\n  \"initiator\": \"MANUAL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45833611-dd94-407e-8af4-ffa03f8d299f",
+          "name": "List scans with their problems",
+          "request": {
+            "name": "List scans with their problems",
+            "description": {
+              "content": "List scans together with the validation problems surfaced by the scanner during execution. Diagnostic counterpart of GET /v3/profiles/problems, but indexed by scan instead of profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans",
+                "problems"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Filter by after date"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Filter by before date"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetIds",
+                  "value": "<string>",
+                  "description": "Filter by asset IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "profileIds",
+                  "value": "<string>",
+                  "description": "Filter by profile IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<string>",
+                  "description": "Filter by project IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignored",
+                  "value": "<string>",
+                  "description": "Filter by ignored status"
+                },
+                {
+                  "disabled": false,
+                  "key": "initiator",
+                  "value": "<string>",
+                  "description": "Filter by initiator"
+                },
+                {
+                  "disabled": false,
+                  "key": "initiator",
+                  "value": "<string>",
+                  "description": "Filter by initiator"
+                },
+                {
+                  "disabled": false,
+                  "key": "kinds",
+                  "value": "<string>",
+                  "description": "Filter by kind"
+                },
+                {
+                  "disabled": false,
+                  "key": "kinds",
+                  "value": "<string>",
+                  "description": "Filter by kind"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8787c762-0440-4cb6-988d-55d3261a731d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignored",
+                      "value": "true"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"fc8ebb21-c9e6-1674-30b0-acbb382c56b9\",\n      \"status\": \"string\",\n      \"createdAt\": \"string\",\n      \"finishedAt\": \"string\",\n      \"score\": 8362.33480803227,\n      \"coverage\": 4785.934871382464,\n      \"duration\": 7471.505824042063,\n      \"progressRatio\": 156.4184741727448,\n      \"initiator\": \"string\",\n      \"kind\": \"string\",\n      \"commitHash\": \"string\",\n      \"commitBranch\": \"string\",\n      \"links\": {\n        \"scanIssues\": \"string\"\n      },\n      \"problems\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"severity\": \"string\"\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"severity\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"9de5cf73-da6b-9cff-de54-e4389bd5c6f9\",\n      \"status\": \"string\",\n      \"createdAt\": \"string\",\n      \"finishedAt\": \"string\",\n      \"score\": 2522.3151691715098,\n      \"coverage\": 2107.4559828341967,\n      \"duration\": 4667.011133938984,\n      \"progressRatio\": 3148.9335989429,\n      \"initiator\": \"string\",\n      \"kind\": \"string\",\n      \"commitHash\": \"string\",\n      \"commitBranch\": \"string\",\n      \"links\": {\n        \"scanIssues\": \"string\"\n      },\n      \"problems\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"severity\": \"string\"\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"severity\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4b1b9f5-5944-4e77-beb6-33888c1c8bd3",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignored",
+                      "value": "true"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ecc9b8b-c1c3-4a43-b46c-abcf3acf0da1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2025-03-15T09:00:00Z"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignored",
+                      "value": "true"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62e4934a-48d4-44f7-ad47-131c3e405c03",
+          "name": "Get a scan",
+          "request": {
+            "name": "Get a scan",
+            "description": {
+              "content": "Get a scan by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans",
+                ":scanId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scanId",
+                  "description": "(Required) The scan ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "590c37aa-90af-42b9-858a-615584a458fd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"5211688f-a32f-fc9a-fd9a-fe6ca19e9a90\",\n  \"status\": \"string\",\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\",\n  \"finishedAt\": \"string\",\n  \"score\": 2613.331821438326,\n  \"coverage\": 504.6399350374575,\n  \"duration\": 8988.940327133436,\n  \"progressRatio\": 4207.22301616688,\n  \"initiator\": \"string\",\n  \"kind\": \"string\",\n  \"profileId\": \"string\",\n  \"organizationId\": \"string\",\n  \"commitHash\": \"string\",\n  \"commitBranch\": \"string\",\n  \"commitAuthor\": \"string\",\n  \"commitLink\": \"string\",\n  \"commitAuthorProfilePictureLink\": \"string\",\n  \"links\": {\n    \"scanIssues\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5909dab6-167a-4b37-8b41-a98ac7d40eb6",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37e41d80-d3fa-4e7e-81e8-f38e9f4e7ab9",
+          "name": "Cancel a scan",
+          "request": {
+            "name": "Cancel a scan",
+            "description": {
+              "content": "Cancel a scan by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans",
+                ":scanId",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scanId",
+                  "description": "(Required) The scan ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "36a16b2d-0f78-4629-b5a2-971ff8885b40",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"5211688f-a32f-fc9a-fd9a-fe6ca19e9a90\",\n  \"status\": \"string\",\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\",\n  \"finishedAt\": \"string\",\n  \"score\": 2613.331821438326,\n  \"coverage\": 504.6399350374575,\n  \"duration\": 8988.940327133436,\n  \"progressRatio\": 4207.22301616688,\n  \"initiator\": \"string\",\n  \"kind\": \"string\",\n  \"profileId\": \"string\",\n  \"organizationId\": \"string\",\n  \"commitHash\": \"string\",\n  \"commitBranch\": \"string\",\n  \"commitAuthor\": \"string\",\n  \"commitLink\": \"string\",\n  \"commitAuthorProfilePictureLink\": \"string\",\n  \"links\": {\n    \"scanIssues\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4436fe3b-3975-490c-aadd-248e8c263765",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dcc9c6c-aae4-433d-bbb7-c98926a05927",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e79a6b71-0add-4d53-8aa6-21773b48d2fa",
+          "name": "Ignore a scan",
+          "request": {
+            "name": "Ignore a scan",
+            "description": {
+              "content": "Ignore a scan by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans",
+                ":scanId",
+                "ignore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scanId",
+                  "description": "(Required) The scan ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ignored\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a1a6213c-c032-417d-91e4-564180f9767e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "ignore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignored\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ignored\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21cdeaed-39c3-4422-8a10-f4ed5d054c6b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "ignore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignored\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "070e4ff7-d742-48d7-b9c5-fd5a2bfc074e",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "ignore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignored\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c0a148a-5b39-4d2b-9245-d213498e250d",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "ignore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignored\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Conflict on the following field\",\n  \"field\": \"string\",\n  \"instanceId\": \"eac6fc4d-2b0c-3d51-611e-a4463fd254fe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8547d44c-ef5d-4243-8a99-cb156e784331",
+          "name": "List scan targets and API coverage",
+          "request": {
+            "name": "List scan targets and API coverage",
+            "description": {
+              "content": "Returns targets discovered during a scan, including REST and GraphQL operations with per-endpoint coverage. Filter by target type to focus on API routes and resolvers for CI/CD quality gates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scans",
+                ":scanId",
+                "targets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "scanId",
+                  "description": "(Required) The scan ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "081ce5f5-9657-4f96-bf2c-9b1017e7a5a8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"createdAt\": \"string\",\n      \"id\": \"cad0f9d3-f001-98d3-b7f4-117f9d0ebf96\",\n      \"apiRoute\": {\n        \"blacklisted\": false,\n        \"createdAt\": \"string\",\n        \"displayName\": \"string\",\n        \"id\": \"a81717ac-f81d-0b72-2727-661f98b4fe58\",\n        \"name\": \"string\",\n        \"operation\": \"string\",\n        \"requestCount\": 7818.783523409443,\n        \"coverage\": \"UNKNOWN\",\n        \"source\": \"SOURCE_INFERRED\",\n        \"parameters\": {\n          \"key_0\": \"string\"\n        },\n        \"meanDuration\": 3531.211834091235,\n        \"coverageByUser\": [\n          {\n            \"name\": \"string\",\n            \"coverage\": \"TIMEOUT\"\n          },\n          {\n            \"name\": \"string\",\n            \"coverage\": \"RATE_LIMIT\"\n          }\n        ],\n        \"returnType\": \"string\"\n      },\n      \"codeFile\": {\n        \"id\": \"24d29363-4d7c-225c-8784-c82cd8be5fba\",\n        \"language\": \"string\",\n        \"path\": \"string\"\n      },\n      \"graphqlResolver\": {\n        \"blacklisted\": true,\n        \"createdAt\": \"string\",\n        \"displayName\": \"string\",\n        \"id\": \"58348191-37f5-e06b-4145-ab8e9b9e5633\",\n        \"name\": \"string\",\n        \"requestCount\": 2254.723549557872,\n        \"coverage\": \"UNAUTHORIZED\",\n        \"parent\": \"string\",\n        \"source\": \"SOURCE_INFERRED\",\n        \"parameters\": {\n          \"key_0\": \"string\"\n        },\n        \"meanDuration\": 1099.2441028345302,\n        \"coverageByUser\": [\n          {\n            \"name\": \"string\",\n            \"coverage\": \"TIMEOUT\"\n          },\n          {\n            \"name\": \"string\",\n            \"coverage\": \"SERVER_ERROR\"\n          }\n        ],\n        \"returnType\": \"string\"\n      },\n      \"port\": {\n        \"id\": \"ba3aba17-4386-6e83-b6ff-4aa095e57122\",\n        \"port\": 6940.736387849228,\n        \"protocol\": \"string\"\n      }\n    },\n    {\n      \"createdAt\": \"string\",\n      \"id\": \"88c16de8-91a6-6c01-1302-52ec6c1a8f91\",\n      \"apiRoute\": {\n        \"blacklisted\": true,\n        \"createdAt\": \"string\",\n        \"displayName\": \"string\",\n        \"id\": \"e23e2ba1-8252-0a29-6543-e6a913c5bb3e\",\n        \"name\": \"string\",\n        \"operation\": \"string\",\n        \"requestCount\": 3384.2797663361757,\n        \"coverage\": \"OK\",\n        \"source\": \"SOURCE_SPECIFICATION\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"meanDuration\": 4100.946345202733,\n        \"coverageByUser\": [\n          {\n            \"name\": \"string\",\n            \"coverage\": \"SERVER_ERROR\"\n          },\n          {\n            \"name\": \"string\",\n            \"coverage\": \"OK\"\n          }\n        ],\n        \"returnType\": \"string\"\n      },\n      \"codeFile\": {\n        \"id\": \"e800ec0d-5559-b2d1-38de-b0641e88e883\",\n        \"language\": \"string\",\n        \"path\": \"string\"\n      },\n      \"graphqlResolver\": {\n        \"blacklisted\": true,\n        \"createdAt\": \"string\",\n        \"displayName\": \"string\",\n        \"id\": \"6c8334e2-3f99-f0a7-831d-9e6ae337c43c\",\n        \"name\": \"string\",\n        \"requestCount\": 265.0948580337742,\n        \"coverage\": \"TIMEOUT\",\n        \"parent\": \"string\",\n        \"source\": \"SOURCE_SPECIFICATION\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"meanDuration\": 869.2589306649734,\n        \"coverageByUser\": [\n          {\n            \"name\": \"string\",\n            \"coverage\": \"NOT_FOUND\"\n          },\n          {\n            \"name\": \"string\",\n            \"coverage\": \"BROKEN_PIPE\"\n          }\n        ],\n        \"returnType\": \"string\"\n      },\n      \"port\": {\n        \"id\": \"c0f18d84-2074-babd-6f37-086ebadda9b2\",\n        \"port\": 3311.9954931390494,\n        \"protocol\": \"string\"\n      }\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8d6f8bd-cc5d-430a-b0da-23232a870583",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56ebbedc-bea1-4249-92be-527eaa2f17fc",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scans",
+                    ":scanId",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "scanId",
+                      "description": "(Required) The scan ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ddec7d37-a157-45ed-938a-519eadf6a510",
+    "name": "Escape Public Asm Scans API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

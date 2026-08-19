@@ -1,0 +1,1890 @@
+{
+  "item": [
+    {
+      "id": "356e27f4-4a1d-4a5c-aff7-258d9b34fe3e",
+      "name": "Issues",
+      "description": {
+        "content": "Manage issues.\n\nIdentify, prioritize, and remediate the security issues and sensitive data exposures uncovered during ASM and DAST scanning\n\nSee [our documentation](https://docs.escape.tech/documentation/governance/vulnerability-management/) for more details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "52e9e962-def8-443d-aa62-3ff371811553",
+          "name": "List issues",
+          "request": {
+            "name": "List issues",
+            "description": {
+              "content": "List and search issues of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "profileIds",
+                  "value": "<string>",
+                  "description": "Filter by application IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetIds",
+                  "value": "<string>",
+                  "description": "Filter by asset IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "domains",
+                  "value": "<string>",
+                  "description": "Filter by domain"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter by specific issue IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filter by issue names"
+                },
+                {
+                  "disabled": false,
+                  "key": "scanIds",
+                  "value": "<string>",
+                  "description": "Filter by scan IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "tagIds",
+                  "value": "<string>",
+                  "description": "Filter by tag IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search term to filter issues by name or description"
+                },
+                {
+                  "disabled": false,
+                  "key": "jiraTicket",
+                  "value": "<string>",
+                  "description": "Filter by issues with Jira tickets"
+                },
+                {
+                  "disabled": false,
+                  "key": "risks",
+                  "value": "<string>",
+                  "description": "Filter by risk types"
+                },
+                {
+                  "disabled": false,
+                  "key": "risks",
+                  "value": "<string>",
+                  "description": "Filter by risk types"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetClasses",
+                  "value": "<string>",
+                  "description": "Filter by asset classes"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetClasses",
+                  "value": "<string>",
+                  "description": "Filter by asset classes"
+                },
+                {
+                  "disabled": false,
+                  "key": "scannerKinds",
+                  "value": "<string>",
+                  "description": "Filter by scanner kinds"
+                },
+                {
+                  "disabled": false,
+                  "key": "scannerKinds",
+                  "value": "<string>",
+                  "description": "Filter by scanner kinds"
+                },
+                {
+                  "disabled": false,
+                  "key": "severities",
+                  "value": "<string>",
+                  "description": "Filter by issue severities"
+                },
+                {
+                  "disabled": false,
+                  "key": "severities",
+                  "value": "<string>",
+                  "description": "Filter by issue severities"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by issue status"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by issue status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f096a40a-0790-4c80-bca0-2600aac041d1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scanIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tagIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "issue1"
+                    },
+                    {
+                      "key": "jiraTicket",
+                      "value": "true"
+                    },
+                    {
+                      "key": "risks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "risks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetClasses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetClasses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scannerKinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scannerKinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "severities",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "severities",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"9aef51de-19fb-0c50-31ec-cd146dc0c760\",\n      \"name\": \"string\",\n      \"fullName\": \"string\",\n      \"category\": \"INFORMATION_DISCLOSURE\",\n      \"severity\": \"HIGH\",\n      \"status\": \"RESOLVED\",\n      \"context\": \"string\",\n      \"risks\": [\n        \"PROD_ONLY_MODE\",\n        \"SENSITIVE_DATA\"\n      ],\n      \"alertUid\": \"string\",\n      \"createdAt\": \"string\",\n      \"asset\": {\n        \"id\": \"dd036b53-0452-a5c8-525c-35625f006d2f\",\n        \"class\": \"CLOUD_COMPONENT\",\n        \"type\": \"GITHUB_REPOSITORY\",\n        \"name\": \"string\",\n        \"externalUrl\": \"string\",\n        \"faviconUrl\": \"string\",\n        \"createdAt\": \"string\",\n        \"lastSeenAt\": \"string\",\n        \"scheduledForDeletionAt\": \"string\",\n        \"status\": \"OUT_OF_SCOPE\",\n        \"tags\": [\n          {\n            \"id\": \"6f9709e6-126c-fe75-025f-81c2644959e3\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          },\n          {\n            \"id\": \"3926186e-5daf-f080-a0d9-b08f52203df3\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          }\n        ],\n        \"risks\": [\n          \"UNAUTHENTICATED\",\n          \"UNAUTHENTICATED\"\n        ],\n        \"service\": {\n          \"url\": \"string\",\n          \"type\": \"SOAP\"\n        },\n        \"frontend\": {\n          \"url\": \"string\",\n          \"type\": \"WEBAPP\"\n        },\n        \"host\": {\n          \"address\": \"string\",\n          \"type\": \"IPV6\"\n        },\n        \"links\": {\n          \"assetOverview\": \"string\"\n        },\n        \"owners\": [\n          \"Yfd@TbHSmkWjSyaArYQGCih.tx\",\n          \"JHtRFH8a@FIVoMvcVIQVXtVU.dafl\"\n        ]\n      },\n      \"lastSeenScanId\": \"string\",\n      \"lastSeenScan\": {\n        \"id\": \"7ef9986b-60af-e975-03c5-e1c497e873fa\",\n        \"status\": \"string\",\n        \"createdAt\": \"string\",\n        \"finishedAt\": \"string\",\n        \"score\": 39.606436784256346,\n        \"coverage\": 7345.718900731333,\n        \"duration\": 5707.939216370462,\n        \"progressRatio\": 4615.434573846098,\n        \"initiator\": \"string\",\n        \"kind\": \"string\",\n        \"commitHash\": \"string\",\n        \"commitBranch\": \"string\",\n        \"links\": {\n          \"scanIssues\": \"string\"\n        }\n      },\n      \"firstSeenScanId\": \"string\",\n      \"customRuleId\": \"string\",\n      \"links\": {\n        \"issueOverview\": \"string\"\n      }\n    },\n    {\n      \"id\": \"17da559a-cb9b-95c9-7a56-a8f20c181b5e\",\n      \"name\": \"string\",\n      \"fullName\": \"string\",\n      \"category\": \"CONFIGURATION\",\n      \"severity\": \"CRITICAL\",\n      \"status\": \"FALSE_POSITIVE\",\n      \"context\": \"string\",\n      \"risks\": [\n        \"CRITICAL_FINDING\",\n        \"SENSITIVE_DATA\"\n      ],\n      \"alertUid\": \"string\",\n      \"createdAt\": \"string\",\n      \"asset\": {\n        \"id\": \"93356706-bd28-0790-9a05-b0826e67c6c5\",\n        \"class\": \"CDN\",\n        \"type\": \"HAR_EXPORT\",\n        \"name\": \"string\",\n        \"externalUrl\": \"string\",\n        \"faviconUrl\": \"string\",\n        \"createdAt\": \"string\",\n        \"lastSeenAt\": \"string\",\n        \"scheduledForDeletionAt\": \"string\",\n        \"status\": \"MONITORED\",\n        \"tags\": [\n          {\n            \"id\": \"16a9cfb5-b4cb-ca28-d938-6bf0e5f721b6\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          },\n          {\n            \"id\": \"4f27341a-368e-73d5-f656-6a949b05c07d\",\n            \"name\": \"string\",\n            \"color\": \"string\"\n          }\n        ],\n        \"risks\": [\n          \"UNAUTHENTICATED\",\n          \"EXPOSED\"\n        ],\n        \"service\": {\n          \"url\": \"string\",\n          \"type\": \"MCP\"\n        },\n        \"frontend\": {\n          \"url\": \"string\",\n          \"type\": \"WEBAPP\"\n        },\n        \"host\": {\n          \"address\": \"string\",\n          \"type\": \"DNS\"\n        },\n        \"links\": {\n          \"assetOverview\": \"string\"\n        },\n        \"owners\": [\n          \"A5WZoHsV606p9@LwKoveP.pudt\",\n          \"HwcDCuc0O@gLBjZgRbqBpkQh.cmdw\"\n        ]\n      },\n      \"lastSeenScanId\": \"string\",\n      \"lastSeenScan\": {\n        \"id\": \"3a901d59-d7c7-08d4-fff3-c96ccb515ab1\",\n        \"status\": \"string\",\n        \"createdAt\": \"string\",\n        \"finishedAt\": \"string\",\n        \"score\": 2361.030554297999,\n        \"coverage\": 6022.81010342278,\n        \"duration\": 3435.792612949391,\n        \"progressRatio\": 561.3610054955432,\n        \"initiator\": \"string\",\n        \"kind\": \"string\",\n        \"commitHash\": \"string\",\n        \"commitBranch\": \"string\",\n        \"links\": {\n          \"scanIssues\": \"string\"\n        }\n      },\n      \"firstSeenScanId\": \"string\",\n      \"customRuleId\": \"string\",\n      \"links\": {\n        \"issueOverview\": \"string\"\n      }\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd2d6305-b07d-490f-80b1-8d399a90799a",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "profileIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scanIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tagIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "issue1"
+                    },
+                    {
+                      "key": "jiraTicket",
+                      "value": "true"
+                    },
+                    {
+                      "key": "risks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "risks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetClasses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assetClasses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scannerKinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scannerKinds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "severities",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "severities",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db289d41-787f-4a55-934c-506e8794ae5f",
+          "name": "Get issue funnel",
+          "request": {
+            "name": "Get issue funnel",
+            "description": {
+              "content": "Get issue funnel data showing how issues distribute across severity/exposure steps: ALL → OPEN_ISSUES → EXPOSED → UNAUTHENTICATED → HIGH_BUSINESS_IMPACT → CRITICAL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                "funnel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<string>",
+                  "description": "Filter by project IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf305a1a-cdb0-4838-9f21-25d965d63bc7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    "funnel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"category\": \"string\",\n    \"step\": \"string\",\n    \"count\": 7033.342387761363\n  },\n  {\n    \"category\": \"string\",\n    \"step\": \"string\",\n    \"count\": 9617.473003289682\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21f5fd99-8823-40f2-979e-7693e312c77f",
+          "name": "Get issue severity trends",
+          "request": {
+            "name": "Get issue severity trends",
+            "description": {
+              "content": "Get time-bucketed issue counts by severity. Useful for tracking security posture over time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                "trends"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "(Required) Start date (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "(Required) End date (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "1 day",
+                  "description": "Time bucket interval (e.g. \"1 day\", \"1 week\")"
+                },
+                {
+                  "disabled": false,
+                  "key": "applicationIds",
+                  "value": "<string>",
+                  "description": "Filter by application IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<string>",
+                  "description": "Filter by project IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52d48fb3-c784-4a2f-bf22-c0079342dc8e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2026-04-01T00:00:00Z"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "1 day"
+                    },
+                    {
+                      "key": "applicationIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"string\",\n    \"HIGH\": 7068.3002683702225,\n    \"MEDIUM\": 6834.860739411453,\n    \"LOW\": 4523.524639885525,\n    \"INFO\": 8766.522951240893\n  },\n  {\n    \"date\": \"string\",\n    \"HIGH\": 4039.4562189519565,\n    \"MEDIUM\": 564.1036512977294,\n    \"LOW\": 8603.313089997593,\n    \"INFO\": 9557.841923012506\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fdddf44-da1b-4f92-801d-59d0c26ea753",
+          "name": "Bulk update issues",
+          "request": {
+            "name": "Bulk update issues",
+            "description": {
+              "content": "Update the status of multiple issues matching a filter predicate. For example, mark all LOW severity issues on a given asset as IGNORED.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                "bulk-update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\",\n  \"where\": {\n    \"ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"assetIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"severities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"profileIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tagIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scannerKinds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "325949f7-7b21-4bf8-a5bd-324afb36b05a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    "bulk-update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\",\n  \"where\": {\n    \"ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"assetIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"severities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"profileIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tagIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scannerKinds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "779937d9-41a1-435d-bc63-ba22cbd377a8",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    "bulk-update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\",\n  \"where\": {\n    \"ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"assetIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"severities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"profileIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tagIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scannerKinds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5804615-8d86-4aca-a72f-6039ab4f9692",
+          "name": "Get an issue",
+          "request": {
+            "name": "Get an issue",
+            "description": {
+              "content": "Get an issue by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                ":issueId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "issueId",
+                  "description": "(Required) The issue ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c231b940-df7a-451e-b009-e3a49ca3452d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"d8805cd1-61e1-2860-112d-5cbb720448fb\",\n  \"name\": \"string\",\n  \"fullName\": \"string\",\n  \"category\": \"SENSITIVE_DATA\",\n  \"severity\": \"HIGH\",\n  \"status\": \"RESOLVED\",\n  \"context\": \"string\",\n  \"risks\": [\n    \"OPEN_SCHEMA\",\n    \"EXPOSED\"\n  ],\n  \"alertUid\": \"string\",\n  \"createdAt\": \"string\",\n  \"asset\": {\n    \"id\": \"8839c6bd-9e86-d4b1-8e03-64c133f4895f\",\n    \"class\": \"TECHNOLOGY\",\n    \"type\": \"OPENAPI\",\n    \"name\": \"string\",\n    \"externalUrl\": \"string\",\n    \"faviconUrl\": \"string\",\n    \"description\": \"string\",\n    \"createdAt\": \"string\",\n    \"lastSeenAt\": \"string\",\n    \"scheduledForDeletionAt\": \"string\",\n    \"status\": \"MONITORED\",\n    \"tags\": [\n      {\n        \"id\": \"07230a24-15df-8782-0a6e-467e749ee508\",\n        \"name\": \"string\",\n        \"color\": \"string\"\n      },\n      {\n        \"id\": \"28b5c917-311e-9cda-2990-6afd63bdbcad\",\n        \"name\": \"string\",\n        \"color\": \"string\"\n      }\n    ],\n    \"risks\": [\n      \"PRIVATE\",\n      \"SENSITIVE_DATA\"\n    ],\n    \"firstSeenScan\": {\n      \"id\": \"48b387f5-9346-7d8f-e0ce-2c44bdec89e5\",\n      \"status\": \"string\",\n      \"createdAt\": \"string\",\n      \"finishedAt\": \"string\",\n      \"score\": 8438.633468273763,\n      \"coverage\": 907.1106666298546,\n      \"duration\": 2673.7644344729815,\n      \"progressRatio\": 1702.5242962658126,\n      \"initiator\": \"string\",\n      \"kind\": \"string\",\n      \"commitHash\": \"string\",\n      \"commitBranch\": \"string\",\n      \"links\": {\n        \"scanIssues\": \"string\"\n      }\n    },\n    \"lastSeenScan\": {\n      \"id\": \"7fe562b9-5346-c4c5-3897-492205621a06\",\n      \"status\": \"string\",\n      \"createdAt\": \"string\",\n      \"finishedAt\": \"string\",\n      \"score\": 6923.389230152257,\n      \"coverage\": 5543.873348701532,\n      \"duration\": 6875.997361225635,\n      \"progressRatio\": 3937.9662004255,\n      \"initiator\": \"string\",\n      \"kind\": \"string\",\n      \"commitHash\": \"string\",\n      \"commitBranch\": \"string\",\n      \"links\": {\n        \"scanIssues\": \"string\"\n      }\n    },\n    \"service\": {\n      \"type\": \"GRAPHQL\",\n      \"url\": \"string\",\n      \"framework\": \"string\",\n      \"authProtocol\": \"string\",\n      \"authTechnology\": \"KEYCLOAK\",\n      \"cloudProvider\": \"SCALEWAY\",\n      \"wafProvider\": \"NETSCALER_APPFIREWALL\",\n      \"environment\": \"STAGING\",\n      \"tls\": true,\n      \"ips\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"frontend\": {\n      \"type\": \"WEBAPP\",\n      \"url\": \"string\",\n      \"framework\": \"string\",\n      \"APIFramework\": \"string\",\n      \"authProtocol\": \"string\",\n      \"authTechnology\": \"KEYCLOAK\",\n      \"cloudProvider\": \"VERCEL\",\n      \"wafProvider\": \"ARMOR_DEFENSE\",\n      \"environment\": \"DEVELOPMENT\",\n      \"ips\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tls\": false\n    },\n    \"host\": {\n      \"type\": \"IPV4\",\n      \"address\": \"string\",\n      \"ips\": [\n        \"string\",\n        \"string\"\n      ],\n      \"ports\": [\n        {\n          \"port\": 5488.210734050853\n        },\n        {\n          \"port\": 5150.620563500834\n        }\n      ],\n      \"records\": [\n        {\n          \"type\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    },\n    \"schemaUrl\": \"string\",\n    \"links\": {\n      \"assetOverview\": \"string\"\n    },\n    \"owners\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"lastSeenScanId\": \"string\",\n  \"lastSeenScan\": {\n    \"id\": \"8b1f96b0-f468-8936-76da-a44226b39907\",\n    \"status\": \"string\",\n    \"createdAt\": \"string\",\n    \"finishedAt\": \"string\",\n    \"score\": 5129.225630972931,\n    \"coverage\": 9033.9539610148,\n    \"duration\": 5484.122012845243,\n    \"progressRatio\": 1976.624071430446,\n    \"initiator\": \"string\",\n    \"kind\": \"string\",\n    \"commitHash\": \"string\",\n    \"commitBranch\": \"string\",\n    \"links\": {\n      \"scanIssues\": \"string\"\n    }\n  },\n  \"firstSeenScanId\": \"string\",\n  \"customRuleId\": \"string\",\n  \"aiRemediationFramework\": \"string\",\n  \"remediation\": \"string\",\n  \"cvss\": {\n    \"score\": 9796.914280524332,\n    \"vector\": \"string\"\n  },\n  \"links\": {\n    \"issueOverview\": \"string\"\n  },\n  \"compliances\": [\n    {\n      \"framework\": \"string\",\n      \"item\": \"string\"\n    },\n    {\n      \"framework\": \"string\",\n      \"item\": \"string\"\n    }\n  ],\n  \"latestEventIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"latestEventsTruncated\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "494e4004-d57b-46f3-8235-f587eaba82c1",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0437b35-c4f3-43f5-b398-1f83f5aff687",
+          "name": "Update an issue",
+          "request": {
+            "name": "Update an issue",
+            "description": {
+              "content": "Update an issue by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                ":issueId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "issueId",
+                  "description": "(Required) The issue ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b8046b49-1123-426e-89a1-b52dfdd1f640",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9d54a84-d3b7-4367-9428-2af429d0261a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "162a13cc-96fe-4278-9160-0b228e7752c6",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9008801-6913-45ff-8e2b-385190cc9910",
+          "name": "List activities of an issue",
+          "request": {
+            "name": "List activities of an issue",
+            "description": {
+              "content": "List activities related to a specific issue.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                ":issueId",
+                "activities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "issueId",
+                  "description": "(Required) The issue ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1944808a-bab4-4ba4-94c9-8a4a663f55f2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"author\": {\n      \"id\": \"string\",\n      \"email\": \"string\"\n    },\n    \"id\": \"28c9e289-38e0-f42b-2ff7-bd6dc290e6c2\",\n    \"createdAt\": \"string\",\n    \"kind\": \"SCHEMA_LINKED\"\n  },\n  {\n    \"author\": {\n      \"id\": \"string\",\n      \"email\": \"string\"\n    },\n    \"id\": \"223657bb-832e-8187-671e-5c92685ea409\",\n    \"createdAt\": \"string\",\n    \"kind\": \"COMMENT\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1061ef0a-2b1e-4b00-a515-23a800e17678",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7f38db5-73a2-4821-9ea0-2baf5233c315",
+          "name": "Comment on an issue",
+          "request": {
+            "name": "Comment on an issue",
+            "description": {
+              "content": "Add a comment to an issue.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                ":issueId",
+                "activities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "issueId",
+                  "description": "(Required) The issue ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6debb351-315b-473a-b131-d8c131c31bdb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"author\": {\n    \"id\": \"string\",\n    \"email\": \"string\"\n  },\n  \"id\": \"e94a970f-f3a2-7b3e-7bc8-995c0cdcc245\",\n  \"createdAt\": \"string\",\n  \"kind\": \"ISSUE_STATUS_CHANGED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fb24f1b-2d10-4f22-96ae-7daa22dd64f0",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbc3a087-5eca-492c-8fab-84d551f3f11d",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aa58c70-058a-4365-9cb9-dc81c1f92d68",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0dbfce1a-3cdf-4a89-a8c3-8601a14249fc",
+          "name": "Notify issue owners",
+          "request": {
+            "name": "Notify issue owners",
+            "description": {
+              "content": "Send an email notification to the owners of the asset associated with this issue.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "issues",
+                ":issueId",
+                "notify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "issueId",
+                  "description": "(Required) The issue ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scanId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5dc955a4-cabb-4ced-bfa9-a9c6461e3a94",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "notify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scanId\": \"00000000-0000-0000-0000-000000000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notified\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1209afd-78dd-461e-a7ae-51c9ae298d4c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "issues",
+                    ":issueId",
+                    "notify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "issueId",
+                      "description": "(Required) The issue ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scanId\": \"00000000-0000-0000-0000-000000000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1be7d672-7d88-47bb-a2ac-d17c4aa95ad0",
+    "name": "Escape Public Asm Issues API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

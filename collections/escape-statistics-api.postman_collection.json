@@ -1,0 +1,127 @@
+{
+  "item": [
+    {
+      "id": "ef642e78-28c9-4622-a419-7290f6bf6c8c",
+      "name": "Statistics",
+      "description": {
+        "content": "Organization Statistics\n\nHigh-level organization security posture statistics.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ae630ab1-71f5-4a84-9ec1-1a3b7467eabf",
+          "name": "Get organization statistics",
+          "request": {
+            "name": "Get organization statistics",
+            "description": {
+              "content": "Get a high-level overview of the organization security posture: application count, asset count, and open issue counts by severity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statistics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67f8be16-f33e-4f7e-a73a-079ecee458cf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"applications\": {\n    \"count\": 2749.6905028952333\n  },\n  \"assets\": {\n    \"total\": 1542.4754166634536\n  },\n  \"issues\": {\n    \"high\": 9665.122793102075,\n    \"medium\": 4957.663509806954,\n    \"low\": 7839.523773259418,\n    \"info\": 7613.916356835094\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7afebd6d-e41c-4cfe-a839-6a4e632cbe63",
+    "name": "Escape Public Asm Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

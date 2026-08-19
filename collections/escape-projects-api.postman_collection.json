@@ -1,0 +1,777 @@
+{
+  "item": [
+    {
+      "id": "05561680-5d52-4dd4-a152-0cac31c7b525",
+      "name": "Projects",
+      "description": {
+        "content": "Projects Management\n\nThe public API provides CRUDs operations to manage projects.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cddbcfe5-009b-4715-856f-391c9edfe4a9",
+          "name": "List projects",
+          "request": {
+            "name": "List projects",
+            "description": {
+              "content": "List and search projects of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The number of items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortType",
+                  "value": "<string>",
+                  "description": "The type to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The direction to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search term to filter projects by name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdf7c99e-8d8b-4cfa-ad5a-5d6e6f37bc74",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "search",
+                      "value": "My Super Project"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"56d1b01c-9b2f-e277-826b-bfe0e3f27565\",\n      \"name\": \"string\",\n      \"createdAt\": \"1988-05-19T18:01:46.777Z\",\n      \"bindings\": [\n        {\n          \"id\": \"8322d35e-0272-b665-4e8a-c9f83ee6dbc3\",\n          \"createdAt\": \"2009-01-28T06:41:00.985Z\",\n          \"roleId\": \"f382c46c-48b8-7377-cb3e-e144db1fbdfd\",\n          \"userId\": \"36b6cdc3-406c-91c1-b3fa-92db4e4b2107\",\n          \"projectId\": \"a29aa6d6-faff-eee8-8602-a18fa4f0b0e6\"\n        },\n        {\n          \"id\": \"aabdc121-02d8-3259-8727-d06c383b2a92\",\n          \"createdAt\": \"2022-01-03T22:17:34.924Z\",\n          \"roleId\": \"b07df01d-2766-5a11-689c-af80237cdb47\",\n          \"userId\": \"21adfb91-ffc0-c425-510c-e1a869fac7e5\",\n          \"projectId\": \"8ff9b2f2-a0a0-ec1e-ed1a-05ad58610520\"\n        }\n      ]\n    },\n    {\n      \"id\": \"75178f80-d442-ed34-12ba-8eb694a32b10\",\n      \"name\": \"string\",\n      \"createdAt\": \"2012-09-12T19:43:07.933Z\",\n      \"bindings\": [\n        {\n          \"id\": \"78a4c07d-a3ea-373c-97d8-b25a0eafe03e\",\n          \"createdAt\": \"2006-08-01T23:18:45.917Z\",\n          \"roleId\": \"1436ed54-4204-d99d-6fdc-d371ddd48a34\",\n          \"userId\": \"612e0301-257c-c43d-ece6-ca031557b6f5\",\n          \"projectId\": \"fd3806ae-49e2-fdb1-a8fb-de16920ed9cb\"\n        },\n        {\n          \"id\": \"ca91a15e-cfc8-1225-5cbe-937fb19d5fea\",\n          \"createdAt\": \"1978-11-07T17:09:14.586Z\",\n          \"roleId\": \"fba0b981-0ba3-9815-58d7-97b117dbffba\",\n          \"userId\": \"d1dfaafb-a6c8-8c7b-bbf2-ead87f7aae2a\",\n          \"projectId\": \"1003758c-c3fa-74a1-4708-e1616a2fe2a8\"\n        }\n      ]\n    }\n  ],\n  \"totalCount\": 20\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99817cb9-8e3e-4db6-beba-2c285ed35452",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sortType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "search",
+                      "value": "My Super Project"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e69a50e-b739-44a8-8810-2e992b698cef",
+          "name": "Create a project",
+          "request": {
+            "name": "Create a project",
+            "description": {
+              "content": "Create a project for the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"bindings\": [\n    {\n      \"roleId\": \"<string>\",\n      \"userId\": \"<string>\"\n    },\n    {\n      \"roleId\": \"<string>\",\n      \"userId\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0271cbe-bf18-4462-b7f5-5cf7fc9ec540",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"My super project\",\n  \"slug\": \"my-super-project\",\n  \"bindings\": [\n    {\n      \"roleId\": \"00000000-0000-0000-0000-000000000000\",\n      \"userId\": \"00000000-0000-0000-0000-000000000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"6bf33d5c-69cd-f8ac-f460-1d49a5d6008a\",\n  \"name\": \"string\",\n  \"createdAt\": \"2000-09-05T17:55:46.228Z\",\n  \"bindings\": [\n    {\n      \"id\": \"2d73a20b-590d-6138-4441-688e8439172f\",\n      \"createdAt\": \"1967-06-25T04:44:49.142Z\",\n      \"role\": {\n        \"id\": \"8e6af7c0-77a8-cab1-0aab-1ffa6f7e7816\",\n        \"name\": \"string\",\n        \"createdAt\": \"2017-12-11T15:17:36.747Z\"\n      },\n      \"project\": {\n        \"id\": \"c9773547-f2a2-9856-dbed-050773b0b34d\",\n        \"name\": \"string\",\n        \"createdAt\": \"1957-07-29T06:15:19.892Z\"\n      },\n      \"user\": {\n        \"id\": \"f33c2aca-821c-1a28-a00d-fb4403d253d2\",\n        \"email\": \"rMC2STmUC-q8Sp@ArSIosC.vp\",\n        \"createdAt\": \"1998-10-09T17:25:50.540Z\",\n        \"activatedAt\": \"1953-06-20T09:26:49.757Z\"\n      }\n    },\n    {\n      \"id\": \"f5d1b6eb-e18b-05f7-a190-79f3e8f4316f\",\n      \"createdAt\": \"1965-11-24T09:03:42.960Z\",\n      \"role\": {\n        \"id\": \"dc4f45f9-4969-3fb0-b782-b0069bd24372\",\n        \"name\": \"string\",\n        \"createdAt\": \"1950-11-11T22:45:45.520Z\"\n      },\n      \"project\": {\n        \"id\": \"33eca5f5-9630-ee8a-abd7-8ac2ca66b7fe\",\n        \"name\": \"string\",\n        \"createdAt\": \"2005-06-14T15:53:02.996Z\"\n      },\n      \"user\": {\n        \"id\": \"c6c179bc-1220-d377-3fdb-926d95a49cd4\",\n        \"email\": \"r3Ec8AUFVJ2@YMcstKammjpFesUAiKwqnYuTovokPn.iii\",\n        \"createdAt\": \"2025-02-21T15:08:08.374Z\",\n        \"activatedAt\": \"1971-03-03T20:05:20.351Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3334b2a1-11a5-487e-99a3-8aade7f2d3a2",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"My super project\",\n  \"slug\": \"my-super-project\",\n  \"bindings\": [\n    {\n      \"roleId\": \"00000000-0000-0000-0000-000000000000\",\n      \"userId\": \"00000000-0000-0000-0000-000000000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ae87ce3-004c-4a34-a4d4-efb1354fdf9f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"My super project\",\n  \"slug\": \"my-super-project\",\n  \"bindings\": [\n    {\n      \"roleId\": \"00000000-0000-0000-0000-000000000000\",\n      \"userId\": \"00000000-0000-0000-0000-000000000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be2b91cc-c07b-42d8-a668-2ca7328107bb",
+          "name": "Get a project",
+          "request": {
+            "name": "Get a project",
+            "description": {
+              "content": "Get a project by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) The project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae3cd8ab-a163-4762-9574-3c81b7969143",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"6bf33d5c-69cd-f8ac-f460-1d49a5d6008a\",\n  \"name\": \"string\",\n  \"createdAt\": \"2000-09-05T17:55:46.228Z\",\n  \"bindings\": [\n    {\n      \"id\": \"2d73a20b-590d-6138-4441-688e8439172f\",\n      \"createdAt\": \"1967-06-25T04:44:49.142Z\",\n      \"role\": {\n        \"id\": \"8e6af7c0-77a8-cab1-0aab-1ffa6f7e7816\",\n        \"name\": \"string\",\n        \"createdAt\": \"2017-12-11T15:17:36.747Z\"\n      },\n      \"project\": {\n        \"id\": \"c9773547-f2a2-9856-dbed-050773b0b34d\",\n        \"name\": \"string\",\n        \"createdAt\": \"1957-07-29T06:15:19.892Z\"\n      },\n      \"user\": {\n        \"id\": \"f33c2aca-821c-1a28-a00d-fb4403d253d2\",\n        \"email\": \"rMC2STmUC-q8Sp@ArSIosC.vp\",\n        \"createdAt\": \"1998-10-09T17:25:50.540Z\",\n        \"activatedAt\": \"1953-06-20T09:26:49.757Z\"\n      }\n    },\n    {\n      \"id\": \"f5d1b6eb-e18b-05f7-a190-79f3e8f4316f\",\n      \"createdAt\": \"1965-11-24T09:03:42.960Z\",\n      \"role\": {\n        \"id\": \"dc4f45f9-4969-3fb0-b782-b0069bd24372\",\n        \"name\": \"string\",\n        \"createdAt\": \"1950-11-11T22:45:45.520Z\"\n      },\n      \"project\": {\n        \"id\": \"33eca5f5-9630-ee8a-abd7-8ac2ca66b7fe\",\n        \"name\": \"string\",\n        \"createdAt\": \"2005-06-14T15:53:02.996Z\"\n      },\n      \"user\": {\n        \"id\": \"c6c179bc-1220-d377-3fdb-926d95a49cd4\",\n        \"email\": \"r3Ec8AUFVJ2@YMcstKammjpFesUAiKwqnYuTovokPn.iii\",\n        \"createdAt\": \"2025-02-21T15:08:08.374Z\",\n        \"activatedAt\": \"1971-03-03T20:05:20.351Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c951dd04-31db-41af-aa8d-e6759d6b7c69",
+          "name": "Update a project",
+          "request": {
+            "name": "Update a project",
+            "description": {
+              "content": "Update a project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) The project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project\": {\n    \"name\": \"<string>\"\n  },\n  \"slug\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6793746e-89d6-4686-914a-ef4bf18927b8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project\": {\n    \"name\": \"My updated super project\"\n  },\n  \"slug\": \"my-updated-super-project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"6bf33d5c-69cd-f8ac-f460-1d49a5d6008a\",\n  \"name\": \"string\",\n  \"createdAt\": \"2000-09-05T17:55:46.228Z\",\n  \"bindings\": [\n    {\n      \"id\": \"2d73a20b-590d-6138-4441-688e8439172f\",\n      \"createdAt\": \"1967-06-25T04:44:49.142Z\",\n      \"role\": {\n        \"id\": \"8e6af7c0-77a8-cab1-0aab-1ffa6f7e7816\",\n        \"name\": \"string\",\n        \"createdAt\": \"2017-12-11T15:17:36.747Z\"\n      },\n      \"project\": {\n        \"id\": \"c9773547-f2a2-9856-dbed-050773b0b34d\",\n        \"name\": \"string\",\n        \"createdAt\": \"1957-07-29T06:15:19.892Z\"\n      },\n      \"user\": {\n        \"id\": \"f33c2aca-821c-1a28-a00d-fb4403d253d2\",\n        \"email\": \"rMC2STmUC-q8Sp@ArSIosC.vp\",\n        \"createdAt\": \"1998-10-09T17:25:50.540Z\",\n        \"activatedAt\": \"1953-06-20T09:26:49.757Z\"\n      }\n    },\n    {\n      \"id\": \"f5d1b6eb-e18b-05f7-a190-79f3e8f4316f\",\n      \"createdAt\": \"1965-11-24T09:03:42.960Z\",\n      \"role\": {\n        \"id\": \"dc4f45f9-4969-3fb0-b782-b0069bd24372\",\n        \"name\": \"string\",\n        \"createdAt\": \"1950-11-11T22:45:45.520Z\"\n      },\n      \"project\": {\n        \"id\": \"33eca5f5-9630-ee8a-abd7-8ac2ca66b7fe\",\n        \"name\": \"string\",\n        \"createdAt\": \"2005-06-14T15:53:02.996Z\"\n      },\n      \"user\": {\n        \"id\": \"c6c179bc-1220-d377-3fdb-926d95a49cd4\",\n        \"email\": \"r3Ec8AUFVJ2@YMcstKammjpFesUAiKwqnYuTovokPn.iii\",\n        \"createdAt\": \"2025-02-21T15:08:08.374Z\",\n        \"activatedAt\": \"1971-03-03T20:05:20.351Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5df0261a-ea53-45dc-b633-4ea516e80a2d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project\": {\n    \"name\": \"My updated super project\"\n  },\n  \"slug\": \"my-updated-super-project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fddd1715-92a2-45ea-a748-392943c86b32",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project\": {\n    \"name\": \"My updated super project\"\n  },\n  \"slug\": \"my-updated-super-project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4d63ebdb-794e-4ca8-99f1-57712f245a16",
+    "name": "Escape Public Asm Projects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

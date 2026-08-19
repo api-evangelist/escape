@@ -1,0 +1,862 @@
+{
+  "item": [
+    {
+      "id": "d7a1164d-6769-4086-a6c5-34350d0a31d1",
+      "name": "CustomRules",
+      "description": {
+        "content": "Manage your custom rules.\n\nThe public API provides basic CRUDs operations to manage custom rules.\n\nSee [our documentation](https://docs.escape.tech/documentation/dast/custom-rules/) for more details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8ea9a6f7-9881-4a96-9cba-d817a887fe99",
+          "name": "List custom rules",
+          "request": {
+            "name": "List custom rules",
+            "description": {
+              "content": "List and search custom rules of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "<string>",
+                  "description": "Filter by custom rule context"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "58d6de72-2bc1-4992-a1a2-704ec66de684",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"37dbca82-939c-f3b6-f32c-f894ec4b8853\",\n    \"name\": \"string\",\n    \"context\": \"string\",\n    \"severity\": \"string\",\n    \"createdAt\": \"string\",\n    \"updatedAt\": \"string\"\n  },\n  {\n    \"id\": \"245cce1c-95f9-1ff4-8467-46b8f88799cb\",\n    \"name\": \"string\",\n    \"context\": \"string\",\n    \"severity\": \"string\",\n    \"createdAt\": \"string\",\n    \"updatedAt\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "208c8175-7cd6-46c4-907d-f7fff74cc620",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "634248d7-14ad-4d3f-abc8-975c787a6ab2",
+          "name": "Create a custom rule",
+          "request": {
+            "name": "Create a custom rule",
+            "description": {
+              "content": "Create a custom rule for the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"rule\": {\n      \"alert\": {\n        \"severity\": \"<string>\",\n        \"name\": \"<string>\",\n        \"context\": \"<string>\",\n        \"category\": \"<string>\",\n        \"description\": \"<string>\",\n        \"remediation\": \"<string>\",\n        \"compliance\": {\n          \"owasp\": \"<string>\",\n          \"pci-dss\": \"<string>\",\n          \"gdpr\": \"<string>\",\n          \"soc2\": \"<string>\",\n          \"psd2\": \"<string>\",\n          \"iso27001\": \"<string>\",\n          \"nist\": \"<string>\",\n          \"fedramp\": \"<string>\",\n          \"nis2\": \"<string>\",\n          \"hipaa\": \"<string>\",\n          \"owasp_llm\": \"<string>\",\n          \"iec62443\": \"<string>\",\n          \"cwe\": \"<string>\",\n          \"cra\": \"<string>\",\n          \"dora\": \"<string>\",\n          \"owasp_asvs\": \"<string>\",\n          \"wasc\": \"<string>\",\n          \"mitre_attack\": \"<string>\",\n          \"hitrust_csf\": \"<string>\"\n        }\n      },\n      \"type\": \"<string>\",\n      \"detect\": [\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          },\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"dastEnabled\": \"<boolean>\",\n  \"inventoryEnabled\": \"<boolean>\",\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d30e7485-e8c2-4264-8341-e106bda2fd94",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"rule\": {\n      \"alert\": {\n        \"severity\": \"<string>\",\n        \"name\": \"<string>\",\n        \"context\": \"<string>\",\n        \"category\": \"<string>\",\n        \"description\": \"<string>\",\n        \"remediation\": \"<string>\",\n        \"compliance\": {\n          \"owasp\": \"<string>\",\n          \"pci-dss\": \"<string>\",\n          \"gdpr\": \"<string>\",\n          \"soc2\": \"<string>\",\n          \"psd2\": \"<string>\",\n          \"iso27001\": \"<string>\",\n          \"nist\": \"<string>\",\n          \"fedramp\": \"<string>\",\n          \"nis2\": \"<string>\",\n          \"hipaa\": \"<string>\",\n          \"owasp_llm\": \"<string>\",\n          \"iec62443\": \"<string>\",\n          \"cwe\": \"<string>\",\n          \"cra\": \"<string>\",\n          \"dora\": \"<string>\",\n          \"owasp_asvs\": \"<string>\",\n          \"wasc\": \"<string>\",\n          \"mitre_attack\": \"<string>\",\n          \"hitrust_csf\": \"<string>\"\n        }\n      },\n      \"type\": \"<string>\",\n      \"detect\": [\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          }\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          },\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"dastEnabled\": \"<boolean>\",\n  \"inventoryEnabled\": \"<boolean>\",\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"rule\": {\n      \"id\": \"string\",\n      \"alert\": {\n        \"severity\": \"HIGH\",\n        \"name\": \"string\",\n        \"context\": \"string\",\n        \"category\": \"INFORMATION_DISCLOSURE\",\n        \"description\": \"string\",\n        \"remediation\": \"string\",\n        \"compliance\": {\n          \"owasp\": \"API4:2023\",\n          \"pci-dss\": \"7.1\",\n          \"gdpr\": \"Article-32\",\n          \"soc2\": \"CC6\",\n          \"psd2\": \"Article-5\",\n          \"iso27001\": \"A.12.7\",\n          \"nist\": \"SP800-161\",\n          \"fedramp\": \"SC-12\",\n          \"nis2\": \"Article-33\",\n          \"hipaa\": \"Standard-5\",\n          \"owasp_llm\": \"LLM03\",\n          \"iec62443\": \"CR 5.2\",\n          \"cwe\": \"918\",\n          \"cra\": \"Article-11\",\n          \"dora\": \"Article-11\",\n          \"owasp_asvs\": \"V4\",\n          \"wasc\": \"WASC-25\",\n          \"mitre_attack\": \"T1078\",\n          \"hitrust_csf\": \"01.f\"\n        }\n      },\n      \"type\": \"API\",\n      \"detect\": [\n        {\n          \"if\": \"scan.type\",\n          \"is\": \"REST\",\n          \"is_not\": \"REST\",\n          \"in\": [\n            \"GRAPHQL\",\n            \"REST\"\n          ]\n        },\n        {\n          \"if\": \"scan.type\",\n          \"is\": \"REST\",\n          \"is_not\": \"REST\",\n          \"in\": [\n            \"GRAPHQL\",\n            \"GRAPHQL\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"rest\",\n          \"user\": \"string\",\n          \"path\": \"string\",\n          \"method\": \"POST\",\n          \"headers\": {\n            \"key_0\": \"string\"\n          },\n          \"body\": \"string\",\n          \"params\": {\n            \"key_0\": \"string\"\n          }\n        },\n        {\n          \"protocol\": \"rest\",\n          \"user\": \"string\",\n          \"path\": \"string\",\n          \"method\": \"PATCH\",\n          \"headers\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"body\": \"string\",\n          \"params\": {\n            \"key_0\": \"string\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"scan.type\",\n            \"is\": \"GRAPHQL\",\n            \"is_not\": \"null\",\n            \"in\": [\n              \"GRAPHQL\",\n              \"GRAPHQL\"\n            ]\n          },\n          {\n            \"if\": \"scan.type\",\n            \"is\": \"null\",\n            \"is_not\": \"REST\",\n            \"in\": [\n              \"GRAPHQL\",\n              \"GRAPHQL\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"schema.url\",\n            \"use_extraction\": true,\n            \"value\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"string\",\n              \"replacement\": \"string\",\n              \"use_extraction\": false\n            }\n          },\n          {\n            \"key\": \"schema.url\",\n            \"use_extraction\": false,\n            \"value\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"string\",\n              \"replacement\": \"string\",\n              \"use_extraction\": false\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"null\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"REST\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": true,\n              \"accept_null\": false\n            },\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": false,\n              \"accept_null\": true\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"null\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"GRAPHQL\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": false,\n              \"accept_null\": false\n            },\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": true,\n              \"accept_null\": true\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"context\": \"string\",\n  \"createdAt\": \"string\",\n  \"dastEnabled\": true,\n  \"id\": \"string\",\n  \"asmEnabled\": true,\n  \"name\": \"string\",\n  \"severity\": \"LOW\",\n  \"tags\": [\n    {\n      \"id\": \"8ac4e9f0-328d-3921-4024-1d497461b6f6\",\n      \"name\": \"string\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": \"bbc78ca6-dbe8-b695-58f3-62c12bc5e5b6\",\n      \"name\": \"string\",\n      \"color\": \"string\"\n    }\n  ],\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bf264ba-07b0-41ec-acec-22e2cf5328a9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"rule\": {\n      \"alert\": {\n        \"severity\": \"<string>\",\n        \"name\": \"<string>\",\n        \"context\": \"<string>\",\n        \"category\": \"<string>\",\n        \"description\": \"<string>\",\n        \"remediation\": \"<string>\",\n        \"compliance\": {\n          \"owasp\": \"<string>\",\n          \"pci-dss\": \"<string>\",\n          \"gdpr\": \"<string>\",\n          \"soc2\": \"<string>\",\n          \"psd2\": \"<string>\",\n          \"iso27001\": \"<string>\",\n          \"nist\": \"<string>\",\n          \"fedramp\": \"<string>\",\n          \"nis2\": \"<string>\",\n          \"hipaa\": \"<string>\",\n          \"owasp_llm\": \"<string>\",\n          \"iec62443\": \"<string>\",\n          \"cwe\": \"<string>\",\n          \"cra\": \"<string>\",\n          \"dora\": \"<string>\",\n          \"owasp_asvs\": \"<string>\",\n          \"wasc\": \"<string>\",\n          \"mitre_attack\": \"<string>\",\n          \"hitrust_csf\": \"<string>\"\n        }\n      },\n      \"type\": \"<string>\",\n      \"detect\": [\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          }\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          },\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"dastEnabled\": \"<boolean>\",\n  \"inventoryEnabled\": \"<boolean>\",\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2973ebf2-83fb-4ef8-95ed-009c6ebb20e6",
+          "name": "Get a custom rule",
+          "request": {
+            "name": "Get a custom rule",
+            "description": {
+              "content": "Get a custom rule of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-rules",
+                ":customRuleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "customRuleId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3cd6072a-a2f2-4432-b834-c4425a377cbc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"rule\": {\n      \"id\": \"string\",\n      \"alert\": {\n        \"severity\": \"HIGH\",\n        \"name\": \"string\",\n        \"context\": \"string\",\n        \"category\": \"INFORMATION_DISCLOSURE\",\n        \"description\": \"string\",\n        \"remediation\": \"string\",\n        \"compliance\": {\n          \"owasp\": \"API4:2023\",\n          \"pci-dss\": \"7.1\",\n          \"gdpr\": \"Article-32\",\n          \"soc2\": \"CC6\",\n          \"psd2\": \"Article-5\",\n          \"iso27001\": \"A.12.7\",\n          \"nist\": \"SP800-161\",\n          \"fedramp\": \"SC-12\",\n          \"nis2\": \"Article-33\",\n          \"hipaa\": \"Standard-5\",\n          \"owasp_llm\": \"LLM03\",\n          \"iec62443\": \"CR 5.2\",\n          \"cwe\": \"918\",\n          \"cra\": \"Article-11\",\n          \"dora\": \"Article-11\",\n          \"owasp_asvs\": \"V4\",\n          \"wasc\": \"WASC-25\",\n          \"mitre_attack\": \"T1078\",\n          \"hitrust_csf\": \"01.f\"\n        }\n      },\n      \"type\": \"API\",\n      \"detect\": [\n        {\n          \"if\": \"scan.type\",\n          \"is\": \"REST\",\n          \"is_not\": \"REST\",\n          \"in\": [\n            \"GRAPHQL\",\n            \"REST\"\n          ]\n        },\n        {\n          \"if\": \"scan.type\",\n          \"is\": \"REST\",\n          \"is_not\": \"REST\",\n          \"in\": [\n            \"GRAPHQL\",\n            \"GRAPHQL\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"rest\",\n          \"user\": \"string\",\n          \"path\": \"string\",\n          \"method\": \"POST\",\n          \"headers\": {\n            \"key_0\": \"string\"\n          },\n          \"body\": \"string\",\n          \"params\": {\n            \"key_0\": \"string\"\n          }\n        },\n        {\n          \"protocol\": \"rest\",\n          \"user\": \"string\",\n          \"path\": \"string\",\n          \"method\": \"PATCH\",\n          \"headers\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"body\": \"string\",\n          \"params\": {\n            \"key_0\": \"string\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"scan.type\",\n            \"is\": \"GRAPHQL\",\n            \"is_not\": \"null\",\n            \"in\": [\n              \"GRAPHQL\",\n              \"GRAPHQL\"\n            ]\n          },\n          {\n            \"if\": \"scan.type\",\n            \"is\": \"null\",\n            \"is_not\": \"REST\",\n            \"in\": [\n              \"GRAPHQL\",\n              \"GRAPHQL\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"schema.url\",\n            \"use_extraction\": true,\n            \"value\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"string\",\n              \"replacement\": \"string\",\n              \"use_extraction\": false\n            }\n          },\n          {\n            \"key\": \"schema.url\",\n            \"use_extraction\": false,\n            \"value\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"string\",\n              \"replacement\": \"string\",\n              \"use_extraction\": false\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"null\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"REST\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": true,\n              \"accept_null\": false\n            },\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": false,\n              \"accept_null\": true\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"null\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"GRAPHQL\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": false,\n              \"accept_null\": false\n            },\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": true,\n              \"accept_null\": true\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"context\": \"string\",\n  \"createdAt\": \"string\",\n  \"dastEnabled\": true,\n  \"id\": \"string\",\n  \"asmEnabled\": true,\n  \"name\": \"string\",\n  \"severity\": \"LOW\",\n  \"tags\": [\n    {\n      \"id\": \"8ac4e9f0-328d-3921-4024-1d497461b6f6\",\n      \"name\": \"string\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": \"bbc78ca6-dbe8-b695-58f3-62c12bc5e5b6\",\n      \"name\": \"string\",\n      \"color\": \"string\"\n    }\n  ],\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db95b2f5-f3f7-4c82-b71f-fc3e115a5c60",
+              "name": "Pagination error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid cursor\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7bfe476-0ae6-40ae-8bf1-17c8612a12d0",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f690b9e-ccd7-4419-900f-8cfc81187e55",
+          "name": "Update a custom rule",
+          "request": {
+            "name": "Update a custom rule",
+            "description": {
+              "content": "Update a custom rule for the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-rules",
+                ":customRuleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "customRuleId",
+                  "description": "(Required) The ID of the custom rule to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"rule\": {\n      \"alert\": {\n        \"severity\": \"<string>\",\n        \"name\": \"<string>\",\n        \"context\": \"<string>\",\n        \"category\": \"<string>\",\n        \"description\": \"<string>\",\n        \"remediation\": \"<string>\",\n        \"compliance\": {\n          \"owasp\": \"<string>\",\n          \"pci-dss\": \"<string>\",\n          \"gdpr\": \"<string>\",\n          \"soc2\": \"<string>\",\n          \"psd2\": \"<string>\",\n          \"iso27001\": \"<string>\",\n          \"nist\": \"<string>\",\n          \"fedramp\": \"<string>\",\n          \"nis2\": \"<string>\",\n          \"hipaa\": \"<string>\",\n          \"owasp_llm\": \"<string>\",\n          \"iec62443\": \"<string>\",\n          \"cwe\": \"<string>\",\n          \"cra\": \"<string>\",\n          \"dora\": \"<string>\",\n          \"owasp_asvs\": \"<string>\",\n          \"wasc\": \"<string>\",\n          \"mitre_attack\": \"<string>\",\n          \"hitrust_csf\": \"<string>\"\n        }\n      },\n      \"type\": \"<string>\",\n      \"detect\": [\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          }\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          },\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"dastEnabled\": \"<boolean>\",\n  \"asmEnabled\": \"<boolean>\",\n  \"tags\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2a4cbecc-8ba4-4d51-8d6b-fd747504d05b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) The ID of the custom rule to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"rule\": {\n      \"alert\": {\n        \"severity\": \"<string>\",\n        \"name\": \"<string>\",\n        \"context\": \"<string>\",\n        \"category\": \"<string>\",\n        \"description\": \"<string>\",\n        \"remediation\": \"<string>\",\n        \"compliance\": {\n          \"owasp\": \"<string>\",\n          \"pci-dss\": \"<string>\",\n          \"gdpr\": \"<string>\",\n          \"soc2\": \"<string>\",\n          \"psd2\": \"<string>\",\n          \"iso27001\": \"<string>\",\n          \"nist\": \"<string>\",\n          \"fedramp\": \"<string>\",\n          \"nis2\": \"<string>\",\n          \"hipaa\": \"<string>\",\n          \"owasp_llm\": \"<string>\",\n          \"iec62443\": \"<string>\",\n          \"cwe\": \"<string>\",\n          \"cra\": \"<string>\",\n          \"dora\": \"<string>\",\n          \"owasp_asvs\": \"<string>\",\n          \"wasc\": \"<string>\",\n          \"mitre_attack\": \"<string>\",\n          \"hitrust_csf\": \"<string>\"\n        }\n      },\n      \"type\": \"<string>\",\n      \"detect\": [\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          },\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"dastEnabled\": \"<boolean>\",\n  \"asmEnabled\": \"<boolean>\",\n  \"tags\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"rule\": {\n      \"id\": \"string\",\n      \"alert\": {\n        \"severity\": \"HIGH\",\n        \"name\": \"string\",\n        \"context\": \"string\",\n        \"category\": \"INFORMATION_DISCLOSURE\",\n        \"description\": \"string\",\n        \"remediation\": \"string\",\n        \"compliance\": {\n          \"owasp\": \"API4:2023\",\n          \"pci-dss\": \"7.1\",\n          \"gdpr\": \"Article-32\",\n          \"soc2\": \"CC6\",\n          \"psd2\": \"Article-5\",\n          \"iso27001\": \"A.12.7\",\n          \"nist\": \"SP800-161\",\n          \"fedramp\": \"SC-12\",\n          \"nis2\": \"Article-33\",\n          \"hipaa\": \"Standard-5\",\n          \"owasp_llm\": \"LLM03\",\n          \"iec62443\": \"CR 5.2\",\n          \"cwe\": \"918\",\n          \"cra\": \"Article-11\",\n          \"dora\": \"Article-11\",\n          \"owasp_asvs\": \"V4\",\n          \"wasc\": \"WASC-25\",\n          \"mitre_attack\": \"T1078\",\n          \"hitrust_csf\": \"01.f\"\n        }\n      },\n      \"type\": \"API\",\n      \"detect\": [\n        {\n          \"if\": \"scan.type\",\n          \"is\": \"REST\",\n          \"is_not\": \"REST\",\n          \"in\": [\n            \"GRAPHQL\",\n            \"REST\"\n          ]\n        },\n        {\n          \"if\": \"scan.type\",\n          \"is\": \"REST\",\n          \"is_not\": \"REST\",\n          \"in\": [\n            \"GRAPHQL\",\n            \"GRAPHQL\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"rest\",\n          \"user\": \"string\",\n          \"path\": \"string\",\n          \"method\": \"POST\",\n          \"headers\": {\n            \"key_0\": \"string\"\n          },\n          \"body\": \"string\",\n          \"params\": {\n            \"key_0\": \"string\"\n          }\n        },\n        {\n          \"protocol\": \"rest\",\n          \"user\": \"string\",\n          \"path\": \"string\",\n          \"method\": \"PATCH\",\n          \"headers\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"body\": \"string\",\n          \"params\": {\n            \"key_0\": \"string\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"scan.type\",\n            \"is\": \"GRAPHQL\",\n            \"is_not\": \"null\",\n            \"in\": [\n              \"GRAPHQL\",\n              \"GRAPHQL\"\n            ]\n          },\n          {\n            \"if\": \"scan.type\",\n            \"is\": \"null\",\n            \"is_not\": \"REST\",\n            \"in\": [\n              \"GRAPHQL\",\n              \"GRAPHQL\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"schema.url\",\n            \"use_extraction\": true,\n            \"value\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"string\",\n              \"replacement\": \"string\",\n              \"use_extraction\": false\n            }\n          },\n          {\n            \"key\": \"schema.url\",\n            \"use_extraction\": false,\n            \"value\": \"string\",\n            \"values\": [\n              \"string\",\n              \"string\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"string\",\n              \"replacement\": \"string\",\n              \"use_extraction\": false\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"null\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"REST\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": true,\n              \"accept_null\": false\n            },\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": false,\n              \"accept_null\": true\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"null\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"scan.type\",\n              \"is\": \"REST\",\n              \"is_not\": \"GRAPHQL\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": false,\n              \"accept_null\": false\n            },\n            {\n              \"key\": \"response.body.json\",\n              \"variable\": \"string\",\n              \"jq\": \"string\",\n              \"can_overwrite\": true,\n              \"accept_null\": true\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"context\": \"string\",\n  \"createdAt\": \"string\",\n  \"dastEnabled\": true,\n  \"id\": \"string\",\n  \"asmEnabled\": true,\n  \"name\": \"string\",\n  \"severity\": \"LOW\",\n  \"tags\": [\n    {\n      \"id\": \"8ac4e9f0-328d-3921-4024-1d497461b6f6\",\n      \"name\": \"string\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": \"bbc78ca6-dbe8-b695-58f3-62c12bc5e5b6\",\n      \"name\": \"string\",\n      \"color\": \"string\"\n    }\n  ],\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f438b88-63e3-4a28-bcb2-d30b6cec9e56",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) The ID of the custom rule to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"rule\": {\n      \"alert\": {\n        \"severity\": \"<string>\",\n        \"name\": \"<string>\",\n        \"context\": \"<string>\",\n        \"category\": \"<string>\",\n        \"description\": \"<string>\",\n        \"remediation\": \"<string>\",\n        \"compliance\": {\n          \"owasp\": \"<string>\",\n          \"pci-dss\": \"<string>\",\n          \"gdpr\": \"<string>\",\n          \"soc2\": \"<string>\",\n          \"psd2\": \"<string>\",\n          \"iso27001\": \"<string>\",\n          \"nist\": \"<string>\",\n          \"fedramp\": \"<string>\",\n          \"nis2\": \"<string>\",\n          \"hipaa\": \"<string>\",\n          \"owasp_llm\": \"<string>\",\n          \"iec62443\": \"<string>\",\n          \"cwe\": \"<string>\",\n          \"cra\": \"<string>\",\n          \"dora\": \"<string>\",\n          \"owasp_asvs\": \"<string>\",\n          \"wasc\": \"<string>\",\n          \"mitre_attack\": \"<string>\",\n          \"hitrust_csf\": \"<string>\"\n        }\n      },\n      \"type\": \"<string>\",\n      \"detect\": [\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"if\": \"<string>\",\n          \"is\": \"<string,null>\",\n          \"is_not\": \"<string,null>\",\n          \"in\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"seed\": [\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"user\": \"<string>\",\n          \"path\": \"<string>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"body\": \"<string>\",\n          \"params\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"transform\": {\n        \"trigger\": [\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"if\": \"<string>\",\n            \"is\": \"<string,null>\",\n            \"is_not\": \"<string,null>\",\n            \"in\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"mutate\": [\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          },\n          {\n            \"key\": \"<string>\",\n            \"use_extraction\": \"<boolean,null>\",\n            \"value\": \"<string>\",\n            \"values\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"regex_replace\": {\n              \"pattern\": \"<string>\",\n              \"replacement\": \"<string>\",\n              \"use_extraction\": \"<boolean,null>\"\n            }\n          }\n        ]\n      },\n      \"extractors\": [\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        },\n        {\n          \"trigger\": [\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            {\n              \"if\": \"<string>\",\n              \"is\": \"<string,null>\",\n              \"is_not\": \"<string,null>\",\n              \"in\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          ],\n          \"extract\": [\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"variable\": \"<string>\",\n              \"jq\": \"<string>\",\n              \"can_overwrite\": \"<boolean,null>\",\n              \"accept_null\": \"<boolean,null>\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"dastEnabled\": \"<boolean>\",\n  \"asmEnabled\": \"<boolean>\",\n  \"tags\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6e39959-5b68-4417-a0c7-09abe15c64c0",
+          "name": "Delete a custom rule",
+          "request": {
+            "name": "Delete a custom rule",
+            "description": {
+              "content": "Delete a custom rule for the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-rules",
+                ":customRuleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "customRuleId",
+                  "description": "(Required) The ID of the custom rule to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4ef1349-979a-458e-92a8-2dedfd48c1be",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) The ID of the custom rule to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fe0b956-f678-4944-a11a-141368122f4b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-rules",
+                    ":customRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customRuleId",
+                      "description": "(Required) The ID of the custom rule to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad Request\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cd83c876-ba20-42aa-9997-f0213671389d",
+    "name": "Escape Public Asm CustomRules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

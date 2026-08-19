@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Events API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/events",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter events by name or description"
+              },
+              {
+                "name": "scanIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scan IDs"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "issueIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue IDs"
+              },
+              {
+                "name": "levels",
+                "value": "",
+                "type": "query",
+                "description": "Filter by level"
+              },
+              {
+                "name": "stages",
+                "value": "",
+                "type": "query",
+                "description": "Filter by stage"
+              },
+              {
+                "name": "hasAttachments",
+                "value": "",
+                "type": "query",
+                "description": "Filter by attachments"
+              },
+              {
+                "name": "attachments",
+                "value": "",
+                "type": "query",
+                "description": "Filter by attachments"
+              }
+            ]
+          },
+          "docs": "List and search events of the organization."
+        },
+        {
+          "info": {
+            "name": "Get an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "The event ID"
+              }
+            ]
+          },
+          "docs": "Get an event by ID (including attachments)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

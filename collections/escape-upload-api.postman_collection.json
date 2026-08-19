@@ -1,0 +1,129 @@
+{
+  "item": [
+    {
+      "id": "0f9cc509-f023-4497-9069-e0c6ac125b20",
+      "name": "Upload",
+      "description": {
+        "content": "Upload helper for Escape Platform.\n\nThe public API provides endpoints to upload files to the platform.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "22bdb16e-c2f5-4160-9b18-00918b49b07a",
+          "name": "Create signed URL",
+          "request": {
+            "name": "Create signed URL",
+            "description": {
+              "content": "Retrieve a signed URL link to upload a file to the Escape Platform.\n\nBy running a query with this endpoint, you will receive a signed URL that you can use to upload a file to the Escape Platform.\n\n```json\n{\n  \"url\": \"[SIGNED URL]\",\n  \"id\": \"[SIGNED URL ID]\"\n}\n```\n\nWith the url, you are able to upload one file:\n\n```bash\ncurl -X PUT --data-binary '@./schema.json' \"[SIGNED URL]\"\n```\n\nNow, you are able to use the previously received id in another query.\nFor example to update a schema of your application.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "upload",
+                "signed-url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5893a4f8-e446-432d-a076-636913cbb328",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "upload",
+                    "signed-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ESCAPE-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"http://jpXkNlRGNXJIvZV.faBEBr8KGtCgzzRCwjMswoxf.WaloPpJMzIjwxmDJrsK4JnLvGUVS8awDHs8\",\n  \"id\": \"fd84b513-e0f2-d028-4188-56a0fd1be2cb\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.escape.tech/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ESCAPE-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b5b3b5cb-b9cd-4f35-8734-3497d4e50d71",
+    "name": "Escape Public Asm Upload API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enables you to operate [Escape](https://escape.tech/) programmatically.\n\nAll requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.\nFor example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.\n\nYou can find your API key in the [Escape dashboard](https://app.escape.tech/user/).",
+      "type": "text/plain"
+    }
+  }
+}

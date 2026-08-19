@@ -1,0 +1,331 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Issues API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List issues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "profileIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by application IDs"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific issue IDs"
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue names"
+              },
+              {
+                "name": "scanIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scan IDs"
+              },
+              {
+                "name": "tagIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter issues by name or description"
+              },
+              {
+                "name": "jiraTicket",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issues with Jira tickets"
+              },
+              {
+                "name": "risks",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk types"
+              },
+              {
+                "name": "assetClasses",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset classes"
+              },
+              {
+                "name": "scannerKinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scanner kinds"
+              },
+              {
+                "name": "severities",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue severities"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by issue status"
+              }
+            ]
+          },
+          "docs": "List and search issues of the organization."
+        },
+        {
+          "info": {
+            "name": "Get issue funnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/funnel",
+            "params": [
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              }
+            ]
+          },
+          "docs": "Get issue funnel data showing how issues distribute across severity/exposure steps: ALL → OPEN_ISSUES → EXPOSED → UNAUTHENTICATED → HIGH_BUSINESS_IMPACT → CRITICAL."
+        },
+        {
+          "info": {
+            "name": "Get issue severity trends",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/trends",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO 8601)"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO 8601)"
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time bucket interval (e.g. \"1 day\", \"1 week\")"
+              },
+              {
+                "name": "applicationIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by application IDs"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              }
+            ]
+          },
+          "docs": "Get time-bucketed issue counts by severity. Useful for tracking security posture over time."
+        },
+        {
+          "info": {
+            "name": "Bulk update issues",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/issues/bulk-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status of multiple issues matching a filter predicate. For example, mark all LOW severity issues on a given asset as IGNORED."
+        },
+        {
+          "info": {
+            "name": "Get an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/:issueId",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ]
+          },
+          "docs": "Get an issue by ID"
+        },
+        {
+          "info": {
+            "name": "Update an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/issues/:issueId",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an issue by ID"
+        },
+        {
+          "info": {
+            "name": "List activities of an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/issues/:issueId/activities",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ]
+          },
+          "docs": "List activities related to a specific issue."
+        },
+        {
+          "info": {
+            "name": "Comment on an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/issues/:issueId/activities",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a comment to an issue."
+        },
+        {
+          "info": {
+            "name": "Notify issue owners",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/issues/:issueId/notify",
+            "params": [
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The issue ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an email notification to the owners of the asset associated with this issue."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

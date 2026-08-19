@@ -1,0 +1,333 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Scans API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by after date"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by before date"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "profileIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by profile IDs"
+              },
+              {
+                "name": "ignored",
+                "value": "",
+                "type": "query",
+                "description": "Filter by ignored status"
+              },
+              {
+                "name": "initiator",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              }
+            ]
+          },
+          "docs": "List and search scans of the organization."
+        },
+        {
+          "info": {
+            "name": "Start a new scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/scans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a new scan"
+        },
+        {
+          "info": {
+            "name": "List scans with their problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/problems",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by after date"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by before date"
+              },
+              {
+                "name": "assetIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset IDs"
+              },
+              {
+                "name": "profileIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by profile IDs"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by project IDs"
+              },
+              {
+                "name": "ignored",
+                "value": "",
+                "type": "query",
+                "description": "Filter by ignored status"
+              },
+              {
+                "name": "initiator",
+                "value": "",
+                "type": "query",
+                "description": "Filter by initiator"
+              },
+              {
+                "name": "kinds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status"
+              }
+            ]
+          },
+          "docs": "List scans together with the validation problems surfaced by the scanner during execution. Diagnostic counterpart of GET /v3/profiles/problems, but indexed by scan instead of profile."
+        },
+        {
+          "info": {
+            "name": "Get a scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/:scanId",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              }
+            ]
+          },
+          "docs": "Get a scan by ID"
+        },
+        {
+          "info": {
+            "name": "Cancel a scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/scans/:scanId/cancel",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              }
+            ]
+          },
+          "docs": "Cancel a scan by ID"
+        },
+        {
+          "info": {
+            "name": "Ignore a scan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public.escape.tech/v3/scans/:scanId/ignore",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ignore a scan by ID"
+        },
+        {
+          "info": {
+            "name": "List scan targets and API coverage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/:scanId/targets",
+            "params": [
+              {
+                "name": "scanId",
+                "value": "",
+                "type": "path",
+                "description": "The scan ID"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "sortType",
+                "value": "",
+                "type": "query",
+                "description": "The type to sort by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER"
+              }
+            ]
+          },
+          "docs": "Returns targets discovered during a scan, including REST and GraphQL operations with per-endpoint coverage. Filter by target type to focus on API routes and resolvers for CI/CD quality gates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

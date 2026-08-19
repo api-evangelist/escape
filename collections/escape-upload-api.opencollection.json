@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Upload API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Upload",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/upload/signed-url"
+          },
+          "docs": "Retrieve a signed URL link to upload a file to the Escape Platform.\n\nBy running a query with this endpoint, you will receive a signed URL that you can use to upload a file to the Escape Platform.\n\n```json\n{\n  \"url\": \"[SIGNED URL]\",\n  \"id\": \"[SIGNED URL ID]\"\n}\n```\n\nWith the url, you are able to upload one file:\n\n```bash\ncurl -X PUT --data-binary '@./schema.json' \"[SIGNED URL]\"\n```\n\nNow, you are able to use the previously received id in another query.\nFor example to update a schema of your applica"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

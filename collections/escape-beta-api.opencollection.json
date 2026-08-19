@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Escape Public Asm Beta API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ESCAPE-API-KEY",
+      "value": "{{X-ESCAPE-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Beta",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an Automated Pentest REST profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest REST profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest GraphQL profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest GraphQL profile."
+        },
+        {
+          "info": {
+            "name": "Create an Automated Pentest WebApp profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/profiles/ai-pentesting/webapp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Automated Pentest WebApp profile."
+        },
+        {
+          "info": {
+            "name": "List inbox emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/emails",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per page"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email IDs"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by before date"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by after date"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Inbox email address used as `to` filter"
+              }
+            ]
+          },
+          "docs": "Given a target email address, list inbox emails with cursor pagination."
+        },
+        {
+          "info": {
+            "name": "Read inbox email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/scans/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The inbox email ID"
+              }
+            ]
+          },
+          "docs": "Given an email id, fetch and return its full raw content."
+        },
+        {
+          "info": {
+            "name": "Trigger a template export job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.escape.tech/v3/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules the same export job as the product UI (SAAS_EXPORT_TEMPLATE): PDF/report blocks, optional scan and issue scope. Use GET /jobs/{jobId} to read status and artefact download URLs when completed."
+        },
+        {
+          "info": {
+            "name": "Get a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.escape.tech/v3/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The job ID"
+              }
+            ]
+          },
+          "docs": "Returns job status, parameters, and artefacts (including signedUrl download links for completed export outputs)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
