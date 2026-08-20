@@ -163,6 +163,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -185,6 +187,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -226,6 +230,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -291,6 +297,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -402,6 +410,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
