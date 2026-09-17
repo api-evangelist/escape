@@ -126,27 +126,6 @@ apis:
     url: https://docs.escape.tech/documentation/automate/public-api/
   - type: Authentication
     url: https://docs.escape.tech/documentation/automate/public-api/
-- aid: escape:escape-customrules-api
-  name: Escape CustomRules API
-  description: >-
-    Manage your custom rules.
-
-
-    The public API provides basic CRUDs operations to manage custom rules.
-
-
-    See [our documentation](https://docs.escape.tech/documentation/dast/custom-rules/) for more details.
-  humanURL: https://docs.escape.tech/documentation/automate/public-api/
-  baseURL: https://public.escape.tech/v3
-  tags:
-  - CustomRules
-  properties:
-  - type: OpenAPI
-    url: openapi/escape-customrules-api-openapi.yml
-  - type: Documentation
-    url: https://docs.escape.tech/documentation/automate/public-api/
-  - type: Authentication
-    url: https://docs.escape.tech/documentation/automate/public-api/
 - aid: escape:escape-emails-api
   name: Escape Emails API
   description: >-
@@ -447,6 +426,27 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/escape-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-custom-rules-api
+  name: Escape Custom Rules API
+  description: >-
+    Manage your custom rules.
+
+
+    The public API provides basic CRUDs operations to manage custom rules.
+
+
+    See our documentation for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Custom Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-custom-rules-api-openapi.yml
   - type: Documentation
     url: https://docs.escape.tech/documentation/automate/public-api/
   - type: Authentication
