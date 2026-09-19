@@ -137,6 +137,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - Email
+  tags_raw:
   - Emails
   properties:
   - type: OpenAPI
@@ -246,6 +248,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
@@ -443,6 +447,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - CustomRules
+  tags_raw:
   - Custom Rules
   properties:
   - type: OpenAPI
