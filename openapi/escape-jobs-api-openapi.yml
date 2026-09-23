@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Escape Public Asm Jobs API
-  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+  title: Escape Public Jobs API
+  description: 'This API enables you to operate Escape programmatically.
 
 
     All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
@@ -10,7 +10,7 @@ info:
     For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
 
 
-    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+    You can find your API key in the Escape dashboard.'
 servers:
 - url: https://public.escape.tech/v3
 security:

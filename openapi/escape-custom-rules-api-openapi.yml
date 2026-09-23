@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Escape Public Asm CustomRules API
-  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+  title: Escape Public Custom Rules API
+  description: 'This API enables you to operate Escape programmatically.
 
 
     All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
@@ -10,25 +10,25 @@ info:
     For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
 
 
-    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+    You can find your API key in the Escape dashboard.'
 servers:
 - url: https://public.escape.tech/v3
 security:
 - apiKey: []
 tags:
-- name: CustomRules
+- name: Custom Rules
   description: 'Manage your custom rules.
 
 
     The public API provides basic CRUDs operations to manage custom rules.
 
 
-    See [our documentation](https://docs.escape.tech/documentation/dast/custom-rules/) for more details.'
+    See our documentation for more details.'
 paths:
   /custom-rules:
     get:
       tags:
-      - CustomRules
+      - Custom Rules
       summary: List custom rules
       operationId: listCustomRules
       description: List and search custom rules of the organization.
@@ -99,7 +99,7 @@ paths:
                 description: Returned when an invalid pagination cursor is supplied
     post:
       tags:
-      - CustomRules
+      - Custom Rules
       summary: Create a custom rule
       operationId: createCustomRule
       description: Create a custom rule for the organization.
@@ -20033,7 +20033,7 @@ paths:
   /custom-rules/{customRuleId}:
     get:
       tags:
-      - CustomRules
+      - Custom Rules
       summary: Get a custom rule
       operationId: getCustomRule
       description: Get a custom rule of the organization.
@@ -30062,7 +30062,7 @@ paths:
                 description: Returned when the requested resource does not exist
     put:
       tags:
-      - CustomRules
+      - Custom Rules
       summary: Update a custom rule
       operationId: updateCustomRule
       description: Update a custom rule for the organization.
@@ -50003,7 +50003,7 @@ paths:
                 description: Returned when the request payload fails validation
     delete:
       tags:
-      - CustomRules
+      - Custom Rules
       summary: Delete a custom rule
       operationId: deleteCustomRule
       description: Delete a custom rule for the organization.

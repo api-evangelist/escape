@@ -1,0 +1,31 @@
+# Front Door AI Index — escape — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: escape
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: escape.tech
+  final_host: escape.tech
+  ownership: own
+  owner: escape
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 42
+  host_score: 42
+  density: 31.02
+  words: 1354
+  tiers:
+    agentic: 6
+    core: 34
+    model: 2
+  ambiguous: 3
+  top_terms:
+    AI: 34
+    AI agent: 3
+    agent: 3
+    agentic: 2
+    Claude: 1
+    Gemini: 1
+    MCP: 1

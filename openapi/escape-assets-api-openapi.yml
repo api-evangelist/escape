@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Escape Public Asm Assets API
-  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+  title: Escape Public Assets API
+  description: 'This API enables you to operate Escape programmatically.
 
 
     All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
@@ -10,7 +10,7 @@ info:
     For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
 
 
-    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+    You can find your API key in the Escape dashboard.'
 servers:
 - url: https://public.escape.tech/v3
 security:
@@ -23,7 +23,7 @@ tags:
     The public API provide basic CRUDs operations for all available assets.
 
 
-    See [our documentation](https://docs.escape.tech/documentation/asm/asset-management/) for more details.'
+    See our documentation for more details.'
 paths:
   /assets:
     get:
@@ -27320,7 +27320,55 @@ paths:
       - Assets
       summary: Create asset schema
       operationId: createAsset_schema
-      description: "Create a schema asset.\n\nThe schema data can either be fetched from a URL or uploaded from a file.\n\n**Fetch example:**\n```json\n{\n  \"asset_type\": \"SCHEMA\",\n  \"fetch\": {\n    \"url\": \"https://api.example.com/v1\"\n  }\n}\n```\n\n\n**Upload example:**\n\nThe file should first be uploaded to the Escape Platform using the [upload endpoint](/v3/#tag/upload/post/upload/signed-url).\n\nThe upload endpoint returns an `id` that should be used in the `temporaryObjectKey` field.\n\n```json\n{\n  \"asset_type\": \"SCHEMA\",\n  \"upload\": {\n    \"temporaryObjectKey\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}\n```\n"
+      description: 'Create a schema asset.
+
+
+        The schema data can either be fetched from a URL or uploaded from a file.
+
+
+        **Fetch example:**
+
+        ```json
+
+        {
+
+        "asset_type": "SCHEMA",
+
+        "fetch": {
+
+        "url": "https://api.example.com/v1"
+
+        }
+
+        }
+
+        ```
+
+
+        **Upload example:**
+
+
+        The file should first be uploaded to the Escape Platform using the upload endpoint.
+
+
+        The upload endpoint returns an `id` that should be used in the `temporaryObjectKey` field.
+
+
+        ```json
+
+        {
+
+        "asset_type": "SCHEMA",
+
+        "upload": {
+
+        "temporaryObjectKey": "00000000-0000-0000-0000-000000000000"
+
+        }
+
+        }
+
+        ```'
       requestBody:
         description: Body of the request to create a schema asset
         content:

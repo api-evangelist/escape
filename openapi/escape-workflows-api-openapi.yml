@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Escape Public Asm Workflows API
-  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+  title: Escape Public Workflows API
+  description: 'This API enables you to operate Escape programmatically.
 
 
     All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
@@ -10,7 +10,7 @@ info:
     For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
 
 
-    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+    You can find your API key in the Escape dashboard.'
 servers:
 - url: https://public.escape.tech/v3
 security:
@@ -26,7 +26,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: List workflows.
+      summary: List workflows
       operationId: listWorkflows
       description: List and search workflows of the organization.
       parameters:
@@ -319,7 +319,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Create workflows.
+      summary: Create workflows
       operationId: createWorkflow
       description: Create a workflow.
       requestBody:
@@ -2850,7 +2850,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Get workflow.
+      summary: Get workflow
       operationId: getWorkflow
       description: Get a workflow.
       parameters:
@@ -3036,7 +3036,7 @@ paths:
     put:
       tags:
       - Workflows
-      summary: Update workflow.
+      summary: Update workflow
       operationId: updateWorkflow
       description: Update a workflow.
       parameters:
@@ -5569,7 +5569,7 @@ paths:
     delete:
       tags:
       - Workflows
-      summary: Delete workflow.
+      summary: Delete workflow
       operationId: deleteWorkflow
       description: Delete a workflow.
       parameters:

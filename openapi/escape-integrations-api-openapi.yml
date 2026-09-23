@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Escape Public Asm Integrations API
-  description: 'This API enables you to operate [Escape](https://escape.tech/) programmatically.
+  title: Escape Public Integrations API
+  description: 'This API enables you to operate Escape programmatically.
 
 
     All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
@@ -10,7 +10,7 @@ info:
     For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
 
 
-    You can find your API key in the [Escape dashboard](https://app.escape.tech/user/).'
+    You can find your API key in the Escape dashboard.'
 servers:
 - url: https://public.escape.tech/v3
 security:
@@ -23,13 +23,13 @@ tags:
     The public API provide basic CRUDs operations for all available integrations.
 
 
-    See [our documentation](https://https://docs.escape.tech/documentation/asm/integrations/) for more details.'
+    See our documentation for more details.'
 paths:
   /integrations/akamai:
     get:
       tags:
       - Integrations
-      summary: List Akamai integrations.
+      summary: List Akamai integrations
       operationId: listakamaiIntegrations
       description: List and search Akamai integrations of the organization.
       parameters:
@@ -320,7 +320,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Akamai integrations.
+      summary: Create Akamai integrations
       operationId: createakamaiIntegration
       description: Create a Akamai integration.
       requestBody:
@@ -592,7 +592,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Akamai integration.
+      summary: Get Akamai integration
       operationId: getakamaiIntegration
       description: Get a Akamai integration.
       parameters:
@@ -825,7 +825,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Akamai integration.
+      summary: Update Akamai integration
       operationId: updateakamaiIntegration
       description: Update a Akamai integration.
       parameters:
@@ -1099,7 +1099,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Akamai integration.
+      summary: Delete Akamai integration
       operationId: deleteakamaiIntegration
       description: Delete a Akamai integration.
       parameters:
@@ -1351,7 +1351,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List AWS integrations.
+      summary: List AWS integrations
       operationId: listawsIntegrations
       description: List and search AWS integrations of the organization.
       parameters:
@@ -1642,7 +1642,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create AWS integrations.
+      summary: Create AWS integrations
       operationId: createawsIntegration
       description: Create a AWS integration.
       requestBody:
@@ -1902,7 +1902,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get AWS integration.
+      summary: Get AWS integration
       operationId: getawsIntegration
       description: Get a AWS integration.
       parameters:
@@ -2129,7 +2129,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update AWS integration.
+      summary: Update AWS integration
       operationId: updateawsIntegration
       description: Update a AWS integration.
       parameters:
@@ -2391,7 +2391,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete AWS integration.
+      summary: Delete AWS integration
       operationId: deleteawsIntegration
       description: Delete a AWS integration.
       parameters:
@@ -2637,7 +2637,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Azure integrations.
+      summary: List Azure integrations
       operationId: listazureIntegrations
       description: List and search Azure integrations of the organization.
       parameters:
@@ -2928,7 +2928,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Azure integrations.
+      summary: Create Azure integrations
       operationId: createazureIntegration
       description: Create a Azure integration.
       requestBody:
@@ -3198,7 +3198,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Azure integration.
+      summary: Get Azure integration
       operationId: getazureIntegration
       description: Get a Azure integration.
       parameters:
@@ -3430,7 +3430,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Azure integration.
+      summary: Update Azure integration
       operationId: updateazureIntegration
       description: Update a Azure integration.
       parameters:
@@ -3702,7 +3702,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Azure integration.
+      summary: Delete Azure integration
       operationId: deleteazureIntegration
       description: Delete a Azure integration.
       parameters:
@@ -3953,7 +3953,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Bitbucket integrations.
+      summary: List Bitbucket integrations
       operationId: listbitbucketIntegrations
       description: List and search Bitbucket integrations of the organization.
       parameters:
@@ -4244,7 +4244,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Bitbucket integrations.
+      summary: Create Bitbucket integrations
       operationId: createbitbucketIntegration
       description: Create a Bitbucket integration.
       requestBody:
@@ -4526,7 +4526,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Bitbucket integration.
+      summary: Get Bitbucket integration
       operationId: getbitbucketIntegration
       description: Get a Bitbucket integration.
       parameters:
@@ -4764,7 +4764,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Bitbucket integration.
+      summary: Update Bitbucket integration
       operationId: updatebitbucketIntegration
       description: Update a Bitbucket integration.
       parameters:
@@ -5048,7 +5048,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Bitbucket integration.
+      summary: Delete Bitbucket integration
       operationId: deletebitbucketIntegration
       description: Delete a Bitbucket integration.
       parameters:
@@ -5305,7 +5305,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Cloudflare integrations.
+      summary: List Cloudflare integrations
       operationId: listcloudflareIntegrations
       description: List and search Cloudflare integrations of the organization.
       parameters:
@@ -5596,7 +5596,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Cloudflare integrations.
+      summary: Create Cloudflare integrations
       operationId: createcloudflareIntegration
       description: Create a Cloudflare integration.
       requestBody:
@@ -5850,7 +5850,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Cloudflare integration.
+      summary: Get Cloudflare integration
       operationId: getcloudflareIntegration
       description: Get a Cloudflare integration.
       parameters:
@@ -6074,7 +6074,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Cloudflare integration.
+      summary: Update Cloudflare integration
       operationId: updatecloudflareIntegration
       description: Update a Cloudflare integration.
       parameters:
@@ -6330,7 +6330,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Cloudflare integration.
+      summary: Delete Cloudflare integration
       operationId: deletecloudflareIntegration
       description: Delete a Cloudflare integration.
       parameters:
@@ -6573,7 +6573,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Custom Integration integrations.
+      summary: List Custom Integration integrations
       operationId: listcustomIntegrations
       description: List and search Custom Integration integrations of the organization.
       parameters:
@@ -6864,7 +6864,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Custom Integration integrations.
+      summary: Create Custom Integration integrations
       operationId: createcustomIntegration
       description: Create a Custom Integration integration.
       requestBody:
@@ -7120,7 +7120,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Custom Integration integration.
+      summary: Get Custom Integration integration
       operationId: getcustomIntegration
       description: Get a Custom Integration integration.
       parameters:
@@ -7345,7 +7345,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Custom Integration integration.
+      summary: Update Custom Integration integration
       operationId: updatecustomIntegration
       description: Update a Custom Integration integration.
       parameters:
@@ -7603,7 +7603,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Custom Integration integration.
+      summary: Delete Custom Integration integration
       operationId: deletecustomIntegration
       description: Delete a Custom Integration integration.
       parameters:
@@ -7847,7 +7847,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List GCP integrations.
+      summary: List GCP integrations
       operationId: listgcpIntegrations
       description: List and search GCP integrations of the organization.
       parameters:
@@ -8138,7 +8138,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create GCP integrations.
+      summary: Create GCP integrations
       operationId: creategcpIntegration
       description: Create a GCP integration.
       requestBody:
@@ -8456,7 +8456,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get GCP integration.
+      summary: Get GCP integration
       operationId: getgcpIntegration
       description: Get a GCP integration.
       parameters:
@@ -8712,7 +8712,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update GCP integration.
+      summary: Update GCP integration
       operationId: updategcpIntegration
       description: Update a GCP integration.
       parameters:
@@ -9032,7 +9032,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete GCP integration.
+      summary: Delete GCP integration
       operationId: deletegcpIntegration
       description: Delete a GCP integration.
       parameters:
@@ -9307,7 +9307,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List GitHub integrations.
+      summary: List GitHub integrations
       operationId: listgithubIntegrations
       description: List and search GitHub integrations of the organization.
       parameters:
@@ -9598,7 +9598,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create GitHub integrations.
+      summary: Create GitHub integrations
       operationId: creategithubIntegration
       description: Create a GitHub integration.
       requestBody:
@@ -9852,7 +9852,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get GitHub integration.
+      summary: Get GitHub integration
       operationId: getgithubIntegration
       description: Get a GitHub integration.
       parameters:
@@ -10076,7 +10076,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update GitHub integration.
+      summary: Update GitHub integration
       operationId: updategithubIntegration
       description: Update a GitHub integration.
       parameters:
@@ -10332,7 +10332,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete GitHub integration.
+      summary: Delete GitHub integration
       operationId: deletegithubIntegration
       description: Delete a GitHub integration.
       parameters:
@@ -10575,7 +10575,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List GitLab integrations.
+      summary: List GitLab integrations
       operationId: listgitlabIntegrations
       description: List and search GitLab integrations of the organization.
       parameters:
@@ -10866,7 +10866,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create GitLab integrations.
+      summary: Create GitLab integrations
       operationId: creategitlabIntegration
       description: Create a GitLab integration.
       requestBody:
@@ -11124,7 +11124,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get GitLab integration.
+      summary: Get GitLab integration
       operationId: getgitlabIntegration
       description: Get a GitLab integration.
       parameters:
@@ -11350,7 +11350,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update GitLab integration.
+      summary: Update GitLab integration
       operationId: updategitlabIntegration
       description: Update a GitLab integration.
       parameters:
@@ -11610,7 +11610,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete GitLab integration.
+      summary: Delete GitLab integration
       operationId: deletegitlabIntegration
       description: Delete a GitLab integration.
       parameters:
@@ -11855,7 +11855,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Jira integrations.
+      summary: List Jira integrations
       operationId: listjiraIntegrations
       description: List and search Jira integrations of the organization.
       parameters:
@@ -12146,7 +12146,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Jira integrations.
+      summary: Create Jira integrations
       operationId: createjiraIntegration
       description: Create a Jira integration.
       requestBody:
@@ -12544,7 +12544,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Jira integration.
+      summary: Get Jira integration
       operationId: getjiraIntegration
       description: Get a Jira integration.
       parameters:
@@ -12840,7 +12840,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Jira integration.
+      summary: Update Jira integration
       operationId: updatejiraIntegration
       description: Update a Jira integration.
       parameters:
@@ -13240,7 +13240,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Jira integration.
+      summary: Delete Jira integration
       operationId: deletejiraIntegration
       description: Delete a Jira integration.
       parameters:
@@ -13555,7 +13555,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Kubernetes integrations.
+      summary: List Kubernetes integrations
       operationId: listkubernetesIntegrations
       description: List and search Kubernetes integrations of the organization.
       parameters:
@@ -13846,7 +13846,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Kubernetes integrations.
+      summary: Create Kubernetes integrations
       operationId: createkubernetesIntegration
       description: Create a Kubernetes integration.
       requestBody:
@@ -14144,7 +14144,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Kubernetes integration.
+      summary: Get Kubernetes integration
       operationId: getkubernetesIntegration
       description: Get a Kubernetes integration.
       parameters:
@@ -14390,7 +14390,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Kubernetes integration.
+      summary: Update Kubernetes integration
       operationId: updatekubernetesIntegration
       description: Update a Kubernetes integration.
       parameters:
@@ -14690,7 +14690,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Kubernetes integration.
+      summary: Delete Kubernetes integration
       operationId: deletekubernetesIntegration
       description: Delete a Kubernetes integration.
       parameters:
@@ -14955,7 +14955,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Postman integrations.
+      summary: List Postman integrations
       operationId: listpostmanIntegrations
       description: List and search Postman integrations of the organization.
       parameters:
@@ -15246,7 +15246,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Postman integrations.
+      summary: Create Postman integrations
       operationId: createpostmanIntegration
       description: Create a Postman integration.
       requestBody:
@@ -15500,7 +15500,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Postman integration.
+      summary: Get Postman integration
       operationId: getpostmanIntegration
       description: Get a Postman integration.
       parameters:
@@ -15724,7 +15724,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Postman integration.
+      summary: Update Postman integration
       operationId: updatepostmanIntegration
       description: Update a Postman integration.
       parameters:
@@ -15980,7 +15980,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Postman integration.
+      summary: Delete Postman integration
       operationId: deletepostmanIntegration
       description: Delete a Postman integration.
       parameters:
@@ -16223,7 +16223,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: List Wiz integrations.
+      summary: List Wiz integrations
       operationId: listwizIntegrations
       description: List and search Wiz integrations of the organization.
       parameters:
@@ -16514,7 +16514,7 @@ paths:
     post:
       tags:
       - Integrations
-      summary: Create Wiz integrations.
+      summary: Create Wiz integrations
       operationId: createwizIntegration
       description: Create a Wiz integration.
       requestBody:
@@ -16810,7 +16810,7 @@ paths:
     get:
       tags:
       - Integrations
-      summary: Get Wiz integration.
+      summary: Get Wiz integration
       operationId: getwizIntegration
       description: Get a Wiz integration.
       parameters:
@@ -17055,7 +17055,7 @@ paths:
     put:
       tags:
       - Integrations
-      summary: Update Wiz integration.
+      summary: Update Wiz integration
       operationId: updatewizIntegration
       description: Update a Wiz integration.
       parameters:
@@ -17353,7 +17353,7 @@ paths:
     delete:
       tags:
       - Integrations
-      summary: Delete Wiz integration.
+      summary: Delete Wiz integration
       operationId: deletewizIntegration
       description: Delete a Wiz integration.
       parameters:
