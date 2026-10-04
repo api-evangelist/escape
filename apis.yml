@@ -451,8 +451,6 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
-  - CustomRules
-  tags_raw:
   - Custom Rules
   properties:
   - type: OpenAPI
