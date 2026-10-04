@@ -38,6 +38,10 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/escape.png
 kind: contract
 position: Consuming
 access: 3rd-Party
+x-docs-platform: mkdocs
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: vercel
 tags:
   - Platform
   - Security
@@ -447,6 +451,8 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
+  - CustomRules
+  tags_raw:
   - Custom Rules
   properties:
   - type: OpenAPI
@@ -456,6 +462,9 @@ apis:
   - type: Authentication
     url: https://docs.escape.tech/documentation/automate/public-api/
 common:
+  - type: CapabilityMap
+    url: capabilities/escape-capability-edges.yml
+    name: Escape Business Capability Map
   - type: AgenticAccess
     url: agentic-access/escape-agentic-access.yml
   - type: DomainSecurity
