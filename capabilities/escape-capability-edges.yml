@@ -1,0 +1,64 @@
+slug: escape
+provider: Escape
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Scans
+  spec_file: escape-scans-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.9
+  evidence: POST /scans startScan 'Start a new scan'; GET /scans/{scanId}/targets 'List scan targets and
+    API coverage'
+  reason: Operations start, cancel and inspect security scans against targets for a DAST vendor — plainly
+    vulnerability scanning.
+- tag: Issues
+  spec_file: escape-issues-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.85
+  evidence: GET /issues/trends getIssueTrends 'Get issue severity trends'; POST /issues/{issueId}/notify
+    'Notify issue owners'
+  reason: Issues here are the security findings produced by the DAST scanner, tracked by severity, triaged
+    in bulk and routed to owners — that is vulnerability finding and remediation management.
+- tag: Profiles
+  spec_file: escape-profiles-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.8
+  evidence: POST /profiles/rest createDastRestProfile 'Create a DAST REST profile'; POST /profiles/ai-pentesting/rest
+    'Create an Automated Pentest REST profile'
+  reason: Profiles are the configured DAST / automated-pentest scan definitions (including scan statuses
+    and problems), i.e. configuration of vulnerability scanning — not person profiles.
+- tag: Asm
+  spec_file: escape-asm-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.75
+  evidence: '"Trigger ASM scans" (POST /asm/scans) on a "DAST (Dynamic Application Security Testing) platform"'
+  reason: Triggers attack-surface-management security scans to find exposed/vulnerable APIs — security
+    scanning and remediation discovery, i.e. vulnerability management.
+- tag: Assets
+  spec_file: escape-assets-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.7
+  evidence: '"List assets", "Create asset dns", "Create asset ipv4", "Create asset graphql"'
+  reason: Inventory of externally exposed attack-surface assets (DNS, IPv4/6, GraphQL endpoints) on a
+    DAST security platform. Clearly cybersecurity management; the surface is inventory/CRUD so the specific
+    sub-capability (vulnerability vs security governance) is ambiguous.
