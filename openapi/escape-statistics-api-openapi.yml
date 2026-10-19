@@ -56,6 +56,9 @@ paths:
                   issues:
                     type: object
                     properties:
+                      critical:
+                        type: number
+                        description: Number of CRITICAL severity open issues
                       high:
                         type: number
                         description: Number of HIGH severity open issues
@@ -69,6 +72,7 @@ paths:
                         type: number
                         description: Number of INFO severity open issues
                     required:
+                    - critical
                     - high
                     - medium
                     - low
@@ -77,6 +81,244 @@ paths:
                 - applications
                 - assets
                 - issues
+  /statistics/issues:
+    get:
+      tags:
+      - Statistics
+      summary: Get issue security KPIs
+      operationId: getStatisticsIssues
+      description: 'Get issue security KPIs for the organization: open count, remediated count (last 30 days), average time to resolve (MTTR in days), and grouped counts by status and severity. Scope by product line (source) and optionally by project.'
+      parameters:
+      - schema:
+          type: string
+          enum:
+          - DAST
+          - PENTEST
+          default: DAST
+          description: Product line to scope the statistics to
+          example: DAST
+        required: false
+        description: Product line to scope the statistics to
+        name: source
+        in: query
+      - schema:
+          type: string
+          format: uuid
+          description: Scope the statistics to a single project. Omit for organization-wide statistics.
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Scope the statistics to a single project. Omit for organization-wide statistics.
+        name: projectId
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  open:
+                    type: integer
+                    description: Number of open issues (status OPEN or MANUAL_REVIEW) on monitored assets for the selected source
+                  remediated:
+                    type: integer
+                    description: Number of issues resolved in the last 30 days for the selected source
+                  averageTimeToResolve:
+                    type:
+                    - number
+                    - 'null'
+                    description: Average time to resolve issues (MTTR in days) over the last 30 days, null when no issues were resolved
+                  byStatus:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          enum:
+                          - FALSE_POSITIVE
+                          - IGNORED
+                          - MANUAL_REVIEW
+                          - OPEN
+                          - RESOLVED
+                          description: The issue status
+                        count:
+                          type: integer
+                          description: Number of issues with this status
+                      required:
+                      - status
+                      - count
+                    description: Issue counts grouped by status on monitored assets for the selected source
+                  bySeverity:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        severity:
+                          type: string
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          description: The issue severity
+                        count:
+                          type: integer
+                          description: Number of issues with this severity
+                      required:
+                      - severity
+                      - count
+                    description: Open issue counts (status OPEN or MANUAL_REVIEW) grouped by severity for the selected source
+                required:
+                - open
+                - remediated
+                - averageTimeToResolve
+                - byStatus
+                - bySeverity
+  /statistics/endpoints:
+    get:
+      tags:
+      - Statistics
+      summary: Get endpoint coverage statistics
+      operationId: getStatisticsEndpoints
+      description: 'Get endpoint coverage statistics for the organization: the number of covered API routes, GraphQL resolvers, and web pages. Scope by product line (source) and optionally by project.'
+      parameters:
+      - schema:
+          type: string
+          enum:
+          - DAST
+          - PENTEST
+          default: DAST
+          description: Product line to scope the statistics to
+          example: DAST
+        required: false
+        description: Product line to scope the statistics to
+        name: source
+        in: query
+      - schema:
+          type: string
+          format: uuid
+          description: Scope the statistics to a single project. Omit for organization-wide statistics.
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Scope the statistics to a single project. Omit for organization-wide statistics.
+        name: projectId
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiRoutes:
+                    type: integer
+                    description: Number of covered API routes
+                  graphqlResolvers:
+                    type: integer
+                    description: Number of covered GraphQL resolvers
+                  webPages:
+                    type: integer
+                    description: Number of covered web pages
+                required:
+                - apiRoutes
+                - graphqlResolvers
+                - webPages
+  /statistics/trends:
+    get:
+      tags:
+      - Statistics
+      summary: Get security trend time series
+      operationId: getStatisticsTrends
+      description: 'Get time-bucketed security trends for the organization over the half-open window [start, end): open vs resolved issue counts, and average API health scores. Both series share the same ordered bucket grid, so index i refers to the same bucket x. Filter by project IDs.'
+      parameters:
+      - schema:
+          type: string
+          description: Start date (ISO 8601)
+          example: '2026-01-01T00:00:00Z'
+        required: true
+        description: Start date (ISO 8601)
+        name: start
+        in: query
+      - schema:
+          type: string
+          description: End date (ISO 8601)
+          example: '2026-04-01T00:00:00Z'
+        required: true
+        description: End date (ISO 8601)
+        name: end
+        in: query
+      - schema:
+          type: string
+          default: 1 day
+          description: Time bucket interval (e.g. "1 day", "1 week", "2 weeks")
+          example: 1 day
+        required: false
+        description: Time bucket interval (e.g. "1 day", "1 week", "2 weeks")
+        name: interval
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by project IDs
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Filter by project IDs
+        name: projectIds
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  openResolved:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        x:
+                          type: string
+                          description: Time bucket start date (ISO 8601). The bucket covers [x, x + interval), except the final bucket, which ends at `end`.
+                        open:
+                          type: integer
+                          description: Issues first seen at or before the bucket start that were still open at the bucket end
+                        resolved:
+                          type: integer
+                          description: Cumulative count of issues first seen at or before the bucket start that were already resolved as of the bucket end. Once an issue is resolved it is counted in every later bucket, so this value repeats; difference consecutive buckets to get resolutions per bucket.
+                      required:
+                      - x
+                      - open
+                      - resolved
+                    description: Time series of open vs resolved issue counts
+                  averageApiHealth:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        x:
+                          type: string
+                          description: Time bucket start date (ISO 8601). The bucket covers [x, x + interval), except the final bucket, which ends at `end`.
+                        y:
+                          type:
+                          - number
+                          - 'null'
+                          description: Average API health score for the bucket, weighting each application equally. Each application contributes its last known finished-scan score, which is carried forward for buckets after its most recent scan, so a value can repeat across buckets; null when no application has scan data for the bucket.
+                      required:
+                      - x
+                      - y
+                    description: Time series of average API health scores
+                required:
+                - openResolved
+                - averageApiHealth
 components:
   securitySchemes:
     apiKey:

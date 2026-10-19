@@ -1,0 +1,492 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Compliance API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Compliance
+  description: 'Compliance frameworks
+
+
+    Read compliance posture at organization, application, and scan level, and manage enabled compliance frameworks.'
+paths:
+  /scans/{scanId}/compliance:
+    get:
+      tags:
+      - Compliance
+      summary: Get scan compliance posture
+      operationId: getScanCompliance
+      description: 'Get the compliance posture for a scan: per-framework enabled status and the list of failed compliance items.'
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        framework:
+                          type: string
+                          enum:
+                          - BITSIGHT
+                          - CRA
+                          - CWE
+                          - DORA
+                          - FEDRAMP
+                          - GDPR
+                          - HIPAA
+                          - HITRUST_CSF
+                          - IEC62443
+                          - ISO27001
+                          - MITRE_ATTACK
+                          - NIS2
+                          - NIST
+                          - OWASP
+                          - OWASP_ASVS
+                          - OWASP_LLM
+                          - PCI_DSS
+                          - PSD2
+                          - SECURITY_SCORECARD
+                          - SOC2
+                          - WASC
+                          description: The compliance framework
+                        enabled:
+                          type: boolean
+                          description: Whether this framework is enabled for the organization
+                        failedItems:
+                          type: array
+                          items:
+                            type: string
+                          description: List of failed compliance item identifiers
+                      required:
+                      - framework
+                      - enabled
+                      - failedItems
+                    description: Compliance posture for the scan
+                required:
+                - data
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /compliance:
+    get:
+      tags:
+      - Compliance
+      summary: Get organization compliance posture
+      operationId: getCompliancePosture
+      description: Get the compliance posture for all frameworks at the organization level, including enabled status and the security tests mapped to each compliance item.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        framework:
+                          type: string
+                          enum:
+                          - BITSIGHT
+                          - CRA
+                          - CWE
+                          - DORA
+                          - FEDRAMP
+                          - GDPR
+                          - HIPAA
+                          - HITRUST_CSF
+                          - IEC62443
+                          - ISO27001
+                          - MITRE_ATTACK
+                          - NIS2
+                          - NIST
+                          - OWASP
+                          - OWASP_ASVS
+                          - OWASP_LLM
+                          - PCI_DSS
+                          - PSD2
+                          - SECURITY_SCORECARD
+                          - SOC2
+                          - WASC
+                          description: The compliance framework
+                        enabled:
+                          type: boolean
+                          description: Whether this framework is enabled for the organization
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                description: The compliance item name
+                              tests:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      description: The security test identifier
+                                    name:
+                                      type: string
+                                      description: The security test name
+                                  required:
+                                  - id
+                                  - name
+                                description: Security tests mapped to this compliance item
+                            required:
+                            - name
+                            - tests
+                          description: Compliance items (categories) with their mapped security tests
+                      required:
+                      - framework
+                      - enabled
+                      - items
+                    description: Compliance posture for each framework
+                required:
+                - data
+  /compliance/enabled:
+    get:
+      tags:
+      - Compliance
+      summary: Get enabled compliance frameworks
+      operationId: getEnabledCompliances
+      description: Get the list of compliance frameworks enabled for the organization.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - BITSIGHT
+                      - CRA
+                      - CWE
+                      - DORA
+                      - FEDRAMP
+                      - GDPR
+                      - HIPAA
+                      - HITRUST_CSF
+                      - IEC62443
+                      - ISO27001
+                      - MITRE_ATTACK
+                      - NIS2
+                      - NIST
+                      - OWASP
+                      - OWASP_ASVS
+                      - OWASP_LLM
+                      - PCI_DSS
+                      - PSD2
+                      - SECURITY_SCORECARD
+                      - SOC2
+                      - WASC
+                    description: Enabled compliance frameworks
+                required:
+                - data
+    put:
+      tags:
+      - Compliance
+      summary: Update enabled compliance frameworks
+      operationId: updateEnabledCompliances
+      description: Enable or disable compliance frameworks for the organization. Requires admin permissions. Provide the full list of frameworks to enable; any framework not listed will be disabled.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                frameworks:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - BITSIGHT
+                    - CRA
+                    - CWE
+                    - DORA
+                    - FEDRAMP
+                    - GDPR
+                    - HIPAA
+                    - HITRUST_CSF
+                    - IEC62443
+                    - ISO27001
+                    - MITRE_ATTACK
+                    - NIS2
+                    - NIST
+                    - OWASP
+                    - OWASP_ASVS
+                    - OWASP_LLM
+                    - PCI_DSS
+                    - PSD2
+                    - SECURITY_SCORECARD
+                    - SOC2
+                    - WASC
+                  description: The full list of compliance frameworks to enable.
+              required:
+              - frameworks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - BITSIGHT
+                      - CRA
+                      - CWE
+                      - DORA
+                      - FEDRAMP
+                      - GDPR
+                      - HIPAA
+                      - HITRUST_CSF
+                      - IEC62443
+                      - ISO27001
+                      - MITRE_ATTACK
+                      - NIS2
+                      - NIST
+                      - OWASP
+                      - OWASP_ASVS
+                      - OWASP_LLM
+                      - PCI_DSS
+                      - PSD2
+                      - SECURITY_SCORECARD
+                      - SOC2
+                      - WASC
+                    description: Enabled compliance frameworks
+                required:
+                - data
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: Forbidden
+                description: Returned when the authenticated user does not have sufficient permissions
+  /compliance/per-application:
+    get:
+      tags:
+      - Compliance
+      summary: Get compliance statistics per application
+      operationId: getCompliancePerApplication
+      description: Get compliance statistics (failed/total items per framework) for each application. Optionally filter by profile IDs.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from
+          example: '123'
+        required: false
+        description: The cursor to start the pagination from
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return
+          example: 50
+        required: false
+        description: The number of items to return
+        name: size
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by profile IDs (comma-separated)
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Filter by profile IDs (comma-separated)
+        name: profileIds
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        application:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: The application ID
+                            name:
+                              type: string
+                              description: The application name
+                          required:
+                          - id
+                          - name
+                        compliances:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              framework:
+                                type: string
+                                enum:
+                                - BITSIGHT
+                                - CRA
+                                - CWE
+                                - DORA
+                                - FEDRAMP
+                                - GDPR
+                                - HIPAA
+                                - HITRUST_CSF
+                                - IEC62443
+                                - ISO27001
+                                - MITRE_ATTACK
+                                - NIS2
+                                - NIST
+                                - OWASP
+                                - OWASP_ASVS
+                                - OWASP_LLM
+                                - PCI_DSS
+                                - PSD2
+                                - SECURITY_SCORECARD
+                                - SOC2
+                                - WASC
+                                description: The compliance framework
+                              failed:
+                                type: integer
+                                description: Number of failed compliance items
+                              total:
+                                type: integer
+                                description: Total number of compliance items
+                            required:
+                            - framework
+                            - failed
+                            - total
+                          description: Compliance statistics for this application
+                      required:
+                      - application
+                      - compliances
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

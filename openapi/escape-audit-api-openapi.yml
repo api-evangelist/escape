@@ -94,19 +94,27 @@ paths:
         in: query
       - schema:
           type: string
-          description: Filter by action type
+          description: Filter by action type (exact match)
           example: user.confirmed
         required: false
-        description: Filter by action type
+        description: Filter by action type (exact match)
         name: action
         in: query
       - schema:
           type: string
-          description: Filter by actor
+          description: Filter by actor (exact match on the actor ID; use `search` for emails or partial values)
           example: 00000000-0000-0000-0000-000000000000
         required: false
-        description: Filter by actor
+        description: Filter by actor (exact match on the actor ID; use `search` for emails or partial values)
         name: actor
+        in: query
+      - schema:
+          type: string
+          description: Filter by target (case-insensitive substring match)
+          example: scan-123
+        required: false
+        description: Filter by target (case-insensitive substring match)
+        name: target
         in: query
       - schema:
           type: string
@@ -160,6 +168,9 @@ paths:
                           - string
                           - 'null'
                           description: The email of the actor
+                        target:
+                          type: string
+                          description: The target of the audit log
                       required:
                       - id
                       - date
@@ -183,13 +194,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
 components:
   securitySchemes:
     apiKey:

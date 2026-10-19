@@ -28,10 +28,37 @@ paths:
       - Tags
       summary: List tags
       operationId: listTags
-      description: List and search tags of the organization.
+      description: 'List and search tags of the organization. Pass `cursor` and `size` to page through the tags: without them every tag is returned, as before.'
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
       responses:
         '200':
           description: OK
+          headers:
+            X-Next-Cursor:
+              schema:
+                type: string
+                description: Cursor to pass as the `cursor` query parameter to fetch the next page. Absent when there is no next page.
+              required: false
+              description: Cursor to pass as the `cursor` query parameter to fetch the next page. Absent when there is no next page.
           content:
             application/json:
               schema:
@@ -66,13 +93,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
     post:
       tags:
       - Tags
@@ -210,79 +238,6 @@ paths:
                 - details
                 title: InternalServerError
                 description: Returned when the server fails to fulfil the request
-    delete:
-      tags:
-      - Tags
-      summary: Delete a tag
-      operationId: deleteTag
-      description: Delete a tag from the organization.
-      parameters:
-      - schema:
-          type: string
-          format: uuid
-          description: The tag ID
-          example: 00000000-0000-0000-0000-000000000000
-        required: true
-        description: The tag ID
-        name: tagId
-        in: path
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                required:
-                - message
-        '404':
-          description: Not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    enum:
-                    - Not found
-                required:
-                - message
-                title: NotFound
-                description: Returned when the requested resource does not exist
-        '409':
-          description: Tag is bound and cannot be deleted
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                required:
-                - message
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    enum:
-                    - Internal Server Error
-                  details:
-                    type: string
-                required:
-                - message
-                - details
-                title: InternalServerError
-                description: Returned when the server fails to fulfil the request
-  /tags/{tagId}/{tagId}:
     put:
       tags:
       - Tags
@@ -370,6 +325,78 @@ paths:
                 - message
                 title: NotFound
                 description: Returned when the requested resource does not exist
+    delete:
+      tags:
+      - Tags
+      summary: Delete a tag
+      operationId: deleteTag
+      description: Delete a tag from the organization.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The tag ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The tag ID
+        name: tagId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '409':
+          description: Tag is bound and cannot be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
 components:
   securitySchemes:
     apiKey:

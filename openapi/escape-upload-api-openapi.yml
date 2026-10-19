@@ -59,7 +59,52 @@ paths:
 
         Now, you are able to use the previously received id in another query.
 
-        For example to update a schema of your application.'
+        For example to update a schema of your application.
+
+
+        Optionally pass `contentType` and `filename` query parameters so the uploaded object keeps its
+
+        MIME type and original name:
+
+
+        ```bash
+
+        curl -X POST "/v3/upload/signed-url?contentType=application/json&filename=schema.har"
+
+        ```
+
+
+        When `contentType` is provided it is part of the signed request, so the `PUT` must send the same
+
+        `Content-Type` header:
+
+
+        ```bash
+
+        curl -X PUT -H "Content-Type: application/json" --data-binary ''@./schema.json'' "[SIGNED URL]"
+
+        ```'
+      parameters:
+      - schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: The MIME type of the file to upload, e.g. `application/json`. Stored on the uploaded object. When provided, the `PUT` must send the same `Content-Type`.
+          example: application/json
+        required: false
+        description: The MIME type of the file to upload, e.g. `application/json`. Stored on the uploaded object. When provided, the `PUT` must send the same `Content-Type`.
+        name: contentType
+        in: query
+      - schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: The original file name, e.g. `schema.har`. Used to build the storage key so the uploaded object keeps its original name.
+          example: schema.har
+        required: false
+        description: The original file name, e.g. `schema.har`. Used to build the storage key so the uploaded object keeps its original name.
+        name: filename
+        in: query
       responses:
         '200':
           description: OK

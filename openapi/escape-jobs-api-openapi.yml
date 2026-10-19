@@ -23,6 +23,314 @@ tags:
     Trigger export jobs and poll for completion and artefacts.'
 paths:
   /jobs:
+    get:
+      tags:
+      - Jobs
+      summary: List jobs
+      operationId: listJobs
+      description: List jobs of the organization with optional filtering by kind and status.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - SCHEDULED_AT
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - INTEGRATION_WIZ_RESEND_ISSUES
+            - MAINTENANCE_RECOMPUTE_ISSUES_FULLNAME
+            - SAAS_AI_FALSE_POSITIVE_DETECTION
+            - SAAS_AI_FALSE_POSITIVE_DETECTION_ON_ISSUE
+            - SAAS_ARCHIVE_SCAN
+            - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_AGENT_TOOL_CALL
+            - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_EXCHANGE
+            - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_GENERATED_OPENAPI_SPEC
+            - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_GRAPH
+            - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_SCREENSHOT
+            - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_SNIPPET
+            - SAAS_ARCHIVE_SCAN_DELETE_EVENTS
+            - SAAS_ARCHIVE_SCAN_DELETE_TARGETS
+            - SAAS_ARTEFACTS_S3_MIGRATION
+            - SAAS_ASSET_FILES_S3_MIGRATION
+            - SAAS_ASSET_SCHEMA_S3_MIGRATION
+            - SAAS_ATTACHMENTS_S3_MIGRATION
+            - SAAS_BATCHED_SCHEDULE_ASM_SCANS
+            - SAAS_BATCHED_UPDATE_CACHED_DATA
+            - SAAS_BATCHED_UPDATE_ISSUE_COUNTS
+            - SAAS_BULK_CREATE_ASSETS
+            - SAAS_CANCEL_RUNNING_SCANS
+            - SAAS_CHECK_LOCATION_DOWN
+            - SAAS_DELETE_APPLICATION
+            - SAAS_DELETE_ASSETS
+            - SAAS_DELETE_INTEGRATION
+            - SAAS_DELETE_ORGANIZATION
+            - SAAS_DELETE_PROJECT
+            - SAAS_END_SCAN_ROUTINE
+            - SAAS_EVENTS_ARCHIVE_GENERATION
+            - SAAS_EXCHANGES_ARCHIVE_GENERATION
+            - SAAS_EXECUTE_CONTINUOUS_PENTEST
+            - SAAS_EXECUTE_SCHEDULE
+            - SAAS_EXECUTE_WORKFLOW
+            - SAAS_EXPORT_TEMPLATE
+            - SAAS_GC_ARCHIVED_SCAN_TARGETS
+            - SAAS_GC_ORPHAN_ATTACHMENTS
+            - SAAS_GENERATE_ISSUE_REMEDIATION
+            - SAAS_GENERATE_PENTEST_ASSESSMENT_EXECUTIVE_SUMMARY
+            - SAAS_GENERATE_PENTEST_EXECUTIVE_SUMMARY
+            - SAAS_GENERATE_PENTEST_PROFILE_EXECUTIVE_SUMMARY
+            - SAAS_GENERATE_PENTEST_REMEDIATION_SUMMARY
+            - SAAS_OFFLOAD_ATTACHMENTS
+            - SAAS_OFFLOAD_EXCHANGE_BODIES
+            - SAAS_POPULATE_ASSET_SCAN_MTM
+            - SAAS_POPULATE_ISSUE_SCAN_MTM
+            - SAAS_PROCESS_FILE_UPLOAD
+            - SAAS_REBUILD_ASSET_LINKS
+            - SAAS_RECOMPUTE_ASSET_RISKS
+            - SAAS_RECONCILE_ORG_SCHEDULES
+            - SAAS_SCHEDULE_ASSET_SCAN_MTM_POPULATION
+            - SAAS_SCHEDULE_DEFAULT_VIEWS_SEED
+            - SAAS_SCHEDULE_ISSUE_SCAN_MTM_POPULATION
+            - SAAS_SCHEDULE_WORKFLOWS
+            - SAAS_SEED_DEFAULT_VIEWS
+            - SAAS_START_ASM_SCAN
+            - SAAS_TEMPORARY_SYNC_SCHEMAS_AND_SERVICES
+            - SAAS_UPSERT_ASM_PROFILES
+            - SEND_JOB_ARTEFACTS_BY_EMAIL
+            - TEST_KIND
+          description: Filter by job kinds.
+        required: false
+        description: Filter by job kinds.
+        name: kinds
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - COMPLETED
+            - FAILED
+            - PENDING
+            - RUNNING
+          description: Filter by job statuses.
+        required: false
+        description: Filter by job statuses.
+        name: statuses
+        in: query
+      - schema:
+          type: string
+          description: Case-insensitive substring match on the job kind. Use the kinds filter for exact kinds; report names are not searchable.
+        required: false
+        description: Case-insensitive substring match on the job kind. Use the kinds filter for exact kinds; report names are not searchable.
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        status:
+                          type: string
+                          enum:
+                          - COMPLETED
+                          - FAILED
+                          - PENDING
+                          - RUNNING
+                        kind:
+                          type: string
+                          enum:
+                          - INTEGRATION_WIZ_RESEND_ISSUES
+                          - MAINTENANCE_RECOMPUTE_ISSUES_FULLNAME
+                          - SAAS_AI_FALSE_POSITIVE_DETECTION
+                          - SAAS_AI_FALSE_POSITIVE_DETECTION_ON_ISSUE
+                          - SAAS_ARCHIVE_SCAN
+                          - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_AGENT_TOOL_CALL
+                          - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_EXCHANGE
+                          - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_GENERATED_OPENAPI_SPEC
+                          - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_GRAPH
+                          - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_SCREENSHOT
+                          - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_SNIPPET
+                          - SAAS_ARCHIVE_SCAN_DELETE_EVENTS
+                          - SAAS_ARCHIVE_SCAN_DELETE_TARGETS
+                          - SAAS_ARTEFACTS_S3_MIGRATION
+                          - SAAS_ASSET_FILES_S3_MIGRATION
+                          - SAAS_ASSET_SCHEMA_S3_MIGRATION
+                          - SAAS_ATTACHMENTS_S3_MIGRATION
+                          - SAAS_BATCHED_SCHEDULE_ASM_SCANS
+                          - SAAS_BATCHED_UPDATE_CACHED_DATA
+                          - SAAS_BATCHED_UPDATE_ISSUE_COUNTS
+                          - SAAS_BULK_CREATE_ASSETS
+                          - SAAS_CANCEL_RUNNING_SCANS
+                          - SAAS_CHECK_LOCATION_DOWN
+                          - SAAS_DELETE_APPLICATION
+                          - SAAS_DELETE_ASSETS
+                          - SAAS_DELETE_INTEGRATION
+                          - SAAS_DELETE_ORGANIZATION
+                          - SAAS_DELETE_PROJECT
+                          - SAAS_END_SCAN_ROUTINE
+                          - SAAS_EVENTS_ARCHIVE_GENERATION
+                          - SAAS_EXCHANGES_ARCHIVE_GENERATION
+                          - SAAS_EXECUTE_CONTINUOUS_PENTEST
+                          - SAAS_EXECUTE_SCHEDULE
+                          - SAAS_EXECUTE_WORKFLOW
+                          - SAAS_EXPORT_TEMPLATE
+                          - SAAS_GC_ARCHIVED_SCAN_TARGETS
+                          - SAAS_GC_ORPHAN_ATTACHMENTS
+                          - SAAS_GENERATE_ISSUE_REMEDIATION
+                          - SAAS_GENERATE_PENTEST_ASSESSMENT_EXECUTIVE_SUMMARY
+                          - SAAS_GENERATE_PENTEST_EXECUTIVE_SUMMARY
+                          - SAAS_GENERATE_PENTEST_PROFILE_EXECUTIVE_SUMMARY
+                          - SAAS_GENERATE_PENTEST_REMEDIATION_SUMMARY
+                          - SAAS_OFFLOAD_ATTACHMENTS
+                          - SAAS_OFFLOAD_EXCHANGE_BODIES
+                          - SAAS_POPULATE_ASSET_SCAN_MTM
+                          - SAAS_POPULATE_ISSUE_SCAN_MTM
+                          - SAAS_PROCESS_FILE_UPLOAD
+                          - SAAS_REBUILD_ASSET_LINKS
+                          - SAAS_RECOMPUTE_ASSET_RISKS
+                          - SAAS_RECONCILE_ORG_SCHEDULES
+                          - SAAS_SCHEDULE_ASSET_SCAN_MTM_POPULATION
+                          - SAAS_SCHEDULE_DEFAULT_VIEWS_SEED
+                          - SAAS_SCHEDULE_ISSUE_SCAN_MTM_POPULATION
+                          - SAAS_SCHEDULE_WORKFLOWS
+                          - SAAS_SEED_DEFAULT_VIEWS
+                          - SAAS_START_ASM_SCAN
+                          - SAAS_TEMPORARY_SYNC_SCHEMAS_AND_SERVICES
+                          - SAAS_UPSERT_ASM_PROFILES
+                          - SEND_JOB_ARTEFACTS_BY_EMAIL
+                          - TEST_KIND
+                        name:
+                          type:
+                          - string
+                          - 'null'
+                        createdAt:
+                          type: string
+                        scheduledAt:
+                          type:
+                          - string
+                          - 'null'
+                        triggeredAt:
+                          type:
+                          - string
+                          - 'null'
+                        completedAt:
+                          type:
+                          - string
+                          - 'null'
+                        error:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            message:
+                              type: string
+                          required:
+                          - message
+                          description: Failure message. Credentials and secrets are redacted.
+                        reason:
+                          type:
+                          - string
+                          - 'null'
+                          description: Why the job was triggered.
+                        retries:
+                          type: integer
+                        retriedAt:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - id
+                      - status
+                      - kind
+                      - name
+                      - createdAt
+                      - scheduledAt
+                      - triggeredAt
+                      - completedAt
+                      - error
+                      - reason
+                      - retries
+                      - retriedAt
+                      title: JobSummary
+                      description: Job status for list views.
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
     post:
       tags:
       - Jobs
@@ -43,7 +351,6 @@ paths:
                       kind:
                         type: string
                         enum:
-                        - AI_ANALYSIS
                         - ASSETS_SUMMARY
                         - COMPLIANCE_COVERAGE
                         - COMPLIANCE_CRA
@@ -68,14 +375,18 @@ paths:
                         - ISSUE_DETAIL
                         - ISSUE_LIST
                         - ISSUE_SUMMARY
+                        - PROFILE_SUMMARY
                         - SCAN_HISTORY_TREND
                         - SCAN_SUMMARY
-                      params:
-                        description: Block-specific JSON parameters (optional).
                     required:
                     - kind
                   minItems: 1
                   description: Report blocks to include, in order.
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                  description: Report name (optional).
                 scanId:
                   type: string
                   format: uuid
@@ -83,6 +394,9 @@ paths:
                 dry:
                   type: boolean
                   description: If true, validates selection only and does not schedule a job.
+                notify:
+                  type: boolean
+                  description: If false, skip the email notification when the report is ready. Defaults to true.
                 assetWhere:
                   description: GraphQL AssetWhereInput JSON (optional); narrows assets like the internal API.
                 profileWhere:
@@ -162,11 +476,18 @@ paths:
                     type: string
                     enum:
                     - INTEGRATION_WIZ_RESEND_ISSUES
-                    - MAINTENANCE_MIGRATE_PROFILE
                     - MAINTENANCE_RECOMPUTE_ISSUES_FULLNAME
                     - SAAS_AI_FALSE_POSITIVE_DETECTION
                     - SAAS_AI_FALSE_POSITIVE_DETECTION_ON_ISSUE
                     - SAAS_ARCHIVE_SCAN
+                    - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_AGENT_TOOL_CALL
+                    - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_EXCHANGE
+                    - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_GENERATED_OPENAPI_SPEC
+                    - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_GRAPH
+                    - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_SCREENSHOT
+                    - SAAS_ARCHIVE_SCAN_DELETE_ATTACHMENT_SNIPPET
+                    - SAAS_ARCHIVE_SCAN_DELETE_EVENTS
+                    - SAAS_ARCHIVE_SCAN_DELETE_TARGETS
                     - SAAS_ARTEFACTS_S3_MIGRATION
                     - SAAS_ASSET_FILES_S3_MIGRATION
                     - SAAS_ASSET_SCHEMA_S3_MIGRATION
@@ -185,25 +506,39 @@ paths:
                     - SAAS_END_SCAN_ROUTINE
                     - SAAS_EVENTS_ARCHIVE_GENERATION
                     - SAAS_EXCHANGES_ARCHIVE_GENERATION
+                    - SAAS_EXECUTE_CONTINUOUS_PENTEST
+                    - SAAS_EXECUTE_SCHEDULE
                     - SAAS_EXECUTE_WORKFLOW
                     - SAAS_EXPORT_TEMPLATE
+                    - SAAS_GC_ARCHIVED_SCAN_TARGETS
+                    - SAAS_GC_ORPHAN_ATTACHMENTS
                     - SAAS_GENERATE_ISSUE_REMEDIATION
-                    - SAAS_MIGRATE_WORKFLOWS_FILTERS
+                    - SAAS_GENERATE_PENTEST_ASSESSMENT_EXECUTIVE_SUMMARY
+                    - SAAS_GENERATE_PENTEST_EXECUTIVE_SUMMARY
+                    - SAAS_GENERATE_PENTEST_PROFILE_EXECUTIVE_SUMMARY
+                    - SAAS_GENERATE_PENTEST_REMEDIATION_SUMMARY
+                    - SAAS_OFFLOAD_ATTACHMENTS
+                    - SAAS_OFFLOAD_EXCHANGE_BODIES
+                    - SAAS_POPULATE_ASSET_SCAN_MTM
                     - SAAS_POPULATE_ISSUE_SCAN_MTM
-                    - SAAS_PROCESS_AGENTIC_LOGS
                     - SAAS_PROCESS_FILE_UPLOAD
                     - SAAS_REBUILD_ASSET_LINKS
                     - SAAS_RECOMPUTE_ASSET_RISKS
+                    - SAAS_RECONCILE_ORG_SCHEDULES
+                    - SAAS_SCHEDULE_ASSET_SCAN_MTM_POPULATION
                     - SAAS_SCHEDULE_DEFAULT_VIEWS_SEED
                     - SAAS_SCHEDULE_ISSUE_SCAN_MTM_POPULATION
                     - SAAS_SCHEDULE_WORKFLOWS
-                    - SAAS_SCHEDULE_WORKFLOWS_FILTERS_MIGRATION
                     - SAAS_SEED_DEFAULT_VIEWS
                     - SAAS_START_ASM_SCAN
                     - SAAS_TEMPORARY_SYNC_SCHEMAS_AND_SERVICES
                     - SAAS_UPSERT_ASM_PROFILES
                     - SEND_JOB_ARTEFACTS_BY_EMAIL
                     - TEST_KIND
+                  name:
+                    type:
+                    - string
+                    - 'null'
                   createdAt:
                     type: string
                   scheduledAt:
@@ -219,6 +554,27 @@ paths:
                     - string
                     - 'null'
                   parameters: {}
+                  error:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      message:
+                        type: string
+                    required:
+                    - message
+                    description: Failure message. Credentials and secrets are redacted.
+                  reason:
+                    type:
+                    - string
+                    - 'null'
+                    description: Why the job was triggered.
+                  retries:
+                    type: integer
+                  retriedAt:
+                    type: array
+                    items:
+                      type: string
                   artefacts:
                     type: array
                     items:
@@ -256,10 +612,15 @@ paths:
                 - id
                 - status
                 - kind
+                - name
                 - createdAt
                 - scheduledAt
                 - triggeredAt
                 - completedAt
+                - error
+                - reason
+                - retries
+                - retriedAt
                 - artefacts
         '400':
           description: Bad Request
@@ -294,6 +655,243 @@ paths:
                 - message
                 title: NotFound
                 description: Returned when the requested resource does not exist
+  /jobs/{jobId}/name:
+    put:
+      tags:
+      - Jobs
+      summary: Rename a report
+      operationId: renameExport
+      description: Rename an export job (report).
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The job ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The job ID
+        name: jobId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                  description: The new report name.
+              required:
+              - name
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: ID of the export job.
+                  name:
+                    type:
+                    - string
+                    - 'null'
+                    description: The updated report name.
+                required:
+                - id
+                - name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /jobs/{jobId}/send-artefacts:
+    post:
+      tags:
+      - Jobs
+      summary: Email report artefacts
+      operationId: sendJobArtefacts
+      description: Send report artefacts (report files) by email. Only report jobs can be emailed.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The job ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The job ID
+        name: jobId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+                  minItems: 1
+                  maxItems: 50
+                  description: Recipient email addresses (at most 50).
+                subject:
+                  type: string
+                  maxLength: 200
+                  description: Email subject line.
+              required:
+              - emails
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sent:
+                    type: boolean
+                    description: Whether the email was scheduled.
+                required:
+                - sent
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
 components:
   securitySchemes:
     apiKey:

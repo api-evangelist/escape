@@ -438,6 +438,199 @@ apis:
     url: https://docs.escape.tech/documentation/automate/public-api/
   - type: Authentication
     url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-aichats-api
+  name: Escape AI Chats API
+  description: >-
+    Copilot chats.
+
+
+    Create, list and resume Copilot chats. Only the chats owned by the authenticated user are exposed.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - AIChats
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-aichats-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-compliance-api
+  name: Escape Compliance API
+  description: >-
+    Compliance frameworks
+
+
+    Read compliance posture at organization, application, and scan level, and manage enabled compliance
+    frameworks.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Compliance
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-compliance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-knowledgefiles-api
+  name: Escape Knowledge Files API
+  description: >-
+    Manage organization knowledge files.
+
+
+    The knowledge file library gives AI pentests context about your organization. Upload files with a
+    signed URL, list them, and delete them.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - KnowledgeFiles
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-knowledgefiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-organizationsettings-api
+  name: Escape Organization Settings API
+  description: >-
+    Organization settings.
+
+
+    Manage organization-wide settings: issue SLA policy, AI system prompt, project propagation and scoped
+    webhook export. Scan kill switches are read-only.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - OrganizationSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-organizationsettings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-regressiontests-api
+  name: Escape Regression Tests API
+  description: >-
+    Manage regression tests.
+
+
+    Create regression tests from a source report, run them, and track their history. A regression test
+    re-validates a finding against an updated codebase.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - RegressionTests
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-regressiontests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-retests-api
+  name: Escape Retests API
+  description: >-
+    A Retest is a scan that re-validates selected issues on a DAST or AI pentest profile.
+
+
+    Start a retest with explicit issue IDs or a filter, then poll status, progress, and per-issue agents
+    (status and outcome). The retest id is the scan id.
+
+
+    See [our documentation](https://docs.escape.tech/documentation/automate/public-api/) for more details.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Retests
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-retests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-securitytests-api
+  name: Escape Security Tests API
+  description: >-
+    Manage security tests.
+
+
+    Browse the security tests Escape can run, with their organization configuration (enabled state and
+    custom severity), scanner and asset applicability, description and compliance mappings. Enable or
+    disable security tests for your organization and override the severity assigned to their issues.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - SecurityTests
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-securitytests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-validations-api
+  name: Escape Validations API
+  description: >-
+    Target validations.
+
+
+    Start a validation to check that a target (asset) is reachable and in scope, then poll for status
+    and output.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Validations
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-validations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-vaultvariables-api
+  name: Escape Vault Variables API
+  description: >-
+    Manage vault variables.
+
+
+    Vault variables are secret references used by scan authentication configs. Values are write-only:
+    they are accepted on create and update, but never returned by the API.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - VaultVariables
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-vaultvariables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
+- aid: escape:escape-views-api
+  name: Escape Views API
+  description: >-
+    Saved views
+
+
+    The public API provides CRUDs operations to manage saved views and list the issues matching an issue
+    view.
+  humanURL: https://docs.escape.tech/documentation/automate/public-api/
+  baseURL: https://public.escape.tech/v3
+  tags:
+  - Views
+  properties:
+  - type: OpenAPI
+    url: openapi/escape-views-api-openapi.yml
+  - type: Documentation
+    url: https://docs.escape.tech/documentation/automate/public-api/
+  - type: Authentication
+    url: https://docs.escape.tech/documentation/automate/public-api/
 - aid: escape:escape-custom-rules-api
   name: Escape Custom Rules API
   description: >-
@@ -451,8 +644,6 @@ apis:
   humanURL: https://docs.escape.tech/documentation/automate/public-api/
   baseURL: https://public.escape.tech/v3
   tags:
-  - CustomRules
-  tags_raw:
   - Custom Rules
   properties:
   - type: OpenAPI

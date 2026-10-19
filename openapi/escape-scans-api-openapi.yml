@@ -90,6 +90,14 @@ paths:
         name: before
         in: query
       - schema:
+          type: string
+          description: Search term to filter scans
+          example: scan
+        required: false
+        description: Search term to filter scans
+        name: search
+        in: query
+      - schema:
           anyOf:
           - type: string
           - type: array
@@ -112,6 +120,54 @@ paths:
         required: false
         description: Filter by profile IDs
         name: profileIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by tag IDs
+        required: false
+        description: Filter by tag IDs
+        name: tagIds
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APK
+            - AWS_LAMBDA
+            - BITBUCKET_REPOSITORY
+            - BURPSUITE_EXPORT
+            - CODE_PROJECT
+            - DNS
+            - GITHUB_REPOSITORY
+            - GITLAB_REPOSITORY
+            - GRAPHQL
+            - GRAPHQL_SCHEMA
+            - GRPC
+            - HAR_EXPORT
+            - INSOMNIA
+            - IPV4
+            - IPV4_RANGE
+            - IPV6
+            - MCP
+            - OPENAPI
+            - PACKAGE
+            - POSTMAN_COLLECTION
+            - POSTMAN_ENVIRONMENT
+            - REST
+            - SOAP
+            - SOFTWARE
+            - WEBAPP
+            - WEBSOCKET
+            - WP_JSON
+          description: Filter by asset types
+        required: false
+        description: Filter by asset types
+        name: assetTypes
         in: query
       - schema:
           type: string
@@ -145,20 +201,13 @@ paths:
           items:
             type: string
             enum:
-            - ASM_AKAMAI_ACCOUNT
-            - ASM_AWS_ACCOUNT
+            - ASM_APK
             - ASM_AWS_LAMBDA
-            - ASM_AZURE_TENANT
-            - ASM_BITBUCKET_ORGANIZATION
             - ASM_BITBUCKET_REPOSITORY
             - ASM_BURPSUITE_EXPORT
-            - ASM_CLOUDFLARE_ACCOUNT
             - ASM_CODE_PROJECT
             - ASM_DNS
-            - ASM_GCP_PROJECT
-            - ASM_GITHUB_ORGANIZATION
             - ASM_GITHUB_REPOSITORY
-            - ASM_GITLAB_GROUP
             - ASM_GITLAB_REPOSITORY
             - ASM_GRAPHQL
             - ASM_GRAPHQL_SCHEMA
@@ -168,26 +217,28 @@ paths:
             - ASM_IPV4
             - ASM_IPV4_RANGE
             - ASM_IPV6
-            - ASM_KUBERNETES_CLUSTER
             - ASM_MCP
             - ASM_OPENAPI
             - ASM_PACKAGE
             - ASM_POSTMAN_COLLECTION
             - ASM_POSTMAN_ENVIRONMENT
-            - ASM_POSTMAN_ORGANIZATION
             - ASM_REST
             - ASM_SOAP
             - ASM_SOFTWARE
             - ASM_WEBAPP
             - ASM_WEBSOCKET
-            - ASM_WIZ_ACCOUNT
             - ASM_WP_JSON
-            - AUTOMATED_PENTEST_GRAPHQL
-            - AUTOMATED_PENTEST_REST
-            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST
             - BLST_GRAPHQL
             - BLST_REST
+            - CONTINUOUS_PENTEST
+            - EXTERNAL_NETWORK_PENTEST
             - FRONTEND_DAST
+            - MOBILE_APP_PENTEST
+            - RETEST
+            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST_REST
+            - AUTOMATED_PENTEST_GRAPHQL
           description: Filter by kind
         required: false
         description: Filter by kind
@@ -220,6 +271,80 @@ paths:
         description: Filter by project IDs
         name: projectIds
         in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AUTH_FAILURE
+            - BLOCKED_BY_CORS
+            - BLOCKED_BY_WAF
+            - CAPTCHA_HIT
+            - CONFIGURATION_IMPROVEMENT
+            - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+            - INTEGRATION_ERROR
+            - NO_AUTHENTICATION_CONFIGURED
+            - NO_SCHEMA_FOUND
+            - PL_FAILURE
+            - RATE_LIMIT_EXCEEDED
+            - SCHEMA_IMPROVEMENT
+            - TIMEOUT
+            - UNEXPECTED_ERROR
+            - UNREACHABLE_ASSET
+          description: Filter by problem codes
+        required: false
+        description: Filter by problem codes
+        name: problemCodes
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ERROR
+            - INFO
+            - WARNING
+          description: Filter by problem severities
+        required: false
+        description: Filter by problem severities
+        name: problemSeverities
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by assets with no tags
+        required: false
+        description: Filter by assets with no tags
+        name: noTags
+        in: query
+      - schema:
+          type: string
+          description: Filter by commit branch. Not supported by the GraphQL where input, so it is applied after fetching.
+        required: false
+        description: Filter by commit branch. Not supported by the GraphQL where input, so it is applied after fetching.
+        name: commitBranch
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Keep only the latest scan of each commit branch. Not supported by the GraphQL where input, so it is applied after fetching.
+        required: false
+        description: Keep only the latest scan of each commit branch. Not supported by the GraphQL where input, so it is applied after fetching.
+        name: latestBranchScans
+        in: query
+      - schema:
+          type: string
+          description: Filter by DNF expression
+        required: false
+        description: Filter by DNF expression
+        name: dnf
+        in: query
       responses:
         '200':
           description: OK
@@ -245,6 +370,18 @@ paths:
                           type: string
                           format: uuid
                           description: The id of the scan
+                        profileId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The id of the profile that ran the scan
+                        assetId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The id of the asset that was scanned, if any
                         status:
                           type: string
                           description: The status of the scan
@@ -299,6 +436,8 @@ paths:
                           description: The links of the scan
                       required:
                       - id
+                      - profileId
+                      - assetId
                       - status
                       - createdAt
                       - finishedAt
@@ -327,13 +466,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
     post:
       tags:
       - Scans
@@ -370,6 +510,10 @@ paths:
                   type: string
                   description: The commit author profile picture link to scan
                   example: https://example.com/example.png
+                forceLockBypass:
+                  type: boolean
+                  description: Bypass the lock that prevents concurrent scans of the same profile
+                  example: false
                 configurationOverride:
                   description: The configuration override to use
                   examples:
@@ -465,6 +609,109 @@ paths:
                     type:
                     - string
                     - 'null'
+                  ignored:
+                    type: boolean
+                    description: Whether the scan is ignored. Only returned by the scan detail endpoint.
+                  executiveSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated executive summary of the scan. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                  scopeSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated summary of the scanned scope. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the problem
+                        code:
+                          type: string
+                          enum:
+                          - AUTH_FAILURE
+                          - BLOCKED_BY_CORS
+                          - BLOCKED_BY_WAF
+                          - CAPTCHA_HIT
+                          - CONFIGURATION_IMPROVEMENT
+                          - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+                          - INTEGRATION_ERROR
+                          - NO_AUTHENTICATION_CONFIGURED
+                          - NO_SCHEMA_FOUND
+                          - PL_FAILURE
+                          - RATE_LIMIT_EXCEEDED
+                          - SCHEMA_IMPROVEMENT
+                          - TIMEOUT
+                          - UNEXPECTED_ERROR
+                          - UNREACHABLE_ASSET
+                          description: The problem code
+                        message:
+                          type: string
+                          description: The problem message
+                        severity:
+                          type: string
+                          enum:
+                          - ERROR
+                          - INFO
+                          - WARNING
+                          description: The problem severity
+                        createdAt:
+                          type: string
+                          description: The date and time the problem was created
+                      required:
+                      - id
+                      - code
+                      - message
+                      - severity
+                      - createdAt
+                      title: ScanProblem
+                      description: A validation problem surfaced by the scanner during a scan
+                    description: Validation problems surfaced by the scanner during this scan. Only returned by the scan detail endpoint.
+                  artefacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the artefact
+                        kind:
+                          type: string
+                          enum:
+                          - AUDITOR_REPORT
+                          - EVENTS_ARCHIVE
+                          - EXCHANGES_ARCHIVE
+                          - EXECUTIVE_REPORT
+                          - EXPORT_JOB_RESULT
+                          description: The kind of the artefact
+                        name:
+                          type: string
+                          description: The name of the artefact
+                        signedUrl:
+                          type: string
+                          description: Time-limited HTTPS download URL for the artefact
+                        createdAt:
+                          type: string
+                          description: The date and time the artefact was created
+                        updatedAt:
+                          type: string
+                          description: The date and time the artefact was updated
+                      required:
+                      - id
+                      - kind
+                      - name
+                      - signedUrl
+                      - createdAt
+                      - updatedAt
+                      title: ScanArtefact
+                      description: A file produced by a scan; signedUrl is a time-limited download link
+                    description: Files produced by this scan, such as executive reports. Only returned by the scan detail endpoint.
                   links:
                     type: object
                     properties:
@@ -643,20 +890,13 @@ paths:
           items:
             type: string
             enum:
-            - ASM_AKAMAI_ACCOUNT
-            - ASM_AWS_ACCOUNT
+            - ASM_APK
             - ASM_AWS_LAMBDA
-            - ASM_AZURE_TENANT
-            - ASM_BITBUCKET_ORGANIZATION
             - ASM_BITBUCKET_REPOSITORY
             - ASM_BURPSUITE_EXPORT
-            - ASM_CLOUDFLARE_ACCOUNT
             - ASM_CODE_PROJECT
             - ASM_DNS
-            - ASM_GCP_PROJECT
-            - ASM_GITHUB_ORGANIZATION
             - ASM_GITHUB_REPOSITORY
-            - ASM_GITLAB_GROUP
             - ASM_GITLAB_REPOSITORY
             - ASM_GRAPHQL
             - ASM_GRAPHQL_SCHEMA
@@ -666,26 +906,28 @@ paths:
             - ASM_IPV4
             - ASM_IPV4_RANGE
             - ASM_IPV6
-            - ASM_KUBERNETES_CLUSTER
             - ASM_MCP
             - ASM_OPENAPI
             - ASM_PACKAGE
             - ASM_POSTMAN_COLLECTION
             - ASM_POSTMAN_ENVIRONMENT
-            - ASM_POSTMAN_ORGANIZATION
             - ASM_REST
             - ASM_SOAP
             - ASM_SOFTWARE
             - ASM_WEBAPP
             - ASM_WEBSOCKET
-            - ASM_WIZ_ACCOUNT
             - ASM_WP_JSON
-            - AUTOMATED_PENTEST_GRAPHQL
-            - AUTOMATED_PENTEST_REST
-            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST
             - BLST_GRAPHQL
             - BLST_REST
+            - CONTINUOUS_PENTEST
+            - EXTERNAL_NETWORK_PENTEST
             - FRONTEND_DAST
+            - MOBILE_APP_PENTEST
+            - RETEST
+            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST_REST
+            - AUTOMATED_PENTEST_GRAPHQL
           description: Filter by kind
         required: false
         description: Filter by kind
@@ -705,6 +947,44 @@ paths:
         required: false
         description: Filter by status
         name: status
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AUTH_FAILURE
+            - BLOCKED_BY_CORS
+            - BLOCKED_BY_WAF
+            - CAPTCHA_HIT
+            - CONFIGURATION_IMPROVEMENT
+            - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+            - INTEGRATION_ERROR
+            - NO_AUTHENTICATION_CONFIGURED
+            - NO_SCHEMA_FOUND
+            - PL_FAILURE
+            - RATE_LIMIT_EXCEEDED
+            - SCHEMA_IMPROVEMENT
+            - TIMEOUT
+            - UNEXPECTED_ERROR
+            - UNREACHABLE_ASSET
+          description: Filter by problem codes
+        required: false
+        description: Filter by problem codes
+        name: problemCodes
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ERROR
+            - INFO
+            - WARNING
+          description: Filter by problem severities
+        required: false
+        description: Filter by problem severities
+        name: problemSeverities
         in: query
       responses:
         '200':
@@ -731,6 +1011,18 @@ paths:
                           type: string
                           format: uuid
                           description: The id of the scan
+                        profileId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The id of the profile that ran the scan
+                        assetId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The id of the asset that was scanned, if any
                         status:
                           type: string
                           description: The status of the scan
@@ -804,6 +1096,8 @@ paths:
                           description: The problems found in the scan
                       required:
                       - id
+                      - profileId
+                      - assetId
                       - status
                       - createdAt
                       - finishedAt
@@ -833,13 +1127,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
         '500':
           description: Internal Server Error
           content:
@@ -864,7 +1159,7 @@ paths:
       - Scans
       summary: Get a scan
       operationId: getScan
-      description: Get a scan by ID
+      description: 'Get a scan by ID, including its AI pentest results: executive and scope summaries, scanner problems and produced artefacts. Credentials and secrets are redacted.'
       parameters:
       - schema:
           type: string
@@ -948,6 +1243,109 @@ paths:
                     type:
                     - string
                     - 'null'
+                  ignored:
+                    type: boolean
+                    description: Whether the scan is ignored. Only returned by the scan detail endpoint.
+                  executiveSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated executive summary of the scan. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                  scopeSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated summary of the scanned scope. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the problem
+                        code:
+                          type: string
+                          enum:
+                          - AUTH_FAILURE
+                          - BLOCKED_BY_CORS
+                          - BLOCKED_BY_WAF
+                          - CAPTCHA_HIT
+                          - CONFIGURATION_IMPROVEMENT
+                          - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+                          - INTEGRATION_ERROR
+                          - NO_AUTHENTICATION_CONFIGURED
+                          - NO_SCHEMA_FOUND
+                          - PL_FAILURE
+                          - RATE_LIMIT_EXCEEDED
+                          - SCHEMA_IMPROVEMENT
+                          - TIMEOUT
+                          - UNEXPECTED_ERROR
+                          - UNREACHABLE_ASSET
+                          description: The problem code
+                        message:
+                          type: string
+                          description: The problem message
+                        severity:
+                          type: string
+                          enum:
+                          - ERROR
+                          - INFO
+                          - WARNING
+                          description: The problem severity
+                        createdAt:
+                          type: string
+                          description: The date and time the problem was created
+                      required:
+                      - id
+                      - code
+                      - message
+                      - severity
+                      - createdAt
+                      title: ScanProblem
+                      description: A validation problem surfaced by the scanner during a scan
+                    description: Validation problems surfaced by the scanner during this scan. Only returned by the scan detail endpoint.
+                  artefacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the artefact
+                        kind:
+                          type: string
+                          enum:
+                          - AUDITOR_REPORT
+                          - EVENTS_ARCHIVE
+                          - EXCHANGES_ARCHIVE
+                          - EXECUTIVE_REPORT
+                          - EXPORT_JOB_RESULT
+                          description: The kind of the artefact
+                        name:
+                          type: string
+                          description: The name of the artefact
+                        signedUrl:
+                          type: string
+                          description: Time-limited HTTPS download URL for the artefact
+                        createdAt:
+                          type: string
+                          description: The date and time the artefact was created
+                        updatedAt:
+                          type: string
+                          description: The date and time the artefact was updated
+                      required:
+                      - id
+                      - kind
+                      - name
+                      - signedUrl
+                      - createdAt
+                      - updatedAt
+                      title: ScanArtefact
+                      description: A file produced by a scan; signedUrl is a time-limited download link
+                    description: Files produced by this scan, such as executive reports. Only returned by the scan detail endpoint.
                   links:
                     type: object
                     properties:
@@ -1081,6 +1479,109 @@ paths:
                     type:
                     - string
                     - 'null'
+                  ignored:
+                    type: boolean
+                    description: Whether the scan is ignored. Only returned by the scan detail endpoint.
+                  executiveSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated executive summary of the scan. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                  scopeSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: AI-generated summary of the scanned scope. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the problem
+                        code:
+                          type: string
+                          enum:
+                          - AUTH_FAILURE
+                          - BLOCKED_BY_CORS
+                          - BLOCKED_BY_WAF
+                          - CAPTCHA_HIT
+                          - CONFIGURATION_IMPROVEMENT
+                          - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+                          - INTEGRATION_ERROR
+                          - NO_AUTHENTICATION_CONFIGURED
+                          - NO_SCHEMA_FOUND
+                          - PL_FAILURE
+                          - RATE_LIMIT_EXCEEDED
+                          - SCHEMA_IMPROVEMENT
+                          - TIMEOUT
+                          - UNEXPECTED_ERROR
+                          - UNREACHABLE_ASSET
+                          description: The problem code
+                        message:
+                          type: string
+                          description: The problem message
+                        severity:
+                          type: string
+                          enum:
+                          - ERROR
+                          - INFO
+                          - WARNING
+                          description: The problem severity
+                        createdAt:
+                          type: string
+                          description: The date and time the problem was created
+                      required:
+                      - id
+                      - code
+                      - message
+                      - severity
+                      - createdAt
+                      title: ScanProblem
+                      description: A validation problem surfaced by the scanner during a scan
+                    description: Validation problems surfaced by the scanner during this scan. Only returned by the scan detail endpoint.
+                  artefacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the artefact
+                        kind:
+                          type: string
+                          enum:
+                          - AUDITOR_REPORT
+                          - EVENTS_ARCHIVE
+                          - EXCHANGES_ARCHIVE
+                          - EXECUTIVE_REPORT
+                          - EXPORT_JOB_RESULT
+                          description: The kind of the artefact
+                        name:
+                          type: string
+                          description: The name of the artefact
+                        signedUrl:
+                          type: string
+                          description: Time-limited HTTPS download URL for the artefact
+                        createdAt:
+                          type: string
+                          description: The date and time the artefact was created
+                        updatedAt:
+                          type: string
+                          description: The date and time the artefact was updated
+                      required:
+                      - id
+                      - kind
+                      - name
+                      - signedUrl
+                      - createdAt
+                      - updatedAt
+                      title: ScanArtefact
+                      description: A file produced by a scan; signedUrl is a time-limited download link
+                    description: Files produced by this scan, such as executive reports. Only returned by the scan detail endpoint.
                   links:
                     type: object
                     properties:
@@ -1238,13 +1739,902 @@ paths:
                 - instanceId
                 title: Conflict
                 description: Returned when the request conflicts with an existing resource
+  /scans/{scanId}/agents:
+    get:
+      tags:
+      - Scans
+      summary: List AI pentest agents for a scan
+      operationId: listScanAgents
+      description: Returns the AI pentest agents that ran during a scan. Filter by title or by text found in any related reasoning log.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - STARTED_AT
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: string
+          description: Filter agents by title
+          example: Coverage Agent
+        required: false
+        description: Filter agents by title
+        name: search
+        in: query
+      - schema:
+          type: string
+          description: Filter agents that have reasoning logs matching this text
+          example: XXE
+        required: false
+        description: Filter agents that have reasoning logs matching this text
+        name: eventSearch
+        in: query
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          description: When true, return only root agents (no parent)
+          example: 'false'
+        required: false
+        description: When true, return only root agents (no parent)
+        name: rootsOnly
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the agent
+                        title:
+                          type: string
+                          description: The title of the agent
+                        status:
+                          type: string
+                          enum:
+                          - FAILED
+                          - FINISHED
+                          - RUNNING
+                          description: The status of the agent
+                        parentId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The parent agent id, when nested
+                        hasChildren:
+                          type: boolean
+                          description: Whether the agent spawned child agents
+                        duration:
+                          type:
+                          - number
+                          - 'null'
+                          description: The agent run duration in milliseconds
+                        issuesCount:
+                          type: number
+                          description: The number of issues reported by the agent
+                        summary:
+                          type:
+                          - string
+                          - 'null'
+                          description: AI-generated summary of what the agent did. Credentials and secrets are redacted.
+                        startedAt:
+                          type:
+                          - string
+                          - 'null'
+                          description: The date and time the agent started
+                        finishedAt:
+                          type:
+                          - string
+                          - 'null'
+                          description: The date and time the agent finished
+                      required:
+                      - id
+                      - title
+                      - status
+                      - parentId
+                      - hasChildren
+                      - duration
+                      - issuesCount
+                      - summary
+                      - startedAt
+                      - finishedAt
+                      title: AgentSummarized
+                      description: Summarized information about an AI pentest agent
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /scans/{scanId}/agents/{agentId}/logs:
+    get:
+      tags:
+      - Scans
+      summary: List reasoning logs for an AI pentest agent
+      operationId: listScanAgentLogs
+      description: Returns reasoning and action logs for a single AI pentest agent within a scan.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      - schema:
+          type: string
+          format: uuid
+          description: The agent ID
+          example: 00000000-0000-0000-0000-000000000001
+        required: true
+        description: The agent ID
+        name: agentId
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - DATE
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: string
+          description: Search in log titles and descriptions
+          example: catalog/product
+        required: false
+        description: Search in log titles and descriptions
+        name: search
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AGENT_ACTION
+            - AGENT_REASONING
+            - CONFIGURATION
+            - EXECUTION
+          description: Filter by log stage
+        required: false
+        description: Filter by log stage
+        name: stages
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the reasoning log event
+                        createdAt:
+                          type: string
+                          description: The date and time the log entry was created
+                        title:
+                          type: string
+                          description: The title of the log entry
+                        description:
+                          type: string
+                          description: The reasoning or action description
+                        stage:
+                          type: string
+                          enum:
+                          - AGENT_ACTION
+                          - AGENT_REASONING
+                          - CONFIGURATION
+                          - EXECUTION
+                          description: The stage of the log entry
+                        level:
+                          type: string
+                          enum:
+                          - DEBUG
+                          - ERROR
+                          - INFO
+                          - WARNING
+                          description: The level of the log entry
+                      required:
+                      - id
+                      - createdAt
+                      - title
+                      - description
+                      - stage
+                      - level
+                      title: AgentLogSummarized
+                      description: A reasoning or action log entry for an AI pentest agent
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /scans/{scanId}/configuration:
+    get:
+      tags:
+      - Scans
+      summary: Get a scan effective configuration
+      operationId: getScanConfiguration
+      description: Returns the configuration a scan actually ran with, as stored on the scan. Credentials, tokens, cookies, passwords and other secret values are redacted with "[REDACTED]". Vault variable references (e.g. "${API_KEY}") are never resolved to their secret value.
+      parameters:
+      - schema:
+          type: string
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scanId:
+                    type: string
+                    format: uuid
+                    description: The id of the scan
+                  configuration:
+                    type: object
+                    additionalProperties: {}
+                    description: The effective scanner configuration the scan actually ran with. Credentials, tokens, cookies, passwords and other secret values are replaced with "[REDACTED]"; vault variable references (e.g. "${API_KEY}") are never resolved to their secret value.
+                required:
+                - scanId
+                - configuration
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /scans/{scanId}/statistics:
+    get:
+      tags:
+      - Scans
+      summary: Get scan statistics
+      operationId: getScanStatistics
+      description: 'Returns aggregated statistics for a scan: issue counts by severity and category, compliance coverage, API coverage statuses, scanner events over time, and request counts by operation.'
+      parameters:
+      - schema:
+          type: string
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scanId:
+                    type: string
+                    format: uuid
+                    description: The id of the scan
+                  issue:
+                    type: object
+                    properties:
+                      severities:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            severity:
+                              type: string
+                              enum:
+                              - CRITICAL
+                              - HIGH
+                              - INFO
+                              - LOW
+                              - MEDIUM
+                              description: The severity of the issues
+                            count:
+                              type: integer
+                              description: The number of issues with this severity in the scan
+                          required:
+                          - severity
+                          - count
+                          title: ScanStatisticsIssueSeverity
+                          description: Issue count for one severity in a scan
+                        description: Issue counts grouped by severity
+                      categories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            category:
+                              type: string
+                              enum:
+                              - ACCESS_CONTROL
+                              - CONFIGURATION
+                              - CUSTOM
+                              - INFORMATION_DISCLOSURE
+                              - INJECTION
+                              - PROTOCOL
+                              - REQUEST_FORGERY
+                              - RESOURCE_LIMITATION
+                              - SCHEMA
+                              - SENSITIVE_DATA
+                              description: The category of the issues
+                            count:
+                              type:
+                              - integer
+                              - 'null'
+                              description: The number of issues in this category, when available
+                            severity:
+                              type:
+                              - string
+                              - 'null'
+                              enum:
+                              - CRITICAL
+                              - HIGH
+                              - INFO
+                              - LOW
+                              - MEDIUM
+                              - null
+                              description: The highest severity seen in this category, when available
+                          required:
+                          - category
+                          - count
+                          - severity
+                          title: ScanStatisticsIssueCategory
+                          description: Issue count for one category in a scan
+                        description: Issue counts grouped by category
+                      compliance:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            compliance:
+                              type: string
+                              enum:
+                              - BITSIGHT
+                              - CRA
+                              - CWE
+                              - DORA
+                              - FEDRAMP
+                              - GDPR
+                              - HIPAA
+                              - HITRUST_CSF
+                              - IEC62443
+                              - ISO27001
+                              - MITRE_ATTACK
+                              - NIS2
+                              - NIST
+                              - OWASP
+                              - OWASP_ASVS
+                              - OWASP_LLM
+                              - PCI_DSS
+                              - PSD2
+                              - SECURITY_SCORECARD
+                              - SOC2
+                              - WASC
+                              description: The compliance framework the items belong to
+                            enabled:
+                              type: boolean
+                              description: Whether the compliance framework is enabled for the scan organization
+                            failedItems:
+                              type: array
+                              items:
+                                type: string
+                              description: Compliance items with at least one issue in the scan
+                          required:
+                          - compliance
+                          - enabled
+                          - failedItems
+                          title: ScanStatisticsIssueCompliance
+                          description: Compliance coverage of the scan issues for one framework
+                        description: Compliance framework coverage of the scan issues
+                      coverage:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - BROKEN_PIPE
+                          - NOT_FOUND
+                          - OK
+                          - RATE_LIMIT
+                          - REDIRECTION
+                          - REPEATER_ERROR
+                          - SERVER_ERROR
+                          - TIMEOUT
+                          - UNAUTHORIZED
+                          - UNKNOWN
+                          - VALIDATION_ERROR
+                        description: Distinct API coverage statuses recorded for the scanned specification operations
+                    required:
+                    - severities
+                    - categories
+                    - compliance
+                    - coverage
+                    description: Statistics about the issues of the scan
+                  events:
+                    type: object
+                    properties:
+                      eventsOverTime:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              description: The ISO 8601 start of the time bucket
+                            count:
+                              type: integer
+                              description: The number of scanner events in the bucket
+                          required:
+                          - date
+                          - count
+                          title: ScanStatisticsEventOverTime
+                          description: Number of scanner events recorded in a time bucket
+                        description: Scanner event counts over time
+                    required:
+                    - eventsOverTime
+                    description: Statistics about the scanner events of the scan
+                  requestTypeCounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        operation:
+                          type: string
+                          description: The HTTP method or GraphQL operation
+                        count:
+                          type: integer
+                          description: The number of requests observed for the operation
+                      required:
+                      - operation
+                      - count
+                      title: ScanStatisticsRequestTypeCount
+                      description: Number of requests observed for one operation
+                    description: Request counts grouped by HTTP method or GraphQL operation
+                required:
+                - scanId
+                - issue
+                - events
+                - requestTypeCounts
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /scans/{scanId}/statistics/events-over-time:
+    get:
+      tags:
+      - Scans
+      summary: Get the scan event time series
+      operationId: getScanEventsOverTime
+      description: 'Returns the number of scanner events per time bucket for a scan. It is a wrapper over the `eventsOverTime` series already embedded in `GET /scans/{scanId}/statistics`, for clients that only need the series. Beta: the shape of a scan time series is not settled yet.'
+      parameters:
+      - schema:
+          type: string
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scanId:
+                    type: string
+                    description: The scan ID the series belongs to
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          description: The ISO 8601 start of the time bucket
+                        count:
+                          type: integer
+                          description: The number of scanner events in the bucket
+                      required:
+                      - date
+                      - count
+                      title: ScanStatisticsEventOverTime
+                      description: Number of scanner events recorded in a time bucket
+                required:
+                - scanId
+                - data
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /scans/{scanId}/scenarios:
+    get:
+      tags:
+      - Scans
+      summary: List attack scenarios for a scan
+      operationId: listScanScenarios
+      description: Returns the attack scenarios explored during an AI pentest scan, each mapped to its attack vector. Filter by vector to build the vector/scenario matrix, or search scenario titles and surfaces. Credentials and secrets in scenario descriptions are redacted.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - BUSINESS_LOGIC
+          - DATA_INTEGRITY
+          - IDENTITY_AND_ACCESS_CONTROL
+          - INJECTION
+          - INSECURE_DATA_HANDLING
+          - LLM_AND_AI
+          - PLATFORM_AND_FRAMEWORK
+          - PROTOCOL_AND_API
+          - SECRETS_AND_CRYPTOGRAPHY
+          - SSRF_AND_FILE_INCLUSION
+          - WEB_AND_BROWSER
+          description: Filter scenarios by attack vector
+          example: INJECTION
+        required: false
+        description: Filter scenarios by attack vector
+        name: vector
+        in: query
+      - schema:
+          type: string
+          description: Filter scenarios by text found in the title or surfaces
+          example: catalog/product
+        required: false
+        description: Filter scenarios by text found in the title or surfaces
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the scenario
+                        title:
+                          type: string
+                          description: The title of the scenario
+                        description:
+                          type: string
+                          description: The description of the scenario
+                        status:
+                          type: string
+                          enum:
+                          - BLOCKED
+                          - CANCELLED
+                          - DONE
+                          - PLANNED
+                          - RUNNING
+                          description: The status of the scenario
+                        vector:
+                          type: string
+                          enum:
+                          - BUSINESS_LOGIC
+                          - DATA_INTEGRITY
+                          - IDENTITY_AND_ACCESS_CONTROL
+                          - INJECTION
+                          - INSECURE_DATA_HANDLING
+                          - LLM_AND_AI
+                          - PLATFORM_AND_FRAMEWORK
+                          - PROTOCOL_AND_API
+                          - SECRETS_AND_CRYPTOGRAPHY
+                          - SSRF_AND_FILE_INCLUSION
+                          - WEB_AND_BROWSER
+                          description: The attack vector the scenario belongs to
+                        surfaces:
+                          type: array
+                          items:
+                            type: string
+                          description: The attack surfaces covered by the scenario
+                      required:
+                      - id
+                      - title
+                      - description
+                      - status
+                      - vector
+                      - surfaces
+                      title: PentestScenario
+                      description: An attack scenario explored by the AI pentest agents during a scan
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
   /scans/{scanId}/targets:
     get:
       tags:
       - Scans
       summary: List scan targets and API coverage
       operationId: listScanTargets
-      description: Returns targets discovered during a scan, including REST and GraphQL operations with per-endpoint coverage. Filter by target type to focus on API routes and resolvers for CI/CD quality gates.
+      description: Returns targets discovered during a scan, including REST and GraphQL operations with per-endpoint coverage. Filter by target type and source (specification vs inferred) to focus on API routes and resolvers for CI/CD quality gates.
       parameters:
       - schema:
           type: string
@@ -1303,6 +2693,7 @@ paths:
             enum:
             - API_ROUTE
             - CODE_FILE
+            - CVE
             - GRAPHQL_RESOLVER
             - PORT
             - WEB_CRAWLED_URL
@@ -1311,6 +2702,92 @@ paths:
         required: false
         description: Optional filter by target kinds (comma-separated or repeated), e.g. API_ROUTE or GRAPHQL_RESOLVER
         name: types
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - SOURCE_INFERRED
+            - SOURCE_SPECIFICATION
+          description: Optional filter by how the target was discovered (comma-separated or repeated). SOURCE_SPECIFICATION comes from the API schema; SOURCE_INFERRED was found during the scan. Applies to API_ROUTE and GRAPHQL_RESOLVER.
+        required: false
+        description: Optional filter by how the target was discovered (comma-separated or repeated). SOURCE_SPECIFICATION comes from the API schema; SOURCE_INFERRED was found during the scan. Applies to API_ROUTE and GRAPHQL_RESOLVER.
+        name: sources
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - BROKEN_PIPE
+            - NOT_FOUND
+            - OK
+            - RATE_LIMIT
+            - REDIRECTION
+            - REPEATER_ERROR
+            - SERVER_ERROR
+            - TIMEOUT
+            - UNAUTHORIZED
+            - UNKNOWN
+            - VALIDATION_ERROR
+          description: Optional filter by the coverage status the scanner observed on the target (comma-separated or repeated), e.g. OK or SERVER_ERROR
+        required: false
+        description: Optional filter by the coverage status the scanner observed on the target (comma-separated or repeated), e.g. OK or SERVER_ERROR
+        name: coverage
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CRITICAL
+            - HIGH
+            - INFO
+            - LOW
+            - MEDIUM
+          description: Optional filter by the severity of the issues found on the target (comma-separated or repeated)
+        required: false
+        description: Optional filter by the severity of the issues found on the target (comma-separated or repeated)
+        name: severities
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Optional filter by issue IDs found on the target
+        required: false
+        description: Optional filter by issue IDs found on the target
+        name: issues
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CONNECT
+            - DELETE
+            - GET
+            - HEAD
+            - OPTIONS
+            - PATCH
+            - POST
+            - PUT
+            - TRACE
+          description: Optional filter by HTTP method (comma-separated or repeated). Applies to API_ROUTE.
+        required: false
+        description: Optional filter by HTTP method (comma-separated or repeated). Applies to API_ROUTE.
+        name: methods
+        in: query
+      - schema:
+          type: string
+          minLength: 1
+          description: Optional free-text search on the target path
+          example: /api/v1/users
+        required: false
+        description: Optional free-text search on the target path
+        name: search
         in: query
       responses:
         '200':
@@ -1336,6 +2813,16 @@ paths:
                         createdAt:
                           type: string
                           description: The date and time the target was created
+                        aiExplorationSummary:
+                          type:
+                          - string
+                          - 'null'
+                          description: AI-generated summary of the exploration results for the target
+                        aiPentestingSummary:
+                          type:
+                          - string
+                          - 'null'
+                          description: AI-generated pentesting summary for the target
                         apiRoute:
                           type:
                           - object
@@ -1602,6 +3089,65 @@ paths:
                           - protocol
                           title: PortDetailed
                           description: The port of the target
+                        webPage:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the web page
+                            url:
+                              type: string
+                              description: The URL of the web page
+                            visits:
+                              type: number
+                              description: How many times the scanner visited the page
+                          required:
+                          - id
+                          - url
+                          - visits
+                          title: WebPageDetailed
+                          description: The web page of the target
+                        webCrawledUrl:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the crawled URL
+                            url:
+                              type: string
+                              description: The crawled URL
+                            visits:
+                              type: number
+                              description: How many times the scanner visited the URL
+                          required:
+                          - id
+                          - url
+                          - visits
+                          title: WebCrawledUrlDetailed
+                          description: The crawled URL of the target
+                        cve:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the CVE target
+                            cveId:
+                              type: string
+                              description: The CVE identifier, e.g. CVE-2024-1234
+                          required:
+                          - id
+                          - cveId
+                          title: CveDetailed
+                          description: The CVE of the target
                       required:
                       - createdAt
                       - id
@@ -1621,13 +3167,99 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /scans/{scanId}/targets/ai-summaries:
+    post:
+      tags:
+      - Scans
+      summary: Generate an AI summary for a scan target
+      operationId: generateScanTargetAISummary
+      description: Generate an AI exploration or pentesting summary for a target of a DAST scan and return it. The target must belong to the scan. Generated summaries are also readable on the target through the scan targets endpoint.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The scan ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID
+        name: scanId
+        in: path
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetId:
+                  type: string
+                  format: uuid
+                  description: The ID of the target to summarize
+                  example: 00000000-0000-0000-0000-000000000001
+                kind:
+                  type: string
+                  enum:
+                  - EXPLORATION
+                  - PENTESTING
+                  description: The kind of summary to generate
+                  example: EXPLORATION
+              required:
+              - targetId
+              - kind
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  summary:
+                    type: string
+                    description: The generated summary, in Markdown
+                required:
+                - summary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
         '404':
           description: Not found
           content:

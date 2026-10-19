@@ -26,6 +26,182 @@ tags:
     See our documentation for more details.'
 paths:
   /asm/scans:
+    get:
+      tags:
+      - Asm
+      summary: List ASM scans
+      operationId: listAsmScans
+      description: 'List Attack Surface Management scans of the organization, most recent first. Each entry exposes the scan status. Note that POST /asm/scans only acknowledges the request: the resulting scans are scheduled in the background and may not appear immediately.'
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - SEVERITY
+          - createdAt
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the scan
+                        profileId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The id of the profile that ran the scan
+                        assetId:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The id of the asset that was scanned, if any
+                        status:
+                          type: string
+                          description: The status of the scan
+                        createdAt:
+                          type: string
+                          description: The date and time the scan was created
+                        finishedAt:
+                          type:
+                          - string
+                          - 'null'
+                          description: The date and time the scan was finished
+                        score:
+                          type:
+                          - number
+                          - 'null'
+                          description: The score of the scan
+                        coverage:
+                          type:
+                          - number
+                          - 'null'
+                          description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                        duration:
+                          type: number
+                          description: The duration of the scan
+                        progressRatio:
+                          type: number
+                          description: The progress ratio of the scan
+                        initiator:
+                          type: string
+                          description: The initiator of the scan
+                        kind:
+                          type: string
+                          description: The kind of the scan
+                        commitHash:
+                          type:
+                          - string
+                          - 'null'
+                          description: The commit hash of the scan
+                        commitBranch:
+                          type:
+                          - string
+                          - 'null'
+                          description: The commit branch of the scan
+                        links:
+                          type: object
+                          properties:
+                            scanIssues:
+                              type: string
+                              description: The url to view the scan issues in the platform
+                          required:
+                          - scanIssues
+                          description: The links of the scan
+                      required:
+                      - id
+                      - profileId
+                      - assetId
+                      - status
+                      - createdAt
+                      - finishedAt
+                      - score
+                      - coverage
+                      - duration
+                      - progressRatio
+                      - initiator
+                      - kind
+                      - commitHash
+                      - commitBranch
+                      - links
+                      title: ScanSummarized
+                      description: Summarized information about a scan
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
     post:
       tags:
       - Asm
@@ -51,20 +227,13 @@ paths:
                       items:
                         type: string
                         enum:
-                        - AKAMAI_ACCOUNT
-                        - AWS_ACCOUNT
+                        - APK
                         - AWS_LAMBDA
-                        - AZURE_TENANT
-                        - BITBUCKET_ORGANIZATION
                         - BITBUCKET_REPOSITORY
                         - BURPSUITE_EXPORT
-                        - CLOUDFLARE_ACCOUNT
                         - CODE_PROJECT
                         - DNS
-                        - GCP_PROJECT
-                        - GITHUB_ORGANIZATION
                         - GITHUB_REPOSITORY
-                        - GITLAB_GROUP
                         - GITLAB_REPOSITORY
                         - GRAPHQL
                         - GRAPHQL_SCHEMA
@@ -74,19 +243,16 @@ paths:
                         - IPV4
                         - IPV4_RANGE
                         - IPV6
-                        - KUBERNETES_CLUSTER
                         - MCP
                         - OPENAPI
                         - PACKAGE
                         - POSTMAN_COLLECTION
                         - POSTMAN_ENVIRONMENT
-                        - POSTMAN_ORGANIZATION
                         - REST
                         - SOAP
                         - SOFTWARE
                         - WEBAPP
                         - WEBSOCKET
-                        - WIZ_ACCOUNT
                         - WP_JSON
                       description: Filter by asset types
                     statuses:

@@ -22,6 +22,49 @@ tags:
 
     The public API provides CRUDs operations to manage roles.'
 paths:
+  /permissions:
+    get:
+      tags:
+      - Roles
+      summary: List permissions
+      operationId: listPermissions
+      description: List every permission that can be granted to a role. The returned `id` values are the accepted `permissions` for role creation and update.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      enum:
+                      - ADMIN
+                      - EDIT_ASSETS
+                      - EDIT_CUSTOM_RULES
+                      - EDIT_INTEGRATIONS
+                      - EDIT_PROFILES
+                      - EDIT_TAGS
+                      - EDIT_WORKFLOWS
+                      - MANAGE_REPORTING
+                      - MANAGE_VAULT_VARIABLES
+                      - VIEW_ONLY
+                      description: The permission identifier, used when creating or updating a role
+                    name:
+                      type: string
+                      description: A human-readable name for the permission
+                    description:
+                      type: string
+                      description: What the permission grants
+                  required:
+                  - id
+                  - name
+                  - description
+                  title: PermissionCatalogEntry
+                  description: A permission that can be granted to a role
   /roles:
     get:
       tags:
@@ -29,9 +72,44 @@ paths:
       summary: List roles
       operationId: listRoles
       description: List and search roles of the organization.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          description: Search term to filter roles by name
+          example: admin
+        required: false
+        description: Search term to filter roles by name
+        name: search
+        in: query
       responses:
         '200':
           description: OK
+          headers:
+            X-Next-Cursor:
+              schema:
+                type: string
+                description: Cursor to pass as the `cursor` query parameter to fetch the next page. Absent when there is no next page.
+              required: false
+              description: Cursor to pass as the `cursor` query parameter to fetch the next page. Absent when there is no next page.
           content:
             application/json:
               schema:
@@ -59,6 +137,7 @@ paths:
                         - EDIT_TAGS
                         - EDIT_WORKFLOWS
                         - MANAGE_REPORTING
+                        - MANAGE_VAULT_VARIABLES
                         - VIEW_ONLY
                       description: The permissions of the role
                     createdAt:
@@ -104,6 +183,25 @@ paths:
                   - permissions
                   - createdAt
                   - bindings
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
     post:
       tags:
       - Roles
@@ -135,6 +233,7 @@ paths:
                     - EDIT_TAGS
                     - EDIT_WORKFLOWS
                     - MANAGE_REPORTING
+                    - MANAGE_VAULT_VARIABLES
                     - VIEW_ONLY
                   description: The permissions of the role
                   example:
@@ -191,6 +290,7 @@ paths:
                       - EDIT_TAGS
                       - EDIT_WORKFLOWS
                       - MANAGE_REPORTING
+                      - MANAGE_VAULT_VARIABLES
                       - VIEW_ONLY
                     description: The permissions of the role
                   createdAt:
@@ -528,6 +628,7 @@ paths:
                       - EDIT_TAGS
                       - EDIT_WORKFLOWS
                       - MANAGE_REPORTING
+                      - MANAGE_VAULT_VARIABLES
                       - VIEW_ONLY
                     description: The permissions of the role
                   createdAt:
@@ -665,6 +766,7 @@ paths:
                         - EDIT_TAGS
                         - EDIT_WORKFLOWS
                         - MANAGE_REPORTING
+                        - MANAGE_VAULT_VARIABLES
                         - VIEW_ONLY
                       description: The permissions of the role
                       example:
@@ -700,6 +802,181 @@ paths:
                       - EDIT_TAGS
                       - EDIT_WORKFLOWS
                       - MANAGE_REPORTING
+                      - MANAGE_VAULT_VARIABLES
+                      - VIEW_ONLY
+                    description: The permissions of the role
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the role was created
+                  bindings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the role binding
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the role binding was created
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the role
+                            name:
+                              type: string
+                              description: The name of the role
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the role was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        project:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the project
+                            name:
+                              type: string
+                              description: The name of the project
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the project was created
+                          required:
+                          - id
+                          - name
+                          - createdAt
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the user
+                            email:
+                              type: string
+                              format: email
+                              description: The email of the user
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: The date and time the user was created
+                            activatedAt:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: The date and time the user was activated
+                          required:
+                          - id
+                          - email
+                          - createdAt
+                          - activatedAt
+                      required:
+                      - id
+                      - createdAt
+                      - role
+                      - project
+                      - user
+                    description: The bindings of the role
+                required:
+                - id
+                - name
+                - permissions
+                - createdAt
+                - bindings
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+    delete:
+      tags:
+      - Roles
+      summary: Delete a role
+      operationId: deleteRole
+      description: Delete a role.
+      parameters:
+      - schema:
+          type: string
+          description: The role ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The role ID
+        name: roleId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the role
+                  name:
+                    type: string
+                    description: The name of the role
+                  permissions:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - ADMIN
+                      - EDIT_ASSETS
+                      - EDIT_CUSTOM_RULES
+                      - EDIT_INTEGRATIONS
+                      - EDIT_PROFILES
+                      - EDIT_TAGS
+                      - EDIT_WORKFLOWS
+                      - MANAGE_REPORTING
+                      - MANAGE_VAULT_VARIABLES
                       - VIEW_ONLY
                     description: The permissions of the role
                   createdAt:

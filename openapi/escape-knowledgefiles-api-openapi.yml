@@ -1,0 +1,449 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Knowledge Files API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: KnowledgeFiles
+  description: 'Manage organization knowledge files.
+
+
+    The knowledge file library gives AI pentests context about your organization. Upload files with a signed URL, list them, and delete them.'
+paths:
+  /knowledge-files:
+    get:
+      tags:
+      - KnowledgeFiles
+      summary: List knowledge files
+      operationId: listKnowledgeFiles
+      description: List the files of the organization knowledge library, with cursor pagination. Files are used as context by AI pentests.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - KIND
+          - NAME
+          - STATUS
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the knowledge file
+                        name:
+                          type: string
+                          description: The name of the knowledge file
+                        kind:
+                          type: string
+                          enum:
+                          - CSV
+                          - DOC
+                          - DOCX
+                          - FILE
+                          - GRAPHQL
+                          - HTML
+                          - JSON
+                          - MD
+                          - ODT
+                          - PDF
+                          - PPT
+                          - PPTX
+                          - TAR_GZ
+                          - TXT
+                          - XLS
+                          - XLSX
+                          - XML
+                          - ZIP
+                          description: The kind of the knowledge file
+                        status:
+                          type: string
+                          enum:
+                          - COMPLETED
+                          - FAILED
+                          - PENDING
+                          - PROCESSING
+                          description: The processing status of the knowledge file
+                        sizeInBytes:
+                          type:
+                          - integer
+                          - 'null'
+                          description: The size of the knowledge file in bytes, known once processing has run
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: The date and time the knowledge file was created
+                        lastProcessingStartAt:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: The date and time the last processing of the knowledge file started
+                        lastProcessingEndAt:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: The date and time the last processing of the knowledge file ended
+                      required:
+                      - id
+                      - name
+                      - kind
+                      - status
+                      - sizeInBytes
+                      - createdAt
+                      - lastProcessingStartAt
+                      - lastProcessingEndAt
+                      title: KnowledgeFileSummary
+                      description: A file of the organization knowledge library. Storage keys and download links are never exposed.
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+    post:
+      tags:
+      - KnowledgeFiles
+      summary: Upload a knowledge file
+      operationId: uploadKnowledgeFile
+      description: 'Add a file to the organization knowledge library. Files are used as context by AI pentests.
+
+
+        This is a two-step flow:
+
+
+        1. Create a signed upload URL with `POST /v3/upload/signed-url`.
+
+        2. `PUT` the file content to the returned `url`.
+
+        3. Call this endpoint with the returned `id` as `temporaryObjectKey`.
+
+
+        The file is processed asynchronously: poll the list endpoint until the status is `COMPLETED` or `FAILED`.
+
+
+        Each upload is stored under its own object, so uploading a file with an already used name adds a new file instead of overwriting the previous one. Uploads are limited to 35MB.'
+      requestBody:
+        description: Body of the request to upload a knowledge file
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: The name of the file, including its extension
+                  example: architecture.md
+                kind:
+                  type: string
+                  enum:
+                  - CSV
+                  - DOC
+                  - DOCX
+                  - FILE
+                  - GRAPHQL
+                  - HTML
+                  - JSON
+                  - MD
+                  - ODT
+                  - PDF
+                  - PPT
+                  - PPTX
+                  - TAR_GZ
+                  - TXT
+                  - XLS
+                  - XLSX
+                  - XML
+                  - ZIP
+                  description: The kind of the file, derived from its extension
+                  example: MD
+                temporaryObjectKey:
+                  type: string
+                  format: uuid
+                  description: The id returned by POST /v3/upload/signed-url after the file content was uploaded to it
+                  example: 00000000-0000-0000-0000-000000000000
+              required:
+              - name
+              - kind
+              - temporaryObjectKey
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the knowledge file
+                  name:
+                    type: string
+                    description: The name of the knowledge file
+                  kind:
+                    type: string
+                    enum:
+                    - CSV
+                    - DOC
+                    - DOCX
+                    - FILE
+                    - GRAPHQL
+                    - HTML
+                    - JSON
+                    - MD
+                    - ODT
+                    - PDF
+                    - PPT
+                    - PPTX
+                    - TAR_GZ
+                    - TXT
+                    - XLS
+                    - XLSX
+                    - XML
+                    - ZIP
+                    description: The kind of the knowledge file
+                  status:
+                    type: string
+                    enum:
+                    - COMPLETED
+                    - FAILED
+                    - PENDING
+                    - PROCESSING
+                    description: The processing status of the knowledge file
+                  sizeInBytes:
+                    type:
+                    - integer
+                    - 'null'
+                    description: The size of the knowledge file in bytes, known once processing has run
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time the knowledge file was created
+                  lastProcessingStartAt:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    description: The date and time the last processing of the knowledge file started
+                  lastProcessingEndAt:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    description: The date and time the last processing of the knowledge file ended
+                required:
+                - id
+                - name
+                - kind
+                - status
+                - sizeInBytes
+                - createdAt
+                - lastProcessingStartAt
+                - lastProcessingEndAt
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+  /knowledge-files/{fileId}:
+    delete:
+      tags:
+      - KnowledgeFiles
+      summary: Delete a knowledge file
+      operationId: deleteKnowledgeFile
+      description: Delete a file from the organization knowledge library.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The knowledge file ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The knowledge file ID
+        name: fileId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

@@ -1,0 +1,1261 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Security Tests API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: SecurityTests
+  description: 'Manage security tests.
+
+
+    Browse the security tests Escape can run, with their organization configuration (enabled state and custom severity), scanner and asset applicability, description and compliance mappings. Enable or disable security tests for your organization and override the severity assigned to their issues.'
+paths:
+  /security-tests:
+    get:
+      tags:
+      - SecurityTests
+      summary: List security tests
+      operationId: listSecurityTests
+      description: List the security tests of the organization catalog, with their organization configuration (enabled state and custom severity). Filter by scanner kind, asset type, enabled state and name.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - ISSUES_COUNT
+          - SEVERITY
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ASM_APK
+            - ASM_AWS_LAMBDA
+            - ASM_BITBUCKET_REPOSITORY
+            - ASM_BURPSUITE_EXPORT
+            - ASM_CODE_PROJECT
+            - ASM_DNS
+            - ASM_GITHUB_REPOSITORY
+            - ASM_GITLAB_REPOSITORY
+            - ASM_GRAPHQL
+            - ASM_GRAPHQL_SCHEMA
+            - ASM_GRPC
+            - ASM_HAR_EXPORT
+            - ASM_INSOMNIA
+            - ASM_IPV4
+            - ASM_IPV4_RANGE
+            - ASM_IPV6
+            - ASM_MCP
+            - ASM_OPENAPI
+            - ASM_PACKAGE
+            - ASM_POSTMAN_COLLECTION
+            - ASM_POSTMAN_ENVIRONMENT
+            - ASM_REST
+            - ASM_SOAP
+            - ASM_SOFTWARE
+            - ASM_WEBAPP
+            - ASM_WEBSOCKET
+            - ASM_WP_JSON
+            - AUTOMATED_PENTEST
+            - BLST_GRAPHQL
+            - BLST_REST
+            - CONTINUOUS_PENTEST
+            - EXTERNAL_NETWORK_PENTEST
+            - FRONTEND_DAST
+            - MOBILE_APP_PENTEST
+            - RETEST
+            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST_REST
+            - AUTOMATED_PENTEST_GRAPHQL
+          description: Filter by scanner kinds
+        required: false
+        description: Filter by scanner kinds
+        name: scannerKinds
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APK
+            - AWS_LAMBDA
+            - BITBUCKET_REPOSITORY
+            - BURPSUITE_EXPORT
+            - CODE_PROJECT
+            - DNS
+            - GITHUB_REPOSITORY
+            - GITLAB_REPOSITORY
+            - GRAPHQL
+            - GRAPHQL_SCHEMA
+            - GRPC
+            - HAR_EXPORT
+            - INSOMNIA
+            - IPV4
+            - IPV4_RANGE
+            - IPV6
+            - MCP
+            - OPENAPI
+            - PACKAGE
+            - POSTMAN_COLLECTION
+            - POSTMAN_ENVIRONMENT
+            - REST
+            - SOAP
+            - SOFTWARE
+            - WEBAPP
+            - WEBSOCKET
+            - WP_JSON
+          description: Filter by asset types
+        required: false
+        description: Filter by asset types
+        name: assetTypes
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by enabled state
+        required: false
+        description: Filter by enabled state
+        name: enabled
+        in: query
+      - schema:
+          type: string
+          description: Case-insensitive search on the security test name
+          example: injection
+        required: false
+        description: Case-insensitive search on the security test name
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The uid of the security test
+                        name:
+                          type: string
+                          description: The human readable name of the security test
+                        category:
+                          type: string
+                          enum:
+                          - ACCESS_CONTROL
+                          - CONFIGURATION
+                          - CUSTOM
+                          - INFORMATION_DISCLOSURE
+                          - INJECTION
+                          - PROTOCOL
+                          - REQUEST_FORGERY
+                          - RESOURCE_LIMITATION
+                          - SCHEMA
+                          - SENSITIVE_DATA
+                          description: The issue category this test belongs to
+                        description:
+                          type: string
+                          description: The description of the security test
+                        documentationPath:
+                          type: string
+                          description: Relative path to the security test documentation
+                        scanners:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - ASM_APK
+                            - ASM_AWS_LAMBDA
+                            - ASM_BITBUCKET_REPOSITORY
+                            - ASM_BURPSUITE_EXPORT
+                            - ASM_CODE_PROJECT
+                            - ASM_DNS
+                            - ASM_GITHUB_REPOSITORY
+                            - ASM_GITLAB_REPOSITORY
+                            - ASM_GRAPHQL
+                            - ASM_GRAPHQL_SCHEMA
+                            - ASM_GRPC
+                            - ASM_HAR_EXPORT
+                            - ASM_INSOMNIA
+                            - ASM_IPV4
+                            - ASM_IPV4_RANGE
+                            - ASM_IPV6
+                            - ASM_MCP
+                            - ASM_OPENAPI
+                            - ASM_PACKAGE
+                            - ASM_POSTMAN_COLLECTION
+                            - ASM_POSTMAN_ENVIRONMENT
+                            - ASM_REST
+                            - ASM_SOAP
+                            - ASM_SOFTWARE
+                            - ASM_WEBAPP
+                            - ASM_WEBSOCKET
+                            - ASM_WP_JSON
+                            - AUTOMATED_PENTEST
+                            - BLST_GRAPHQL
+                            - BLST_REST
+                            - CONTINUOUS_PENTEST
+                            - EXTERNAL_NETWORK_PENTEST
+                            - FRONTEND_DAST
+                            - MOBILE_APP_PENTEST
+                            - RETEST
+                          description: Scanner kinds that can run this security test
+                        assetTypes:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - APK
+                            - AWS_LAMBDA
+                            - BITBUCKET_REPOSITORY
+                            - BURPSUITE_EXPORT
+                            - CODE_PROJECT
+                            - DNS
+                            - GITHUB_REPOSITORY
+                            - GITLAB_REPOSITORY
+                            - GRAPHQL
+                            - GRAPHQL_SCHEMA
+                            - GRPC
+                            - HAR_EXPORT
+                            - INSOMNIA
+                            - IPV4
+                            - IPV4_RANGE
+                            - IPV6
+                            - MCP
+                            - OPENAPI
+                            - PACKAGE
+                            - POSTMAN_COLLECTION
+                            - POSTMAN_ENVIRONMENT
+                            - REST
+                            - SOAP
+                            - SOFTWARE
+                            - WEBAPP
+                            - WEBSOCKET
+                            - WP_JSON
+                          description: Asset types this security test applies to
+                        enabled:
+                          type: boolean
+                          description: Whether the test is enabled for the organization (defaults to true)
+                        defaultSeverity:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          - null
+                          description: The default severity of the test
+                        customSeverity:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          - null
+                          description: The organization override of the severity, null when not overridden
+                        severity:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          - null
+                          description: 'The effective severity: `customSeverity` when set, otherwise `defaultSeverity`'
+                        cvssScore:
+                          type:
+                          - number
+                          - 'null'
+                          description: The CVSS score of the test, when available
+                        cvssVector:
+                          type:
+                          - string
+                          - 'null'
+                          description: The CVSS vector of the test, when available
+                        compliance:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              framework:
+                                type: string
+                                enum:
+                                - BITSIGHT
+                                - CRA
+                                - CWE
+                                - DORA
+                                - FEDRAMP
+                                - GDPR
+                                - HIPAA
+                                - HITRUST_CSF
+                                - IEC62443
+                                - ISO27001
+                                - MITRE_ATTACK
+                                - NIS2
+                                - NIST
+                                - OWASP
+                                - OWASP_ASVS
+                                - OWASP_LLM
+                                - PCI_DSS
+                                - PSD2
+                                - SECURITY_SCORECARD
+                                - SOC2
+                                - WASC
+                                description: The compliance framework name
+                              item:
+                                type: string
+                                description: The compliance item identifier within the framework
+                            required:
+                            - framework
+                            - item
+                            title: SecurityTestCompliance
+                          description: Compliance mappings associated with the test
+                        issueCounts:
+                          type: object
+                          properties:
+                            critical:
+                              type: integer
+                              description: Number of open CRITICAL issues for this test
+                            high:
+                              type: integer
+                              description: Number of open HIGH issues for this test
+                            medium:
+                              type: integer
+                              description: Number of open MEDIUM issues for this test
+                            low:
+                              type: integer
+                              description: Number of open LOW issues for this test
+                            info:
+                              type: integer
+                              description: Number of open INFO issues for this test
+                          required:
+                          - critical
+                          - high
+                          - medium
+                          - low
+                          - info
+                          title: SecurityTestIssueCounts
+                          description: Open issue counts for this test in the organization
+                      required:
+                      - id
+                      - name
+                      - category
+                      - description
+                      - documentationPath
+                      - scanners
+                      - assetTypes
+                      - enabled
+                      - defaultSeverity
+                      - customSeverity
+                      - severity
+                      - cvssScore
+                      - cvssVector
+                      - compliance
+                      - issueCounts
+                      title: SecurityTest
+                      description: A security test from the organization catalog, with its organization configuration
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+  /security-tests/bulk-update:
+    post:
+      tags:
+      - SecurityTests
+      summary: Bulk update security tests
+      operationId: bulkUpdateSecurityTests
+      description: 'Update the organization configuration of multiple security tests matching a filter predicate: enable or disable them, and/or override the severity assigned to their issues. Requires organization admin rights. A non-empty `where` or `all: true` is required. Set `dryRun` to preview the matching security test IDs without changing anything. When `enabled` is omitted, each matched test keeps the enabled state read at the start of the request; a concurrent change to the same test may therefore be overwritten. Pass `customSeverity: null` to reset the override to the scanner default.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: The new enabled state to apply
+                customSeverity:
+                  type:
+                  - string
+                  - 'null'
+                  enum:
+                  - CRITICAL
+                  - HIGH
+                  - INFO
+                  - LOW
+                  - MEDIUM
+                  - null
+                  description: The new severity override to apply. Pass null to reset to the scanner default. Omit to leave the current override unchanged.
+                where:
+                  type: object
+                  properties:
+                    ids:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by specific security test IDs
+                    search:
+                      type: string
+                      description: Filter by name substring
+                    enabled:
+                      type: boolean
+                      description: Filter by enabled state
+                    scannerKinds:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ASM_APK
+                        - ASM_AWS_LAMBDA
+                        - ASM_BITBUCKET_REPOSITORY
+                        - ASM_BURPSUITE_EXPORT
+                        - ASM_CODE_PROJECT
+                        - ASM_DNS
+                        - ASM_GITHUB_REPOSITORY
+                        - ASM_GITLAB_REPOSITORY
+                        - ASM_GRAPHQL
+                        - ASM_GRAPHQL_SCHEMA
+                        - ASM_GRPC
+                        - ASM_HAR_EXPORT
+                        - ASM_INSOMNIA
+                        - ASM_IPV4
+                        - ASM_IPV4_RANGE
+                        - ASM_IPV6
+                        - ASM_MCP
+                        - ASM_OPENAPI
+                        - ASM_PACKAGE
+                        - ASM_POSTMAN_COLLECTION
+                        - ASM_POSTMAN_ENVIRONMENT
+                        - ASM_REST
+                        - ASM_SOAP
+                        - ASM_SOFTWARE
+                        - ASM_WEBAPP
+                        - ASM_WEBSOCKET
+                        - ASM_WP_JSON
+                        - AUTOMATED_PENTEST
+                        - BLST_GRAPHQL
+                        - BLST_REST
+                        - CONTINUOUS_PENTEST
+                        - EXTERNAL_NETWORK_PENTEST
+                        - FRONTEND_DAST
+                        - MOBILE_APP_PENTEST
+                        - RETEST
+                      description: Filter by scanner kinds
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ACCESS_CONTROL
+                        - CONFIGURATION
+                        - CUSTOM
+                        - INFORMATION_DISCLOSURE
+                        - INJECTION
+                        - PROTOCOL
+                        - REQUEST_FORGERY
+                        - RESOURCE_LIMITATION
+                        - SCHEMA
+                        - SENSITIVE_DATA
+                      description: Filter by categories
+                    assetTypes:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - APK
+                        - AWS_LAMBDA
+                        - BITBUCKET_REPOSITORY
+                        - BURPSUITE_EXPORT
+                        - CODE_PROJECT
+                        - DNS
+                        - GITHUB_REPOSITORY
+                        - GITLAB_REPOSITORY
+                        - GRAPHQL
+                        - GRAPHQL_SCHEMA
+                        - GRPC
+                        - HAR_EXPORT
+                        - INSOMNIA
+                        - IPV4
+                        - IPV4_RANGE
+                        - IPV6
+                        - MCP
+                        - OPENAPI
+                        - PACKAGE
+                        - POSTMAN_COLLECTION
+                        - POSTMAN_ENVIRONMENT
+                        - REST
+                        - SOAP
+                        - SOFTWARE
+                        - WEBAPP
+                        - WEBSOCKET
+                        - WP_JSON
+                      description: Filter by asset types
+                    compliances:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - BITSIGHT
+                        - CRA
+                        - CWE
+                        - DORA
+                        - FEDRAMP
+                        - GDPR
+                        - HIPAA
+                        - HITRUST_CSF
+                        - IEC62443
+                        - ISO27001
+                        - MITRE_ATTACK
+                        - NIS2
+                        - NIST
+                        - OWASP
+                        - OWASP_ASVS
+                        - OWASP_LLM
+                        - PCI_DSS
+                        - PSD2
+                        - SECURITY_SCORECARD
+                        - SOC2
+                        - WASC
+                      description: Filter by compliance frameworks
+                    complianceItems:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by compliance items
+                  additionalProperties: false
+                  description: Filter predicate. Required unless `all` is true.
+                all:
+                  type: boolean
+                  description: Set to true to target every security test. Mutually exclusive with a non-empty `where`.
+                dryRun:
+                  type: boolean
+                  description: Return the matching security test IDs and count without updating anything
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ids:
+                    type: array
+                    items:
+                      type: string
+                    description: IDs of the updated security tests (or matching security tests on dry run)
+                  count:
+                    type: integer
+                    description: Number of security test IDs in `ids`
+                  dryRun:
+                    type: boolean
+                    description: Whether this was a preview with no update applied
+                required:
+                - ids
+                - count
+                - dryRun
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: Forbidden
+                description: Returned when the authenticated user does not have sufficient permissions
+  /security-tests/{securityTestUid}:
+    get:
+      tags:
+      - SecurityTests
+      summary: Get a security test
+      operationId: getSecurityTest
+      description: Get a security test from the organization catalog by uid, with its organization configuration (enabled state and custom severity) and open issue counts.
+      parameters:
+      - schema:
+          type: string
+          description: The uid of the security test
+          example: ISSUE_SQL_INJECTION
+        required: true
+        description: The uid of the security test
+        name: securityTestUid
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The uid of the security test
+                  name:
+                    type: string
+                    description: The human readable name of the security test
+                  category:
+                    type: string
+                    enum:
+                    - ACCESS_CONTROL
+                    - CONFIGURATION
+                    - CUSTOM
+                    - INFORMATION_DISCLOSURE
+                    - INJECTION
+                    - PROTOCOL
+                    - REQUEST_FORGERY
+                    - RESOURCE_LIMITATION
+                    - SCHEMA
+                    - SENSITIVE_DATA
+                    description: The issue category this test belongs to
+                  description:
+                    type: string
+                    description: The description of the security test
+                  documentationPath:
+                    type: string
+                    description: Relative path to the security test documentation
+                  scanners:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - ASM_APK
+                      - ASM_AWS_LAMBDA
+                      - ASM_BITBUCKET_REPOSITORY
+                      - ASM_BURPSUITE_EXPORT
+                      - ASM_CODE_PROJECT
+                      - ASM_DNS
+                      - ASM_GITHUB_REPOSITORY
+                      - ASM_GITLAB_REPOSITORY
+                      - ASM_GRAPHQL
+                      - ASM_GRAPHQL_SCHEMA
+                      - ASM_GRPC
+                      - ASM_HAR_EXPORT
+                      - ASM_INSOMNIA
+                      - ASM_IPV4
+                      - ASM_IPV4_RANGE
+                      - ASM_IPV6
+                      - ASM_MCP
+                      - ASM_OPENAPI
+                      - ASM_PACKAGE
+                      - ASM_POSTMAN_COLLECTION
+                      - ASM_POSTMAN_ENVIRONMENT
+                      - ASM_REST
+                      - ASM_SOAP
+                      - ASM_SOFTWARE
+                      - ASM_WEBAPP
+                      - ASM_WEBSOCKET
+                      - ASM_WP_JSON
+                      - AUTOMATED_PENTEST
+                      - BLST_GRAPHQL
+                      - BLST_REST
+                      - CONTINUOUS_PENTEST
+                      - EXTERNAL_NETWORK_PENTEST
+                      - FRONTEND_DAST
+                      - MOBILE_APP_PENTEST
+                      - RETEST
+                    description: Scanner kinds that can run this security test
+                  assetTypes:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - APK
+                      - AWS_LAMBDA
+                      - BITBUCKET_REPOSITORY
+                      - BURPSUITE_EXPORT
+                      - CODE_PROJECT
+                      - DNS
+                      - GITHUB_REPOSITORY
+                      - GITLAB_REPOSITORY
+                      - GRAPHQL
+                      - GRAPHQL_SCHEMA
+                      - GRPC
+                      - HAR_EXPORT
+                      - INSOMNIA
+                      - IPV4
+                      - IPV4_RANGE
+                      - IPV6
+                      - MCP
+                      - OPENAPI
+                      - PACKAGE
+                      - POSTMAN_COLLECTION
+                      - POSTMAN_ENVIRONMENT
+                      - REST
+                      - SOAP
+                      - SOFTWARE
+                      - WEBAPP
+                      - WEBSOCKET
+                      - WP_JSON
+                    description: Asset types this security test applies to
+                  enabled:
+                    type: boolean
+                    description: Whether the test is enabled for the organization (defaults to true)
+                  defaultSeverity:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    - null
+                    description: The default severity of the test
+                  customSeverity:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    - null
+                    description: The organization override of the severity, null when not overridden
+                  severity:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    - null
+                    description: 'The effective severity: `customSeverity` when set, otherwise `defaultSeverity`'
+                  cvssScore:
+                    type:
+                    - number
+                    - 'null'
+                    description: The CVSS score of the test, when available
+                  cvssVector:
+                    type:
+                    - string
+                    - 'null'
+                    description: The CVSS vector of the test, when available
+                  compliance:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        framework:
+                          type: string
+                          enum:
+                          - BITSIGHT
+                          - CRA
+                          - CWE
+                          - DORA
+                          - FEDRAMP
+                          - GDPR
+                          - HIPAA
+                          - HITRUST_CSF
+                          - IEC62443
+                          - ISO27001
+                          - MITRE_ATTACK
+                          - NIS2
+                          - NIST
+                          - OWASP
+                          - OWASP_ASVS
+                          - OWASP_LLM
+                          - PCI_DSS
+                          - PSD2
+                          - SECURITY_SCORECARD
+                          - SOC2
+                          - WASC
+                          description: The compliance framework name
+                        item:
+                          type: string
+                          description: The compliance item identifier within the framework
+                      required:
+                      - framework
+                      - item
+                      title: SecurityTestCompliance
+                    description: Compliance mappings associated with the test
+                  issueCounts:
+                    type: object
+                    properties:
+                      critical:
+                        type: integer
+                        description: Number of open CRITICAL issues for this test
+                      high:
+                        type: integer
+                        description: Number of open HIGH issues for this test
+                      medium:
+                        type: integer
+                        description: Number of open MEDIUM issues for this test
+                      low:
+                        type: integer
+                        description: Number of open LOW issues for this test
+                      info:
+                        type: integer
+                        description: Number of open INFO issues for this test
+                    required:
+                    - critical
+                    - high
+                    - medium
+                    - low
+                    - info
+                    title: SecurityTestIssueCounts
+                    description: Open issue counts for this test in the organization
+                required:
+                - id
+                - name
+                - category
+                - description
+                - documentationPath
+                - scanners
+                - assetTypes
+                - enabled
+                - defaultSeverity
+                - customSeverity
+                - severity
+                - cvssScore
+                - cvssVector
+                - compliance
+                - issueCounts
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    put:
+      tags:
+      - SecurityTests
+      summary: Update a security test
+      operationId: updateSecurityTest
+      description: 'Update the organization configuration of a security test: enable or disable it, and/or override the severity assigned to its issues. At least one of `enabled` or `customSeverity` is required. Omitted fields are left unchanged. Pass `customSeverity: null` to reset the override to the scanner default.'
+      parameters:
+      - schema:
+          type: string
+          description: The security test ID (UID)
+          example: ISSUE_AGENTIC_SQL_INJECTION
+        required: true
+        description: The security test ID (UID)
+        name: securityTestUid
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: Whether the security test is enabled for your organization
+                customSeverity:
+                  type:
+                  - string
+                  - 'null'
+                  enum:
+                  - CRITICAL
+                  - HIGH
+                  - INFO
+                  - LOW
+                  - MEDIUM
+                  - null
+                  description: The severity override for this security test. Pass null to reset to the scanner default. Omit to leave the current override unchanged.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The uid of the security test
+                  name:
+                    type: string
+                    description: The human readable name of the security test
+                  category:
+                    type: string
+                    enum:
+                    - ACCESS_CONTROL
+                    - CONFIGURATION
+                    - CUSTOM
+                    - INFORMATION_DISCLOSURE
+                    - INJECTION
+                    - PROTOCOL
+                    - REQUEST_FORGERY
+                    - RESOURCE_LIMITATION
+                    - SCHEMA
+                    - SENSITIVE_DATA
+                    description: The issue category this test belongs to
+                  description:
+                    type: string
+                    description: The description of the security test
+                  documentationPath:
+                    type: string
+                    description: Relative path to the security test documentation
+                  scanners:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - ASM_APK
+                      - ASM_AWS_LAMBDA
+                      - ASM_BITBUCKET_REPOSITORY
+                      - ASM_BURPSUITE_EXPORT
+                      - ASM_CODE_PROJECT
+                      - ASM_DNS
+                      - ASM_GITHUB_REPOSITORY
+                      - ASM_GITLAB_REPOSITORY
+                      - ASM_GRAPHQL
+                      - ASM_GRAPHQL_SCHEMA
+                      - ASM_GRPC
+                      - ASM_HAR_EXPORT
+                      - ASM_INSOMNIA
+                      - ASM_IPV4
+                      - ASM_IPV4_RANGE
+                      - ASM_IPV6
+                      - ASM_MCP
+                      - ASM_OPENAPI
+                      - ASM_PACKAGE
+                      - ASM_POSTMAN_COLLECTION
+                      - ASM_POSTMAN_ENVIRONMENT
+                      - ASM_REST
+                      - ASM_SOAP
+                      - ASM_SOFTWARE
+                      - ASM_WEBAPP
+                      - ASM_WEBSOCKET
+                      - ASM_WP_JSON
+                      - AUTOMATED_PENTEST
+                      - BLST_GRAPHQL
+                      - BLST_REST
+                      - CONTINUOUS_PENTEST
+                      - EXTERNAL_NETWORK_PENTEST
+                      - FRONTEND_DAST
+                      - MOBILE_APP_PENTEST
+                      - RETEST
+                    description: Scanner kinds that can run this security test
+                  assetTypes:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - APK
+                      - AWS_LAMBDA
+                      - BITBUCKET_REPOSITORY
+                      - BURPSUITE_EXPORT
+                      - CODE_PROJECT
+                      - DNS
+                      - GITHUB_REPOSITORY
+                      - GITLAB_REPOSITORY
+                      - GRAPHQL
+                      - GRAPHQL_SCHEMA
+                      - GRPC
+                      - HAR_EXPORT
+                      - INSOMNIA
+                      - IPV4
+                      - IPV4_RANGE
+                      - IPV6
+                      - MCP
+                      - OPENAPI
+                      - PACKAGE
+                      - POSTMAN_COLLECTION
+                      - POSTMAN_ENVIRONMENT
+                      - REST
+                      - SOAP
+                      - SOFTWARE
+                      - WEBAPP
+                      - WEBSOCKET
+                      - WP_JSON
+                    description: Asset types this security test applies to
+                  enabled:
+                    type: boolean
+                    description: Whether the test is enabled for the organization (defaults to true)
+                  defaultSeverity:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    - null
+                    description: The default severity of the test
+                  customSeverity:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    - null
+                    description: The organization override of the severity, null when not overridden
+                  severity:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    - null
+                    description: 'The effective severity: `customSeverity` when set, otherwise `defaultSeverity`'
+                  cvssScore:
+                    type:
+                    - number
+                    - 'null'
+                    description: The CVSS score of the test, when available
+                  cvssVector:
+                    type:
+                    - string
+                    - 'null'
+                    description: The CVSS vector of the test, when available
+                  compliance:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        framework:
+                          type: string
+                          enum:
+                          - BITSIGHT
+                          - CRA
+                          - CWE
+                          - DORA
+                          - FEDRAMP
+                          - GDPR
+                          - HIPAA
+                          - HITRUST_CSF
+                          - IEC62443
+                          - ISO27001
+                          - MITRE_ATTACK
+                          - NIS2
+                          - NIST
+                          - OWASP
+                          - OWASP_ASVS
+                          - OWASP_LLM
+                          - PCI_DSS
+                          - PSD2
+                          - SECURITY_SCORECARD
+                          - SOC2
+                          - WASC
+                          description: The compliance framework name
+                        item:
+                          type: string
+                          description: The compliance item identifier within the framework
+                      required:
+                      - framework
+                      - item
+                      title: SecurityTestCompliance
+                    description: Compliance mappings associated with the test
+                  issueCounts:
+                    type: object
+                    properties:
+                      critical:
+                        type: integer
+                        description: Number of open CRITICAL issues for this test
+                      high:
+                        type: integer
+                        description: Number of open HIGH issues for this test
+                      medium:
+                        type: integer
+                        description: Number of open MEDIUM issues for this test
+                      low:
+                        type: integer
+                        description: Number of open LOW issues for this test
+                      info:
+                        type: integer
+                        description: Number of open INFO issues for this test
+                    required:
+                    - critical
+                    - high
+                    - medium
+                    - low
+                    - info
+                    title: SecurityTestIssueCounts
+                    description: Open issue counts for this test in the organization
+                required:
+                - id
+                - name
+                - category
+                - description
+                - documentationPath
+                - scanners
+                - assetTypes
+                - enabled
+                - defaultSeverity
+                - customSeverity
+                - severity
+                - cvssScore
+                - cvssVector
+                - compliance
+                - issueCounts
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

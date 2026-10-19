@@ -1,0 +1,758 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Vault Variables API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: VaultVariables
+  description: 'Manage vault variables.
+
+
+    Vault variables are secret references used by scan authentication configs. Values are write-only: they are accepted on create and update, but never returned by the API.'
+paths:
+  /vault-variables:
+    get:
+      tags:
+      - VaultVariables
+      summary: List vault variables
+      operationId: listVaultVariables
+      description: 'List the vault variables of the organization. Values are never returned: only the id, the type and the name.'
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          description: Search term to filter variables by name
+          example: MY_VARIABLE
+        required: false
+        description: Search term to filter variables by name
+        name: search
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - EXTERNAL
+            - PLAINTEXT
+            - SECRET
+          description: Filter by variable types
+          example:
+          - EXTERNAL
+        required: false
+        description: Filter by variable types
+        name: types
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the vault variable
+                        type:
+                          type: string
+                          enum:
+                          - EXTERNAL
+                          - PLAINTEXT
+                          - SECRET
+                          description: The type of the vault variable
+                        name:
+                          type: string
+                          description: The name of the vault variable, referenced from scan configs as ${NAME}
+                      required:
+                      - id
+                      - type
+                      - name
+                      title: VariableContent
+                      description: 'A vault variable. The value is write-only: it is accepted on create and update, but never returned.'
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+  /vault-variables/plaintext:
+    post:
+      tags:
+      - VaultVariables
+      summary: Create a plaintext vault variable
+      operationId: createPlaintextVaultVariable
+      description: 'Create a vault variable for the organization. The value is write-only: it is stored but never returned.'
+      requestBody:
+        description: Body of the request to create a vault variable
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - PLAINTEXT
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 128
+                  description: The name of the variable, referenced from scan configs as ${NAME}
+                  example: MY_VARIABLE
+                value:
+                  type: string
+                  minLength: 1
+                  description: 'The plaintext value. Write-only: never returned by the API.'
+                  example: staging
+              required:
+              - type
+              - name
+              - value
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the vault variable
+                  type:
+                    type: string
+                    enum:
+                    - EXTERNAL
+                    - PLAINTEXT
+                    - SECRET
+                    description: The type of the vault variable
+                  name:
+                    type: string
+                    description: The name of the vault variable, referenced from scan configs as ${NAME}
+                required:
+                - id
+                - type
+                - name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '409':
+          description: A variable with this name already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+  /vault-variables/secret:
+    post:
+      tags:
+      - VaultVariables
+      summary: Create a secret vault variable
+      operationId: createSecretVaultVariable
+      description: 'Create a vault variable for the organization. The value is write-only: it is stored but never returned.'
+      requestBody:
+        description: Body of the request to create a vault variable
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - SECRET
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 128
+                  description: The name of the variable, referenced from scan configs as ${NAME}
+                  example: MY_VARIABLE
+                value:
+                  type: string
+                  minLength: 1
+                  description: 'The secret value. Write-only: never returned by the API.'
+                  example: hunter2
+              required:
+              - type
+              - name
+              - value
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the vault variable
+                  type:
+                    type: string
+                    enum:
+                    - EXTERNAL
+                    - PLAINTEXT
+                    - SECRET
+                    description: The type of the vault variable
+                  name:
+                    type: string
+                    description: The name of the vault variable, referenced from scan configs as ${NAME}
+                required:
+                - id
+                - type
+                - name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '409':
+          description: A variable with this name already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+  /vault-variables/external:
+    post:
+      tags:
+      - VaultVariables
+      summary: Create an external vault variable
+      operationId: createExternalVaultVariable
+      description: Create a variable that points at an entry in a provider vault. Escape looks up the vault and the entry first and rejects the request when either is missing, then links the vault and stores the variable.
+      requestBody:
+        description: Body of the request to create an external vault variable
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - EXTERNAL
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 128
+                  description: The name of the variable, referenced from scan configs as ${NAME}
+                  example: MY_VARIABLE
+                externalId:
+                  type: string
+                  minLength: 1
+                  maxLength: 512
+                  description: The vault's own coordinate at the provider
+                  example: https://my-vault.vault.azure.net/
+                externalEntry:
+                  type: string
+                  minLength: 1
+                  description: The name of the entry inside the provider vault. Write-only.
+                  example: production-db
+              required:
+              - type
+              - name
+              - externalId
+              - externalEntry
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the vault variable
+                  type:
+                    type: string
+                    enum:
+                    - EXTERNAL
+                    - PLAINTEXT
+                    - SECRET
+                    description: The type of the vault variable
+                  name:
+                    type: string
+                    description: The name of the vault variable, referenced from scan configs as ${NAME}
+                required:
+                - id
+                - type
+                - name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '409':
+          description: A variable with this name already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '502':
+          description: The vault provider refused or could not answer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+  /vault-variables/{variableId}:
+    delete:
+      tags:
+      - VaultVariables
+      summary: Delete a vault variable
+      operationId: deleteVaultVariable
+      description: Delete a vault variable from the organization.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the vault variable
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the vault variable
+        name: variableId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    put:
+      tags:
+      - VaultVariables
+      summary: Update a vault variable
+      operationId: updateVaultVariable
+      description: Replace the value of a plaintext or secret variable, or the entry name of an external variable. The name and the type stay as they are. The new value is write-only.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the vault variable
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the vault variable
+        name: variableId
+        in: path
+      requestBody:
+        description: Body of the request to update a vault variable
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+                  minLength: 1
+                  description: The new plaintext or secret value. Write-only. Forbidden for an EXTERNAL variable.
+                externalEntry:
+                  type: string
+                  minLength: 1
+                  description: The new entry name inside the provider vault. Only for an EXTERNAL variable.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the vault variable
+                  type:
+                    type: string
+                    enum:
+                    - EXTERNAL
+                    - PLAINTEXT
+                    - SECRET
+                    description: The type of the vault variable
+                  name:
+                    type: string
+                    description: The name of the vault variable, referenced from scan configs as ${NAME}
+                required:
+                - id
+                - type
+                - name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+        '502':
+          description: The vault provider refused or could not answer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

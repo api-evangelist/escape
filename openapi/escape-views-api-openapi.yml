@@ -1,0 +1,1459 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Views API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Views
+  description: 'Saved views
+
+
+    The public API provides CRUDs operations to manage saved views and list the issues matching an issue view.'
+paths:
+  /views:
+    get:
+      tags:
+      - Views
+      summary: List views
+      operationId: listViews
+      description: 'List the saved views of the organization for a given target. By default this returns the next-generation views; set `next` to false to list legacy table views instead. Legacy table views only expose their identity and ordering: their stored configuration is kept in an internal format that the internal API does not expose. Pass `cursor` and `size` to page through the views: without them every view is returned, as before.'
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - ASSETS
+          - EVENTS
+          - INTEGRATIONS
+          - ISSUES
+          - LOCATIONS
+          - PROFILES
+          - SCANS
+          - TARGETS
+          description: The resource the views apply to
+        required: true
+        description: The resource the views apply to
+        name: target
+        in: query
+      - schema:
+          type: string
+          format: uuid
+          description: Only return views scoped to this project
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: Only return views scoped to this project
+        name: projectId
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Whether to list next-generation views (true, default) or legacy table views (false)
+        required: false
+        description: Whether to list next-generation views (true, default) or legacy table views (false)
+        name: next
+        in: query
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Next-Cursor:
+              schema:
+                type: string
+                description: Cursor to pass as the `cursor` query parameter to fetch the next page. Absent when there is no next page.
+              required: false
+              description: Cursor to pass as the `cursor` query parameter to fetch the next page. Absent when there is no next page.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The view ID.
+                        name:
+                          type: string
+                          description: The name of the view.
+                        key:
+                          type:
+                          - string
+                          - 'null'
+                          description: The managed view key, or null for user-created views.
+                        target:
+                          type: string
+                          enum:
+                          - ASSETS
+                          - EVENTS
+                          - INTEGRATIONS
+                          - ISSUES
+                          - LOCATIONS
+                          - PROFILES
+                          - SCANS
+                          - TARGETS
+                          description: The resource the view applies to.
+                        next:
+                          type: boolean
+                          description: Whether this is a next-generation view.
+                        order:
+                          type: integer
+                          description: The position of the view in the list.
+                        project:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                          required:
+                          - id
+                          description: The project the view is scoped to, if any.
+                        filters:
+                          type:
+                          - object
+                          - 'null'
+                          additionalProperties: {}
+                          description: The stored filters of the view.
+                        widgets:
+                          type: array
+                          items:
+                            type: string
+                          description: The stored widget IDs.
+                        columns:
+                          type: array
+                          items:
+                            type: string
+                          description: The stored column IDs.
+                        groupBy:
+                          type: array
+                          items:
+                            type: string
+                          description: The stored group-by keys.
+                        sort:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              description: The key to sort by.
+                            direction:
+                              type: string
+                              enum:
+                              - asc
+                              - desc
+                              description: The sort direction.
+                          required:
+                          - id
+                          - direction
+                          title: ViewSort
+                          description: The stored sort.
+                        groupSort:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              description: The key to sort by.
+                            direction:
+                              type: string
+                              enum:
+                              - asc
+                              - desc
+                              description: The sort direction.
+                          required:
+                          - id
+                          - direction
+                          title: ViewSort
+                          description: The stored group sort.
+                      required:
+                      - id
+                      - name
+                      - key
+                      - target
+                      - next
+                      - order
+                      - project
+                      - filters
+                      - widgets
+                      - columns
+                      - groupBy
+                      - sort
+                      - groupSort
+                      title: ViewDetail
+                      description: Detailed information about a saved view
+                required:
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+    post:
+      tags:
+      - Views
+      summary: Create a view
+      operationId: createView
+      description: Create a saved view for the organization.
+      requestBody:
+        description: Body of the request to create a view
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 256
+                  description: The name of the view
+                  example: My view
+                target:
+                  type: string
+                  enum:
+                  - ASSETS
+                  - EVENTS
+                  - INTEGRATIONS
+                  - ISSUES
+                  - LOCATIONS
+                  - PROFILES
+                  - SCANS
+                  - TARGETS
+                  description: The resource the view applies to
+                projectId:
+                  type: string
+                  format: uuid
+                  description: The project to scope the view to
+                  example: 00000000-0000-0000-0000-000000000000
+                filters:
+                  type:
+                  - object
+                  - 'null'
+                  additionalProperties: {}
+                  description: The filters of the view, in the shape of the target where-input
+                widgets:
+                  type: array
+                  items:
+                    type: string
+                  description: The widget IDs of the view
+                columns:
+                  type: array
+                  items:
+                    type: string
+                  description: The column IDs of the view
+                groupBy:
+                  type: array
+                  items:
+                    type: string
+                  description: The group-by keys of the view
+                sort:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The key to sort by.
+                    direction:
+                      type: string
+                      enum:
+                      - asc
+                      - desc
+                      description: The sort direction.
+                  required:
+                  - id
+                  - direction
+                  title: ViewSortInput
+                  description: The sort of the view
+                groupSort:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The key to sort by.
+                    direction:
+                      type: string
+                      enum:
+                      - asc
+                      - desc
+                      description: The sort direction.
+                  required:
+                  - id
+                  - direction
+                  title: ViewSortInput
+                  description: The group sort of the view
+              required:
+              - name
+              - target
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The view ID.
+                  name:
+                    type: string
+                    description: The name of the view.
+                  key:
+                    type:
+                    - string
+                    - 'null'
+                    description: The managed view key, or null for user-created views.
+                  target:
+                    type: string
+                    enum:
+                    - ASSETS
+                    - EVENTS
+                    - INTEGRATIONS
+                    - ISSUES
+                    - LOCATIONS
+                    - PROFILES
+                    - SCANS
+                    - TARGETS
+                    description: The resource the view applies to.
+                  next:
+                    type: boolean
+                    description: Whether this is a next-generation view.
+                  order:
+                    type: integer
+                    description: The position of the view in the list.
+                  project:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                    required:
+                    - id
+                    description: The project the view is scoped to, if any.
+                  filters:
+                    type:
+                    - object
+                    - 'null'
+                    additionalProperties: {}
+                    description: The stored filters of the view.
+                  widgets:
+                    type: array
+                    items:
+                      type: string
+                    description: The stored widget IDs.
+                  columns:
+                    type: array
+                    items:
+                      type: string
+                    description: The stored column IDs.
+                  groupBy:
+                    type: array
+                    items:
+                      type: string
+                    description: The stored group-by keys.
+                  sort:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        description: The key to sort by.
+                      direction:
+                        type: string
+                        enum:
+                        - asc
+                        - desc
+                        description: The sort direction.
+                    required:
+                    - id
+                    - direction
+                    title: ViewSort
+                    description: The stored sort.
+                  groupSort:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        description: The key to sort by.
+                      direction:
+                        type: string
+                        enum:
+                        - asc
+                        - desc
+                        description: The sort direction.
+                    required:
+                    - id
+                    - direction
+                    title: ViewSort
+                    description: The stored group sort.
+                required:
+                - id
+                - name
+                - key
+                - target
+                - next
+                - order
+                - project
+                - filters
+                - widgets
+                - columns
+                - groupBy
+                - sort
+                - groupSort
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /views/reorder:
+    post:
+      tags:
+      - Views
+      summary: Reorder views
+      operationId: reorderViews
+      description: Reorder the saved views of a target. The order is the list of view IDs in their new order. Views omitted from the list keep their relative order after the provided ones.
+      requestBody:
+        description: Body of the request to reorder views
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  enum:
+                  - ASSETS
+                  - EVENTS
+                  - INTEGRATIONS
+                  - ISSUES
+                  - LOCATIONS
+                  - PROFILES
+                  - SCANS
+                  - TARGETS
+                  description: The resource the views apply to
+                order:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: The view IDs in their new order
+                  example:
+                  - 00000000-0000-0000-0000-000000000000
+              required:
+              - target
+              - order
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the views were reordered
+                required:
+                - success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /views/{viewId}:
+    put:
+      tags:
+      - Views
+      summary: Update a view
+      operationId: updateView
+      description: Update a saved view of the organization. Only the provided fields are changed.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The view ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The view ID
+        name: viewId
+        in: path
+      requestBody:
+        description: Body of the request to update a view
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 256
+                  description: The new name of the view
+                filters:
+                  type:
+                  - object
+                  - 'null'
+                  additionalProperties: {}
+                  description: The new filters of the view. Pass null to clear them.
+                widgets:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                  description: The new widget IDs of the view. Pass null to clear them.
+                columns:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                  description: The new column IDs of the view. Pass null to clear them.
+                groupBy:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                  description: The new group-by keys of the view. Pass null to clear them.
+                sort:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The key to sort by.
+                    direction:
+                      type: string
+                      enum:
+                      - asc
+                      - desc
+                      description: The sort direction.
+                  required:
+                  - id
+                  - direction
+                  title: ViewSortInput
+                  description: The new sort of the view
+                groupSort:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The key to sort by.
+                    direction:
+                      type: string
+                      enum:
+                      - asc
+                      - desc
+                      description: The sort direction.
+                  required:
+                  - id
+                  - direction
+                  title: ViewSortInput
+                  description: The new group sort of the view
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The view ID.
+                  name:
+                    type: string
+                    description: The name of the view.
+                  key:
+                    type:
+                    - string
+                    - 'null'
+                    description: The managed view key, or null for user-created views.
+                  target:
+                    type: string
+                    enum:
+                    - ASSETS
+                    - EVENTS
+                    - INTEGRATIONS
+                    - ISSUES
+                    - LOCATIONS
+                    - PROFILES
+                    - SCANS
+                    - TARGETS
+                    description: The resource the view applies to.
+                  next:
+                    type: boolean
+                    description: Whether this is a next-generation view.
+                  order:
+                    type: integer
+                    description: The position of the view in the list.
+                  project:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                    required:
+                    - id
+                    description: The project the view is scoped to, if any.
+                  filters:
+                    type:
+                    - object
+                    - 'null'
+                    additionalProperties: {}
+                    description: The stored filters of the view.
+                  widgets:
+                    type: array
+                    items:
+                      type: string
+                    description: The stored widget IDs.
+                  columns:
+                    type: array
+                    items:
+                      type: string
+                    description: The stored column IDs.
+                  groupBy:
+                    type: array
+                    items:
+                      type: string
+                    description: The stored group-by keys.
+                  sort:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        description: The key to sort by.
+                      direction:
+                        type: string
+                        enum:
+                        - asc
+                        - desc
+                        description: The sort direction.
+                    required:
+                    - id
+                    - direction
+                    title: ViewSort
+                    description: The stored sort.
+                  groupSort:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        description: The key to sort by.
+                      direction:
+                        type: string
+                        enum:
+                        - asc
+                        - desc
+                        description: The sort direction.
+                    required:
+                    - id
+                    - direction
+                    title: ViewSort
+                    description: The stored group sort.
+                required:
+                - id
+                - name
+                - key
+                - target
+                - next
+                - order
+                - project
+                - filters
+                - widgets
+                - columns
+                - groupBy
+                - sort
+                - groupSort
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    delete:
+      tags:
+      - Views
+      summary: Delete a view
+      operationId: deleteView
+      description: Delete a saved view of the organization.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The view ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The view ID
+        name: viewId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /views/{viewId}/issues:
+    get:
+      tags:
+      - Views
+      summary: List issues of a view
+      operationId: listViewIssues
+      description: List the issues matching a saved issue view. The view filters are applied as the issue predicate. Only next-generation views with the `ISSUES` target are supported.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The view ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The view ID
+        name: viewId
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - ASSET
+          - LAST_SEEN
+          - SEVERITY
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the issue
+                        name:
+                          type: string
+                          description: The name of the issue
+                        fullName:
+                          type: string
+                          description: The full name of the issue
+                        category:
+                          type: string
+                          enum:
+                          - ACCESS_CONTROL
+                          - CONFIGURATION
+                          - CUSTOM
+                          - INFORMATION_DISCLOSURE
+                          - INJECTION
+                          - PROTOCOL
+                          - REQUEST_FORGERY
+                          - RESOURCE_LIMITATION
+                          - SCHEMA
+                          - SENSITIVE_DATA
+                          description: The category of the issue
+                        severity:
+                          type: string
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          description: The severity level of the issue
+                        manualSeverity:
+                          type: boolean
+                          description: Whether the severity has been manually overridden
+                        status:
+                          type: string
+                          enum:
+                          - FALSE_POSITIVE
+                          - IGNORED
+                          - MANUAL_REVIEW
+                          - OPEN
+                          - RESOLVED
+                          description: The current status of the issue
+                        context:
+                          type: string
+                          description: The context of the issue
+                        risks:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - CRITICAL_FINDING
+                            - EXPOSED
+                            - OPEN_SCHEMA
+                            - PRIVATE
+                            - PROD_ONLY_MODE
+                            - SENSITIVE_DATA
+                            - UNAUTHENTICATED
+                          description: Array of risk types associated with the issue
+                        alertUid:
+                          type: string
+                          description: Unique identifier for the alert
+                        createdAt:
+                          type: string
+                          description: When the issue was first created
+                        asset:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the asset
+                            class:
+                              type: string
+                              enum:
+                              - API_SERVICE
+                              - CDN
+                              - CLOUD_COMPONENT
+                              - CLOUD_HOSTING
+                              - CODE_PROJECT
+                              - CSPM
+                              - DEV_TOOLS
+                              - FRONTEND
+                              - HOST
+                              - MOBILE_APP
+                              - NETWORK
+                              - REPOSITORY
+                              - SCHEMA
+                              - SOURCE_CODE_MANAGEMENT
+                              - TECHNOLOGY
+                              description: The class of the asset
+                            type:
+                              type: string
+                              enum:
+                              - APK
+                              - AWS_LAMBDA
+                              - BITBUCKET_REPOSITORY
+                              - BURPSUITE_EXPORT
+                              - CODE_PROJECT
+                              - DNS
+                              - GITHUB_REPOSITORY
+                              - GITLAB_REPOSITORY
+                              - GRAPHQL
+                              - GRAPHQL_SCHEMA
+                              - GRPC
+                              - HAR_EXPORT
+                              - INSOMNIA
+                              - IPV4
+                              - IPV4_RANGE
+                              - IPV6
+                              - MCP
+                              - OPENAPI
+                              - PACKAGE
+                              - POSTMAN_COLLECTION
+                              - POSTMAN_ENVIRONMENT
+                              - REST
+                              - SOAP
+                              - SOFTWARE
+                              - WEBAPP
+                              - WEBSOCKET
+                              - WP_JSON
+                              description: The type of the asset
+                            name:
+                              type: string
+                              description: The name of the asset
+                            externalUrl:
+                              type:
+                              - string
+                              - 'null'
+                              description: The external url of the asset
+                            faviconUrl:
+                              type:
+                              - string
+                              - 'null'
+                              description: The favicon url of the asset
+                            createdAt:
+                              type: string
+                              description: The date and time the asset was created
+                            lastSeenAt:
+                              type: string
+                              description: The date and time the asset was last seen
+                            scheduledForDeletionAt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The date and time the asset is scheduled for deletion
+                            status:
+                              type: string
+                              enum:
+                              - DEPRECATED
+                              - FALSE_POSITIVE
+                              - MONITORED
+                              - OUT_OF_SCOPE
+                              - THIRD_PARTY
+                              description: The status of the asset
+                            tags:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uuid
+                                    description: The id of the tag
+                                  name:
+                                    type: string
+                                    description: The name of the tag
+                                  color:
+                                    type: string
+                                    description: The color of the tag
+                                required:
+                                - id
+                                - name
+                                - color
+                                title: Tag
+                                description: Information about a tag
+                              description: The tags of the asset
+                            risks:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - CRITICAL_FINDING
+                                - EXPOSED
+                                - OPEN_SCHEMA
+                                - PRIVATE
+                                - PROD_ONLY_MODE
+                                - SENSITIVE_DATA
+                                - UNAUTHENTICATED
+                              description: The risks of the asset
+                            projectIds:
+                              type: array
+                              items:
+                                type: string
+                                format: uuid
+                              description: IDs of the projects this asset is assigned to
+                            owners:
+                              type: array
+                              items:
+                                type: string
+                                format: email
+                              description: Email addresses of the owners of this asset.
+                            service:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                url:
+                                  type: string
+                                  description: The url of the asset service
+                                type:
+                                  type: string
+                                  enum:
+                                  - GRAPHQL
+                                  - GRPC
+                                  - MCP
+                                  - REST
+                                  - SOAP
+                                  - WEBSOCKET
+                                  description: The type of the asset service
+                              required:
+                              - url
+                              - type
+                              title: AssetServiceSummarized
+                              description: The service of the asset
+                            frontend:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                url:
+                                  type: string
+                                  description: The url of the asset frontend
+                                type:
+                                  type: string
+                                  enum:
+                                  - WEBAPP
+                                  description: The type of the asset frontend
+                              required:
+                              - url
+                              - type
+                              title: AssetFrontendSummarized
+                              description: The frontend of the asset
+                            host:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                address:
+                                  type: string
+                                  description: The address of the asset host
+                                type:
+                                  type: string
+                                  enum:
+                                  - DNS
+                                  - IPV4
+                                  - IPV6
+                                  description: The type of the asset host
+                              required:
+                              - address
+                              - type
+                              title: AssetHostSummarized
+                              description: The host of the asset
+                            technology:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - PACKAGE
+                                  - SOFTWARE
+                                  description: Whether this is a PACKAGE or SOFTWARE asset
+                                technologyKey:
+                                  type: string
+                                  description: Versionless technology identifier (e.g. vendor/product or ecosystem/name)
+                                version:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Detected version, if known
+                                cpe:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Common Platform Enumeration identifier, if known
+                              required:
+                              - type
+                              - technologyKey
+                              - version
+                              - cpe
+                              title: AssetTechnologySummarized
+                              description: Technology metadata for PACKAGE and SOFTWARE assets
+                            mobileApp:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - APK
+                                  description: The type of the mobile app
+                                filename:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Original uploaded filename
+                                bundleId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Android package name, if known
+                              required:
+                              - type
+                              - filename
+                              - bundleId
+                              title: AssetMobileAppSummarized
+                              description: Mobile app metadata for APK assets
+                            links:
+                              type: object
+                              properties:
+                                assetOverview:
+                                  type: string
+                                  description: The url to view the asset overview in the platform
+                              required:
+                              - assetOverview
+                              description: The links of the asset
+                          required:
+                          - id
+                          - class
+                          - type
+                          - name
+                          - externalUrl
+                          - faviconUrl
+                          - createdAt
+                          - lastSeenAt
+                          - scheduledForDeletionAt
+                          - status
+                          - tags
+                          - risks
+                          - projectIds
+                          - service
+                          - frontend
+                          - host
+                          - technology
+                          - mobileApp
+                          - links
+                          title: AssetSummarized
+                          description: The asset of the issue
+                        lastSeenScanId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the last scan where this issue was seen
+                        lastSeenScan:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the scan
+                            profileId:
+                              type:
+                              - string
+                              - 'null'
+                              format: uuid
+                              description: The id of the profile that ran the scan
+                            assetId:
+                              type:
+                              - string
+                              - 'null'
+                              format: uuid
+                              description: The id of the asset that was scanned, if any
+                            status:
+                              type: string
+                              description: The status of the scan
+                            createdAt:
+                              type: string
+                              description: The date and time the scan was created
+                            finishedAt:
+                              type:
+                              - string
+                              - 'null'
+                              description: The date and time the scan was finished
+                            score:
+                              type:
+                              - number
+                              - 'null'
+                              description: The score of the scan
+                            coverage:
+                              type:
+                              - number
+                              - 'null'
+                              description: Aggregate API coverage ratio for this scan (0–1), when the scan has finished with coverage data
+                            duration:
+                              type: number
+                              description: The duration of the scan
+                            progressRatio:
+                              type: number
+                              description: The progress ratio of the scan
+                            initiator:
+                              type: string
+                              description: The initiator of the scan
+                            kind:
+                              type: string
+                              description: The kind of the scan
+                            commitHash:
+                              type:
+                              - string
+                              - 'null'
+                              description: The commit hash of the scan
+                            commitBranch:
+                              type:
+                              - string
+                              - 'null'
+                              description: The commit branch of the scan
+                            links:
+                              type: object
+                              properties:
+                                scanIssues:
+                                  type: string
+                                  description: The url to view the scan issues in the platform
+                              required:
+                              - scanIssues
+                              description: The links of the scan
+                          required:
+                          - id
+                          - profileId
+                          - assetId
+                          - status
+                          - createdAt
+                          - finishedAt
+                          - score
+                          - coverage
+                          - duration
+                          - progressRatio
+                          - initiator
+                          - kind
+                          - commitHash
+                          - commitBranch
+                          - links
+                          title: ScanSummarized
+                          description: The last scan in which this issue was observed
+                        firstSeenScanId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the first scan where this issue was seen
+                        customRuleId:
+                          type:
+                          - string
+                          - 'null'
+                          description: ID of the custom rule if this is a custom issue
+                        links:
+                          type: object
+                          properties:
+                            issueOverview:
+                              type: string
+                              description: URL to view the issue overview in the platform
+                          required:
+                          - issueOverview
+                      required:
+                      - id
+                      - name
+                      - fullName
+                      - category
+                      - severity
+                      - manualSeverity
+                      - status
+                      - context
+                      - risks
+                      - alertUid
+                      - createdAt
+                      - asset
+                      - lastSeenScanId
+                      - lastSeenScan
+                      - firstSeenScanId
+                      - customRuleId
+                      - links
+                      title: IssueSummarized
+                      description: Summarized information about an issue
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

@@ -84,7 +84,7 @@ paths:
           type: string
           format: email
           description: Inbox email address used as `to` filter
-          example: demo.0100519e@scan.escape.tech
+          example: demo.00000000-0000-0000-0000-000000000000@scan.escape.tech
         required: true
         description: Inbox email address used as `to` filter
         name: email
@@ -145,13 +145,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
         '500':
           description: Internal Server Error
           content:

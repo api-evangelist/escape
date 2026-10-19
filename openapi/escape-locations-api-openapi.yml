@@ -138,6 +138,49 @@ paths:
                           - string
                           - 'null'
                           description: The date and time the location agent last connected.
+                        ip:
+                          type:
+                          - string
+                          - 'null'
+                          description: The IP address of the location.
+                        region:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - Asia
+                          - Canada
+                          - Europe
+                          - UnitedStates
+                          - null
+                          description: The region of the location.
+                        isActive:
+                          type: boolean
+                          default: false
+                          description: Whether the location agent is currently active.
+                        tags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uuid
+                                description: The id of the tag
+                              name:
+                                type: string
+                                description: The name of the tag
+                              color:
+                                type: string
+                                description: The color of the tag
+                            required:
+                            - id
+                            - name
+                            - color
+                            title: TagDetail
+                            description: Detailed information about a tag
+                          default: []
+                          description: The tags associated with the location.
                         links:
                           type: object
                           properties:
@@ -168,13 +211,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
     post:
       tags:
       - Locations
@@ -234,6 +278,49 @@ paths:
                     - 'null'
                     default: '2021-01-01T00:00:00Z'
                     description: The date and time the location was last seen.
+                  ip:
+                    type:
+                    - string
+                    - 'null'
+                    description: The IP address of the location.
+                  region:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - Asia
+                    - Canada
+                    - Europe
+                    - UnitedStates
+                    - null
+                    description: The region of the location.
+                  isActive:
+                    type: boolean
+                    default: false
+                    description: Whether the location agent is currently active.
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the tag
+                        name:
+                          type: string
+                          description: The name of the tag
+                        color:
+                          type: string
+                          description: The color of the tag
+                      required:
+                      - id
+                      - name
+                      - color
+                      title: TagDetail
+                      description: Detailed information about a tag
+                    default: []
+                    description: The tags associated with the location.
                   links:
                     type: object
                     properties:
@@ -242,6 +329,9 @@ paths:
                         description: The URL of the location overview.
                     required:
                     - locationOverview
+                  runCommand:
+                    type: string
+                    description: Command to start the location agent locally. The hosted MCP never runs this command.
                 required:
                 - links
         '400':
@@ -336,6 +426,49 @@ paths:
                     - 'null'
                     default: '2021-01-01T00:00:00Z'
                     description: The date and time the location was last seen.
+                  ip:
+                    type:
+                    - string
+                    - 'null'
+                    description: The IP address of the location.
+                  region:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - Asia
+                    - Canada
+                    - Europe
+                    - UnitedStates
+                    - null
+                    description: The region of the location.
+                  isActive:
+                    type: boolean
+                    default: false
+                    description: Whether the location agent is currently active.
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the tag
+                        name:
+                          type: string
+                          description: The name of the tag
+                        color:
+                          type: string
+                          description: The color of the tag
+                      required:
+                      - id
+                      - name
+                      - color
+                      title: TagDetail
+                      description: Detailed information about a tag
+                    default: []
+                    description: The tags associated with the location.
                   links:
                     type: object
                     properties:
@@ -366,7 +499,7 @@ paths:
       - Locations
       summary: Update a location
       operationId: updateLocation
-      description: Update a Private Location details.
+      description: Update a Private Location details. Location names are immutable and cannot be changed.
       parameters:
       - schema:
           type: string
@@ -385,8 +518,9 @@ paths:
               properties:
                 name:
                   type: string
-                  description: The name of the location.
+                  description: Deprecated. Location names are immutable and this field is ignored if provided.
                   example: location1
+                  deprecated: true
                 enabled:
                   type: boolean
                   description: Whether the location is enabled.
@@ -430,6 +564,49 @@ paths:
                     - 'null'
                     default: '2021-01-01T00:00:00Z'
                     description: The date and time the location was last seen.
+                  ip:
+                    type:
+                    - string
+                    - 'null'
+                    description: The IP address of the location.
+                  region:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - Asia
+                    - Canada
+                    - Europe
+                    - UnitedStates
+                    - null
+                    description: The region of the location.
+                  isActive:
+                    type: boolean
+                    default: false
+                    description: Whether the location agent is currently active.
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the tag
+                        name:
+                          type: string
+                          description: The name of the tag
+                        color:
+                          type: string
+                          description: The color of the tag
+                      required:
+                      - id
+                      - name
+                      - color
+                      title: TagDetail
+                      description: Detailed information about a tag
+                    default: []
+                    description: The tags associated with the location.
                   links:
                     type: object
                     properties:
@@ -473,28 +650,6 @@ paths:
                 - message
                 title: NotFound
                 description: Returned when the requested resource does not exist
-        '409':
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    enum:
-                    - Conflict on the following field
-                  field:
-                    type: string
-                  instanceId:
-                    type: string
-                    format: uuid
-                required:
-                - message
-                - field
-                - instanceId
-                title: Conflict
-                description: Returned when the request conflicts with an existing resource
     delete:
       tags:
       - Locations
@@ -525,6 +680,279 @@ paths:
                     - Location deleted successfully
                 required:
                 - message
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /locations/{locationId}/logs:
+    get:
+      tags:
+      - Locations
+      summary: List location logs
+      operationId: listLocationLogs
+      description: List logs for a private location.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the location
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the location
+        name: locationId
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: '123'
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          description: Filter by search term
+          example: connection
+        required: false
+        description: Filter by search term
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The log entry ID.
+                        createdAt:
+                          type: string
+                          description: The date and time the log entry was created.
+                        cliTimestamp:
+                          type: string
+                          description: The timestamp formatted for CLI display.
+                        message:
+                          type: string
+                          description: The log message.
+                        nodeId:
+                          type: string
+                          description: The ID of the node that produced the log entry.
+                      required:
+                      - id
+                      - createdAt
+                      - cliTimestamp
+                      - message
+                      - nodeId
+                      title: LocationLog
+                      description: A log entry for a private location
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /locations/{locationId}/tags:
+    put:
+      tags:
+      - Locations
+      summary: Update location tags
+      operationId: updateLocationTags
+      description: Update the tags associated with a private location.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The ID of the location
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The ID of the location
+        name: locationId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tagIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: The IDs of the tags to associate with the location.
+              required:
+              - tagIds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    default: 00000000-0000-0000-0000-000000000000
+                    description: The location ID.
+                  name:
+                    type: string
+                    default: Location Name
+                    description: The name of the location.
+                  type:
+                    type: string
+                    default: Location Type
+                    description: The type of the location.
+                  enabled:
+                    type: boolean
+                    default: true
+                    description: Whether the location is enabled.
+                  createdAt:
+                    type: string
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was created.
+                  lastSeenAt:
+                    type:
+                    - string
+                    - 'null'
+                    default: '2021-01-01T00:00:00Z'
+                    description: The date and time the location was last seen.
+                  ip:
+                    type:
+                    - string
+                    - 'null'
+                    description: The IP address of the location.
+                  region:
+                    type:
+                    - string
+                    - 'null'
+                    enum:
+                    - Asia
+                    - Canada
+                    - Europe
+                    - UnitedStates
+                    - null
+                    description: The region of the location.
+                  isActive:
+                    type: boolean
+                    default: false
+                    description: Whether the location agent is currently active.
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the tag
+                        name:
+                          type: string
+                          description: The name of the tag
+                        color:
+                          type: string
+                          description: The color of the tag
+                      required:
+                      - id
+                      - name
+                      - color
+                      title: TagDetail
+                      description: Detailed information about a tag
+                    default: []
+                    description: The tags associated with the location.
+                  links:
+                    type: object
+                    properties:
+                      locationOverview:
+                        type: string
+                        description: The URL of the location overview.
+                    required:
+                    - locationOverview
+                required:
+                - links
         '400':
           description: Bad Request
           content:

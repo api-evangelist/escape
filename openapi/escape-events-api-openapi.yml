@@ -78,6 +78,22 @@ paths:
         name: search
         in: query
       - schema:
+          type: string
+          description: Filter by after date
+          example: '2025-03-15T09:00:00Z'
+        required: false
+        description: Filter by after date
+        name: after
+        in: query
+      - schema:
+          type: string
+          description: Filter by before date
+          example: '2025-03-15T09:00:00Z'
+        required: false
+        description: Filter by before date
+        name: before
+        in: query
+      - schema:
           anyOf:
           - type: string
           - type: array
@@ -88,6 +104,18 @@ paths:
         required: false
         description: Filter by scan IDs
         name: scanIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by profile IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by profile IDs
+        name: profileIds
         in: query
       - schema:
           anyOf:
@@ -112,6 +140,50 @@ paths:
         required: false
         description: Filter by issue IDs
         name: issueIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by event IDs
+        required: false
+        description: Filter by event IDs
+        name: eventIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by target IDs
+        required: false
+        description: Filter by target IDs
+        name: targetIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by workflow IDs
+        required: false
+        description: Filter by workflow IDs
+        name: workflowIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by groups
+        required: false
+        description: Filter by groups
+        name: groups
         in: query
       - schema:
           type: array
@@ -142,6 +214,76 @@ paths:
         name: stages
         in: query
       - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CRITICAL
+            - HIGH
+            - INFO
+            - LOW
+            - MEDIUM
+          description: Filter by severity
+        required: false
+        description: Filter by severity
+        name: severities
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CRITICAL_FINDING
+            - EXPOSED
+            - OPEN_SCHEMA
+            - PRIVATE
+            - PROD_ONLY_MODE
+            - SENSITIVE_DATA
+            - UNAUTHENTICATED
+          description: Filter by risk
+        required: false
+        description: Filter by risk
+        name: risks
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AUTH_FAILURE
+            - BLOCKED_BY_CORS
+            - BLOCKED_BY_WAF
+            - CAPTCHA_HIT
+            - CONFIGURATION_IMPROVEMENT
+            - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+            - INTEGRATION_ERROR
+            - NO_AUTHENTICATION_CONFIGURED
+            - NO_SCHEMA_FOUND
+            - PL_FAILURE
+            - RATE_LIMIT_EXCEEDED
+            - SCHEMA_IMPROVEMENT
+            - TIMEOUT
+            - UNEXPECTED_ERROR
+            - UNREACHABLE_ASSET
+          description: Filter by scan problem codes
+        required: false
+        description: Filter by scan problem codes
+        name: scanProblemCodes
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              anyOf:
+              - type: string
+              - type: number
+          description: Filter by response status codes
+        required: false
+        description: Filter by response status codes
+        name: responseStatusCodes
+        in: query
+      - schema:
           type: string
           enum:
           - 'true'
@@ -167,6 +309,24 @@ paths:
         required: false
         description: Filter by attachments
         name: attachments
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by public events
+        required: false
+        description: Filter by public events
+        name: public
+        in: query
+      - schema:
+          type: string
+          description: Filter by DNF expression
+        required: false
+        description: Filter by DNF expression
+        name: dnf
         in: query
       responses:
         '200':
@@ -358,13 +518,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
   /events/{eventId}:
     get:
       tags:
@@ -411,6 +572,59 @@ paths:
                         createdAt:
                           type: string
                           description: The date and time the attachment was created
+                        agentToolCall:
+                          type:
+                          - object
+                          - 'null'
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the agent tool call
+                            key:
+                              type: string
+                              description: The key of the agent tool call
+                            name:
+                              type: string
+                              description: The name of the agent tool call
+                            kind:
+                              type: string
+                              enum:
+                              - GENERIC
+                              - REPORT_ISSUE
+                              - SUB_AGENT
+                              description: The kind of the agent tool call
+                            status:
+                              type: string
+                              enum:
+                              - FAILED
+                              - RUNNING
+                              - SUCCESS
+                              description: The status of the agent tool call
+                            durationMs:
+                              type:
+                              - number
+                              - 'null'
+                              description: The duration of the agent tool call in milliseconds
+                            arguments:
+                              description: The arguments of the agent tool call as JSON
+                            resultText:
+                              type:
+                              - string
+                              - 'null'
+                              description: The text result of the agent tool call
+                            resultJson:
+                              description: The JSON result of the agent tool call
+                          required:
+                          - id
+                          - key
+                          - name
+                          - kind
+                          - status
+                          - durationMs
+                          - resultText
+                          title: AgentToolCallDetailed
+                          description: The agent tool call of the attachment
                         exchange:
                           type:
                           - object
@@ -602,6 +816,16 @@ paths:
                             createdAt:
                               type: string
                               description: The date and time the target was created
+                            aiExplorationSummary:
+                              type:
+                              - string
+                              - 'null'
+                              description: AI-generated summary of the exploration results for the target
+                            aiPentestingSummary:
+                              type:
+                              - string
+                              - 'null'
+                              description: AI-generated pentesting summary for the target
                             apiRoute:
                               type:
                               - object
@@ -868,6 +1092,65 @@ paths:
                               - protocol
                               title: PortDetailed
                               description: The port of the target
+                            webPage:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the web page
+                                url:
+                                  type: string
+                                  description: The URL of the web page
+                                visits:
+                                  type: number
+                                  description: How many times the scanner visited the page
+                              required:
+                              - id
+                              - url
+                              - visits
+                              title: WebPageDetailed
+                              description: The web page of the target
+                            webCrawledUrl:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the crawled URL
+                                url:
+                                  type: string
+                                  description: The crawled URL
+                                visits:
+                                  type: number
+                                  description: How many times the scanner visited the URL
+                              required:
+                              - id
+                              - url
+                              - visits
+                              title: WebCrawledUrlDetailed
+                              description: The crawled URL of the target
+                            cve:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: The id of the CVE target
+                                cveId:
+                                  type: string
+                                  description: The CVE identifier, e.g. CVE-2024-1234
+                              required:
+                              - id
+                              - cveId
+                              title: CveDetailed
+                              description: The CVE of the target
                           required:
                           - createdAt
                           - id
@@ -917,6 +1200,9 @@ paths:
                           - LOW
                           - MEDIUM
                           description: The severity level of the issue
+                        manualSeverity:
+                          type: boolean
+                          description: Whether the severity has been manually overridden
                         status:
                           type: string
                           enum:
@@ -967,6 +1253,7 @@ paths:
                               - DEV_TOOLS
                               - FRONTEND
                               - HOST
+                              - MOBILE_APP
                               - NETWORK
                               - REPOSITORY
                               - SCHEMA
@@ -976,20 +1263,13 @@ paths:
                             type:
                               type: string
                               enum:
-                              - AKAMAI_ACCOUNT
-                              - AWS_ACCOUNT
+                              - APK
                               - AWS_LAMBDA
-                              - AZURE_TENANT
-                              - BITBUCKET_ORGANIZATION
                               - BITBUCKET_REPOSITORY
                               - BURPSUITE_EXPORT
-                              - CLOUDFLARE_ACCOUNT
                               - CODE_PROJECT
                               - DNS
-                              - GCP_PROJECT
-                              - GITHUB_ORGANIZATION
                               - GITHUB_REPOSITORY
-                              - GITLAB_GROUP
                               - GITLAB_REPOSITORY
                               - GRAPHQL
                               - GRAPHQL_SCHEMA
@@ -999,19 +1279,16 @@ paths:
                               - IPV4
                               - IPV4_RANGE
                               - IPV6
-                              - KUBERNETES_CLUSTER
                               - MCP
                               - OPENAPI
                               - PACKAGE
                               - POSTMAN_COLLECTION
                               - POSTMAN_ENVIRONMENT
-                              - POSTMAN_ORGANIZATION
                               - REST
                               - SOAP
                               - SOFTWARE
                               - WEBAPP
                               - WEBSOCKET
-                              - WIZ_ACCOUNT
                               - WP_JSON
                               description: The type of the asset
                             name:
@@ -1082,6 +1359,12 @@ paths:
                                 - SENSITIVE_DATA
                                 - UNAUTHENTICATED
                               description: The risks of the asset
+                            projectIds:
+                              type: array
+                              items:
+                                type: string
+                                format: uuid
+                              description: IDs of the projects this asset is assigned to
                             owners:
                               type: array
                               items:
@@ -1149,6 +1432,63 @@ paths:
                               - type
                               title: AssetHostSummarized
                               description: The host of the asset
+                            technology:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - PACKAGE
+                                  - SOFTWARE
+                                  description: Whether this is a PACKAGE or SOFTWARE asset
+                                technologyKey:
+                                  type: string
+                                  description: Versionless technology identifier (e.g. vendor/product or ecosystem/name)
+                                version:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Detected version, if known
+                                cpe:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Common Platform Enumeration identifier, if known
+                              required:
+                              - type
+                              - technologyKey
+                              - version
+                              - cpe
+                              title: AssetTechnologySummarized
+                              description: Technology metadata for PACKAGE and SOFTWARE assets
+                            mobileApp:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - APK
+                                  description: The type of the mobile app
+                                filename:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Original uploaded filename
+                                bundleId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Android package name, if known
+                              required:
+                              - type
+                              - filename
+                              - bundleId
+                              title: AssetMobileAppSummarized
+                              description: Mobile app metadata for APK assets
                             links:
                               type: object
                               properties:
@@ -1171,9 +1511,12 @@ paths:
                           - status
                           - tags
                           - risks
+                          - projectIds
                           - service
                           - frontend
                           - host
+                          - technology
+                          - mobileApp
                           - links
                           title: AssetSummarized
                           description: The asset of the issue
@@ -1191,6 +1534,18 @@ paths:
                               type: string
                               format: uuid
                               description: The id of the scan
+                            profileId:
+                              type:
+                              - string
+                              - 'null'
+                              format: uuid
+                              description: The id of the profile that ran the scan
+                            assetId:
+                              type:
+                              - string
+                              - 'null'
+                              format: uuid
+                              description: The id of the asset that was scanned, if any
                             status:
                               type: string
                               description: The status of the scan
@@ -1245,6 +1600,8 @@ paths:
                               description: The links of the scan
                           required:
                           - id
+                          - profileId
+                          - assetId
                           - status
                           - createdAt
                           - finishedAt
@@ -1283,6 +1640,7 @@ paths:
                       - fullName
                       - category
                       - severity
+                      - manualSeverity
                       - status
                       - context
                       - risks
@@ -1379,6 +1737,109 @@ paths:
                         type:
                         - string
                         - 'null'
+                      ignored:
+                        type: boolean
+                        description: Whether the scan is ignored. Only returned by the scan detail endpoint.
+                      executiveSummary:
+                        type:
+                        - string
+                        - 'null'
+                        description: AI-generated executive summary of the scan. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                      scopeSummary:
+                        type:
+                        - string
+                        - 'null'
+                        description: AI-generated summary of the scanned scope. Credentials and secrets are redacted. Only returned by the scan detail endpoint.
+                      problems:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the problem
+                            code:
+                              type: string
+                              enum:
+                              - AUTH_FAILURE
+                              - BLOCKED_BY_CORS
+                              - BLOCKED_BY_WAF
+                              - CAPTCHA_HIT
+                              - CONFIGURATION_IMPROVEMENT
+                              - HIGH_NUMBER_OF_ERROR_ENDPOINTS
+                              - INTEGRATION_ERROR
+                              - NO_AUTHENTICATION_CONFIGURED
+                              - NO_SCHEMA_FOUND
+                              - PL_FAILURE
+                              - RATE_LIMIT_EXCEEDED
+                              - SCHEMA_IMPROVEMENT
+                              - TIMEOUT
+                              - UNEXPECTED_ERROR
+                              - UNREACHABLE_ASSET
+                              description: The problem code
+                            message:
+                              type: string
+                              description: The problem message
+                            severity:
+                              type: string
+                              enum:
+                              - ERROR
+                              - INFO
+                              - WARNING
+                              description: The problem severity
+                            createdAt:
+                              type: string
+                              description: The date and time the problem was created
+                          required:
+                          - id
+                          - code
+                          - message
+                          - severity
+                          - createdAt
+                          title: ScanProblem
+                          description: A validation problem surfaced by the scanner during a scan
+                        description: Validation problems surfaced by the scanner during this scan. Only returned by the scan detail endpoint.
+                      artefacts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the artefact
+                            kind:
+                              type: string
+                              enum:
+                              - AUDITOR_REPORT
+                              - EVENTS_ARCHIVE
+                              - EXCHANGES_ARCHIVE
+                              - EXECUTIVE_REPORT
+                              - EXPORT_JOB_RESULT
+                              description: The kind of the artefact
+                            name:
+                              type: string
+                              description: The name of the artefact
+                            signedUrl:
+                              type: string
+                              description: Time-limited HTTPS download URL for the artefact
+                            createdAt:
+                              type: string
+                              description: The date and time the artefact was created
+                            updatedAt:
+                              type: string
+                              description: The date and time the artefact was updated
+                          required:
+                          - id
+                          - kind
+                          - name
+                          - signedUrl
+                          - createdAt
+                          - updatedAt
+                          title: ScanArtefact
+                          description: A file produced by a scan; signedUrl is a time-limited download link
+                        description: Files produced by this scan, such as executive reports. Only returned by the scan detail endpoint.
                       links:
                         type: object
                         properties:

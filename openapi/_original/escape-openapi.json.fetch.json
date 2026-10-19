@@ -1,0 +1,12 @@
+{
+ "url": "https://public.escape.tech/v3/openapi.json",
+ "final": "https://public.escape.tech/v3/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 5046796,
+ "sha256": "28d850251c07e4719e5ebb395fc0c7551741ce3186d1fae65b5099326ecc35fa",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

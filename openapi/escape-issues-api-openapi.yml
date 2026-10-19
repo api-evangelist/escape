@@ -128,10 +128,10 @@ paths:
           - type: array
             items:
               type: string
-          description: Filter by issue names
-          example: issue1,issue2
+          description: Filter by issue full name (the display name including risk characteristics, e.g. 'SQL injection found on external-facing asset')
+          example: SQL injection found,SQL injection found on external-facing asset
         required: false
-        description: Filter by issue names
+        description: Filter by issue full name (the display name including risk characteristics, e.g. 'SQL injection found on external-facing asset')
         name: names
         in: query
       - schema:
@@ -153,9 +153,70 @@ paths:
             items:
               type: string
           description: Filter by tag IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
         required: false
         description: Filter by tag IDs
         name: tagIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by project IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by project IDs
+        name: projectIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by target IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by target IDs
+        name: targetIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by security test UIDs
+          example: ISSUE_SQL_INJECTION,ISSUE_CVE_2021_44228
+        required: false
+        description: Filter by security test UIDs
+        name: securityTestUids
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Exclude these issue IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Exclude these issue IDs
+        name: blacklistedIds
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Exclude issues by their raw name (e.g. 'SQL injection')
+          example: SQL injection,Cross-Site Scripting
+        required: false
+        description: Exclude issues by their raw name (e.g. 'SQL injection')
+        name: blacklistedNames
         in: query
       - schema:
           type: string
@@ -175,6 +236,38 @@ paths:
         required: false
         description: Filter by issues with Jira tickets
         name: jiraTicket
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          description: 'Filter by issues whose assets have no tags. Only `true` is supported: the API cannot express "assets that have tags", so `false` is rejected instead of silently matching every issue.'
+          example: 'true'
+        required: false
+        description: 'Filter by issues whose assets have no tags. Only `true` is supported: the API cannot express "assets that have tags", so `false` is rejected instead of silently matching every issue.'
+        name: noTags
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by AI false positive classification
+        required: false
+        description: Filter by AI false positive classification
+        name: aiFalsePositive
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          example: 'true'
+          description: Filter by agentic (AI pentest) issues
+        required: false
+        description: Filter by agentic (AI pentest) issues
+        name: agentic
         in: query
       - schema:
           type: array
@@ -207,6 +300,7 @@ paths:
             - DEV_TOOLS
             - FRONTEND
             - HOST
+            - MOBILE_APP
             - NETWORK
             - REPOSITORY
             - SCHEMA
@@ -222,20 +316,85 @@ paths:
           items:
             type: string
             enum:
-            - ASM_AKAMAI_ACCOUNT
-            - ASM_AWS_ACCOUNT
+            - ACCESS_CONTROL
+            - CONFIGURATION
+            - CUSTOM
+            - INFORMATION_DISCLOSURE
+            - INJECTION
+            - PROTOCOL
+            - REQUEST_FORGERY
+            - RESOURCE_LIMITATION
+            - SCHEMA
+            - SENSITIVE_DATA
+          description: Filter by issue categories
+        required: false
+        description: Filter by issue categories
+        name: categories
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APK
+            - AWS_LAMBDA
+            - BITBUCKET_REPOSITORY
+            - BURPSUITE_EXPORT
+            - CODE_PROJECT
+            - DNS
+            - GITHUB_REPOSITORY
+            - GITLAB_REPOSITORY
+            - GRAPHQL
+            - GRAPHQL_SCHEMA
+            - GRPC
+            - HAR_EXPORT
+            - INSOMNIA
+            - IPV4
+            - IPV4_RANGE
+            - IPV6
+            - MCP
+            - OPENAPI
+            - PACKAGE
+            - POSTMAN_COLLECTION
+            - POSTMAN_ENVIRONMENT
+            - REST
+            - SOAP
+            - SOFTWARE
+            - WEBAPP
+            - WEBSOCKET
+            - WP_JSON
+          description: Filter by asset types
+        required: false
+        description: Filter by asset types
+        name: assetTypes
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - DEPRECATED
+            - FALSE_POSITIVE
+            - MONITORED
+            - OUT_OF_SCOPE
+            - THIRD_PARTY
+          description: Filter by asset statuses
+        required: false
+        description: Filter by asset statuses
+        name: assetStatuses
+        in: query
+      - schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ASM_APK
             - ASM_AWS_LAMBDA
-            - ASM_AZURE_TENANT
-            - ASM_BITBUCKET_ORGANIZATION
             - ASM_BITBUCKET_REPOSITORY
             - ASM_BURPSUITE_EXPORT
-            - ASM_CLOUDFLARE_ACCOUNT
             - ASM_CODE_PROJECT
             - ASM_DNS
-            - ASM_GCP_PROJECT
-            - ASM_GITHUB_ORGANIZATION
             - ASM_GITHUB_REPOSITORY
-            - ASM_GITLAB_GROUP
             - ASM_GITLAB_REPOSITORY
             - ASM_GRAPHQL
             - ASM_GRAPHQL_SCHEMA
@@ -245,26 +404,28 @@ paths:
             - ASM_IPV4
             - ASM_IPV4_RANGE
             - ASM_IPV6
-            - ASM_KUBERNETES_CLUSTER
             - ASM_MCP
             - ASM_OPENAPI
             - ASM_PACKAGE
             - ASM_POSTMAN_COLLECTION
             - ASM_POSTMAN_ENVIRONMENT
-            - ASM_POSTMAN_ORGANIZATION
             - ASM_REST
             - ASM_SOAP
             - ASM_SOFTWARE
             - ASM_WEBAPP
             - ASM_WEBSOCKET
-            - ASM_WIZ_ACCOUNT
             - ASM_WP_JSON
-            - AUTOMATED_PENTEST_GRAPHQL
-            - AUTOMATED_PENTEST_REST
-            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST
             - BLST_GRAPHQL
             - BLST_REST
+            - CONTINUOUS_PENTEST
+            - EXTERNAL_NETWORK_PENTEST
             - FRONTEND_DAST
+            - MOBILE_APP_PENTEST
+            - RETEST
+            - AUTOMATED_PENTEST_WEBAPP
+            - AUTOMATED_PENTEST_REST
+            - AUTOMATED_PENTEST_GRAPHQL
           description: Filter by scanner kinds
         required: false
         description: Filter by scanner kinds
@@ -299,6 +460,13 @@ paths:
         required: false
         description: Filter by issue status
         name: status
+        in: query
+      - schema:
+          type: string
+          description: Advanced filter as a DNF expression (URL-encoded JSON object)
+        required: false
+        description: Advanced filter as a DNF expression (URL-encoded JSON object)
+        name: dnf
         in: query
       responses:
         '200':
@@ -354,6 +522,9 @@ paths:
                           - LOW
                           - MEDIUM
                           description: The severity level of the issue
+                        manualSeverity:
+                          type: boolean
+                          description: Whether the severity has been manually overridden
                         status:
                           type: string
                           enum:
@@ -404,6 +575,7 @@ paths:
                               - DEV_TOOLS
                               - FRONTEND
                               - HOST
+                              - MOBILE_APP
                               - NETWORK
                               - REPOSITORY
                               - SCHEMA
@@ -413,20 +585,13 @@ paths:
                             type:
                               type: string
                               enum:
-                              - AKAMAI_ACCOUNT
-                              - AWS_ACCOUNT
+                              - APK
                               - AWS_LAMBDA
-                              - AZURE_TENANT
-                              - BITBUCKET_ORGANIZATION
                               - BITBUCKET_REPOSITORY
                               - BURPSUITE_EXPORT
-                              - CLOUDFLARE_ACCOUNT
                               - CODE_PROJECT
                               - DNS
-                              - GCP_PROJECT
-                              - GITHUB_ORGANIZATION
                               - GITHUB_REPOSITORY
-                              - GITLAB_GROUP
                               - GITLAB_REPOSITORY
                               - GRAPHQL
                               - GRAPHQL_SCHEMA
@@ -436,19 +601,16 @@ paths:
                               - IPV4
                               - IPV4_RANGE
                               - IPV6
-                              - KUBERNETES_CLUSTER
                               - MCP
                               - OPENAPI
                               - PACKAGE
                               - POSTMAN_COLLECTION
                               - POSTMAN_ENVIRONMENT
-                              - POSTMAN_ORGANIZATION
                               - REST
                               - SOAP
                               - SOFTWARE
                               - WEBAPP
                               - WEBSOCKET
-                              - WIZ_ACCOUNT
                               - WP_JSON
                               description: The type of the asset
                             name:
@@ -519,6 +681,12 @@ paths:
                                 - SENSITIVE_DATA
                                 - UNAUTHENTICATED
                               description: The risks of the asset
+                            projectIds:
+                              type: array
+                              items:
+                                type: string
+                                format: uuid
+                              description: IDs of the projects this asset is assigned to
                             owners:
                               type: array
                               items:
@@ -586,6 +754,63 @@ paths:
                               - type
                               title: AssetHostSummarized
                               description: The host of the asset
+                            technology:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - PACKAGE
+                                  - SOFTWARE
+                                  description: Whether this is a PACKAGE or SOFTWARE asset
+                                technologyKey:
+                                  type: string
+                                  description: Versionless technology identifier (e.g. vendor/product or ecosystem/name)
+                                version:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Detected version, if known
+                                cpe:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Common Platform Enumeration identifier, if known
+                              required:
+                              - type
+                              - technologyKey
+                              - version
+                              - cpe
+                              title: AssetTechnologySummarized
+                              description: Technology metadata for PACKAGE and SOFTWARE assets
+                            mobileApp:
+                              type:
+                              - object
+                              - 'null'
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                  - APK
+                                  description: The type of the mobile app
+                                filename:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Original uploaded filename
+                                bundleId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Android package name, if known
+                              required:
+                              - type
+                              - filename
+                              - bundleId
+                              title: AssetMobileAppSummarized
+                              description: Mobile app metadata for APK assets
                             links:
                               type: object
                               properties:
@@ -608,9 +833,12 @@ paths:
                           - status
                           - tags
                           - risks
+                          - projectIds
                           - service
                           - frontend
                           - host
+                          - technology
+                          - mobileApp
                           - links
                           title: AssetSummarized
                           description: The asset of the issue
@@ -628,6 +856,18 @@ paths:
                               type: string
                               format: uuid
                               description: The id of the scan
+                            profileId:
+                              type:
+                              - string
+                              - 'null'
+                              format: uuid
+                              description: The id of the profile that ran the scan
+                            assetId:
+                              type:
+                              - string
+                              - 'null'
+                              format: uuid
+                              description: The id of the asset that was scanned, if any
                             status:
                               type: string
                               description: The status of the scan
@@ -682,6 +922,8 @@ paths:
                               description: The links of the scan
                           required:
                           - id
+                          - profileId
+                          - assetId
                           - status
                           - createdAt
                           - finishedAt
@@ -720,6 +962,7 @@ paths:
                       - fullName
                       - category
                       - severity
+                      - manualSeverity
                       - status
                       - context
                       - risks
@@ -747,13 +990,14 @@ paths:
                     type: string
                     enum:
                     - Invalid cursor
+                    - Branch filters page limit reached
                   details:
                     type: string
                 required:
                 - message
                 - details
                 title: PaginationError
-                description: Returned when an invalid pagination cursor is supplied
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
   /issues/funnel:
     get:
       tags:
@@ -867,6 +1111,9 @@ paths:
                     date:
                       type: string
                       description: Time bucket start date
+                    CRITICAL:
+                      type: number
+                      description: Number of CRITICAL severity issues
                     HIGH:
                       type: number
                       description: Number of HIGH severity issues
@@ -881,6 +1128,7 @@ paths:
                       description: Number of INFO severity issues
                   required:
                   - date
+                  - CRITICAL
                   - HIGH
                   - MEDIUM
                   - LOW
@@ -893,7 +1141,7 @@ paths:
       - Issues
       summary: Bulk update issues
       operationId: bulkUpdateIssues
-      description: Update the status of multiple issues matching a filter predicate. For example, mark all LOW severity issues on a given asset as IGNORED.
+      description: 'Update the status and/or severity of multiple issues matching a filter predicate. For example, mark all LOW severity issues on a given asset as IGNORED, or reset severities to scanner values. A non-empty `where` or `all: true` is required. Set `dryRun` to preview the matching issue IDs without changing anything. Requests matching more than 10,000 issues are rejected: narrow the filter.'
       requestBody:
         content:
           application/json:
@@ -901,14 +1149,394 @@ paths:
               type: object
               properties:
                 status:
-                  type: string
-                  enum:
-                  - FALSE_POSITIVE
-                  - IGNORED
-                  - MANUAL_REVIEW
-                  - OPEN
-                  - RESOLVED
+                  anyOf:
+                  - type: object
+                    properties:
+                      value:
+                        type: string
+                        enum:
+                        - FALSE_POSITIVE
+                        - IGNORED
+                        - MANUAL_REVIEW
+                        - OPEN
+                        - RESOLVED
+                        description: The status to set
+                      reason:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 1
+                        maxLength: 512
+                        description: Reason for the change (required if your organization enforces it)
+                    required:
+                    - value
+                  - type: string
+                    enum:
+                    - FALSE_POSITIVE
+                    - IGNORED
+                    - MANUAL_REVIEW
+                    - OPEN
+                    - RESOLVED
+                    description: 'Deprecated: pass an object { value, reason } instead'
+                    deprecated: true
                   description: The new status to apply
+                severity:
+                  anyOf:
+                  - type: object
+                    properties:
+                      value:
+                        type:
+                        - string
+                        - 'null'
+                        enum:
+                        - CRITICAL
+                        - HIGH
+                        - INFO
+                        - LOW
+                        - MEDIUM
+                        - null
+                        description: The severity to set. Pass null to reset to the scanner default.
+                      reason:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 1
+                        maxLength: 512
+                        description: Reason for the change (required if your organization enforces it)
+                    required:
+                    - value
+                  - type: string
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    description: 'Deprecated: pass an object { value, reason } instead'
+                    deprecated: true
+                  - type: 'null'
+                    description: 'Deprecated: pass an object { value, reason } instead'
+                    deprecated: true
+                  - type: 'null'
+                  description: The new severity to apply. Pass null to reset to the scanner severity.
+                where:
+                  type: object
+                  properties:
+                    ids:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by specific issue IDs
+                    blacklistedIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Exclude these issue IDs
+                    blacklistedNames:
+                      type: array
+                      items:
+                        type: string
+                      description: Exclude issues by their raw name (e.g. 'SQL injection')
+                    projectIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by project IDs
+                    profileIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by profile IDs
+                    assetIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by asset IDs
+                    targetIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by target IDs
+                    scanIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by scan IDs
+                    tagIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by tag IDs
+                    securityTestUids:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by security test UIDs
+                    domains:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by domain
+                    names:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by issue full name (the display name including risk characteristics, e.g. 'SQL injection found on external-facing asset')
+                    search:
+                      type: string
+                      description: Search term to filter issues by name or description
+                    jiraTicket:
+                      type: boolean
+                      description: Filter by issues with Jira tickets
+                    noTags:
+                      type: boolean
+                      enum:
+                      - true
+                      description: 'Filter by issues whose assets have no tags. Only `true` is supported: the API cannot express "assets that have tags", so `false` is rejected instead of silently matching every issue.'
+                    aiFalsePositive:
+                      type: boolean
+                      description: Filter by AI false positive classification
+                    agentic:
+                      type: boolean
+                      description: Filter by agentic (AI pentest) issues
+                    risks:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - CRITICAL_FINDING
+                        - EXPOSED
+                        - OPEN_SCHEMA
+                        - PRIVATE
+                        - PROD_ONLY_MODE
+                        - SENSITIVE_DATA
+                        - UNAUTHENTICATED
+                      description: Filter by risk types
+                    assetClasses:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - API_SERVICE
+                        - CDN
+                        - CLOUD_COMPONENT
+                        - CLOUD_HOSTING
+                        - CODE_PROJECT
+                        - CSPM
+                        - DEV_TOOLS
+                        - FRONTEND
+                        - HOST
+                        - MOBILE_APP
+                        - NETWORK
+                        - REPOSITORY
+                        - SCHEMA
+                        - SOURCE_CODE_MANAGEMENT
+                        - TECHNOLOGY
+                      description: Filter by asset classes
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ACCESS_CONTROL
+                        - CONFIGURATION
+                        - CUSTOM
+                        - INFORMATION_DISCLOSURE
+                        - INJECTION
+                        - PROTOCOL
+                        - REQUEST_FORGERY
+                        - RESOURCE_LIMITATION
+                        - SCHEMA
+                        - SENSITIVE_DATA
+                      description: Filter by issue categories
+                    assetTypes:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - APK
+                        - AWS_LAMBDA
+                        - BITBUCKET_REPOSITORY
+                        - BURPSUITE_EXPORT
+                        - CODE_PROJECT
+                        - DNS
+                        - GITHUB_REPOSITORY
+                        - GITLAB_REPOSITORY
+                        - GRAPHQL
+                        - GRAPHQL_SCHEMA
+                        - GRPC
+                        - HAR_EXPORT
+                        - INSOMNIA
+                        - IPV4
+                        - IPV4_RANGE
+                        - IPV6
+                        - MCP
+                        - OPENAPI
+                        - PACKAGE
+                        - POSTMAN_COLLECTION
+                        - POSTMAN_ENVIRONMENT
+                        - REST
+                        - SOAP
+                        - SOFTWARE
+                        - WEBAPP
+                        - WEBSOCKET
+                        - WP_JSON
+                      description: Filter by asset types
+                    assetStatuses:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - DEPRECATED
+                        - FALSE_POSITIVE
+                        - MONITORED
+                        - OUT_OF_SCOPE
+                        - THIRD_PARTY
+                      description: Filter by asset statuses
+                    scannerKinds:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ASM_APK
+                        - ASM_AWS_LAMBDA
+                        - ASM_BITBUCKET_REPOSITORY
+                        - ASM_BURPSUITE_EXPORT
+                        - ASM_CODE_PROJECT
+                        - ASM_DNS
+                        - ASM_GITHUB_REPOSITORY
+                        - ASM_GITLAB_REPOSITORY
+                        - ASM_GRAPHQL
+                        - ASM_GRAPHQL_SCHEMA
+                        - ASM_GRPC
+                        - ASM_HAR_EXPORT
+                        - ASM_INSOMNIA
+                        - ASM_IPV4
+                        - ASM_IPV4_RANGE
+                        - ASM_IPV6
+                        - ASM_MCP
+                        - ASM_OPENAPI
+                        - ASM_PACKAGE
+                        - ASM_POSTMAN_COLLECTION
+                        - ASM_POSTMAN_ENVIRONMENT
+                        - ASM_REST
+                        - ASM_SOAP
+                        - ASM_SOFTWARE
+                        - ASM_WEBAPP
+                        - ASM_WEBSOCKET
+                        - ASM_WP_JSON
+                        - AUTOMATED_PENTEST
+                        - BLST_GRAPHQL
+                        - BLST_REST
+                        - CONTINUOUS_PENTEST
+                        - EXTERNAL_NETWORK_PENTEST
+                        - FRONTEND_DAST
+                        - MOBILE_APP_PENTEST
+                        - RETEST
+                        - AUTOMATED_PENTEST_WEBAPP
+                        - AUTOMATED_PENTEST_REST
+                        - AUTOMATED_PENTEST_GRAPHQL
+                      description: Filter by scanner kinds
+                    severities:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - CRITICAL
+                        - HIGH
+                        - INFO
+                        - LOW
+                        - MEDIUM
+                      description: Filter by issue severities
+                    status:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - FALSE_POSITIVE
+                        - IGNORED
+                        - MANUAL_REVIEW
+                        - OPEN
+                        - RESOLVED
+                      description: Filter by issue status
+                    dnf:
+                      type: object
+                      additionalProperties: {}
+                      description: Advanced filter as a DNF expression (JSON object)
+                  additionalProperties: false
+                  description: Filter predicate. Required unless `all` is true.
+                all:
+                  type: boolean
+                  description: Set to true to target every issue. Mutually exclusive with a non-empty `where`.
+                dryRun:
+                  type: boolean
+                  description: Return the matching issue IDs and count without updating anything
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ids:
+                    type: array
+                    items:
+                      type: string
+                    description: IDs of the updated issues (or matching issues on dry run)
+                  count:
+                    type: integer
+                    description: Number of issue IDs in `ids`
+                  dryRun:
+                    type: boolean
+                    description: Whether this was a preview with no update applied
+                required:
+                - ids
+                - count
+                - dryRun
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /issues/bulk-workflow:
+    post:
+      tags:
+      - Issues
+      summary: Bulk trigger manual workflows on issues
+      operationId: bulkTriggerIssueWorkflows
+      description: 'Trigger one or more manual workflows on every issue matching a filter predicate. For example, export all issues on a given asset to Jira. A non-empty `where` or `all: true` is required. Set `dryRun` to preview the matching issue IDs without triggering anything. Requests matching more than 10,000 issues are rejected: narrow the filter.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workflowIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  minItems: 1
+                  maxItems: 50
+                  description: The manual workflow IDs to trigger on the matching issues
                 where:
                   type: object
                   properties:
@@ -948,20 +1576,13 @@ paths:
                       items:
                         type: string
                         enum:
-                        - ASM_AKAMAI_ACCOUNT
-                        - ASM_AWS_ACCOUNT
+                        - ASM_APK
                         - ASM_AWS_LAMBDA
-                        - ASM_AZURE_TENANT
-                        - ASM_BITBUCKET_ORGANIZATION
                         - ASM_BITBUCKET_REPOSITORY
                         - ASM_BURPSUITE_EXPORT
-                        - ASM_CLOUDFLARE_ACCOUNT
                         - ASM_CODE_PROJECT
                         - ASM_DNS
-                        - ASM_GCP_PROJECT
-                        - ASM_GITHUB_ORGANIZATION
                         - ASM_GITHUB_REPOSITORY
-                        - ASM_GITLAB_GROUP
                         - ASM_GITLAB_REPOSITORY
                         - ASM_GRAPHQL
                         - ASM_GRAPHQL_SCHEMA
@@ -971,30 +1592,38 @@ paths:
                         - ASM_IPV4
                         - ASM_IPV4_RANGE
                         - ASM_IPV6
-                        - ASM_KUBERNETES_CLUSTER
                         - ASM_MCP
                         - ASM_OPENAPI
                         - ASM_PACKAGE
                         - ASM_POSTMAN_COLLECTION
                         - ASM_POSTMAN_ENVIRONMENT
-                        - ASM_POSTMAN_ORGANIZATION
                         - ASM_REST
                         - ASM_SOAP
                         - ASM_SOFTWARE
                         - ASM_WEBAPP
                         - ASM_WEBSOCKET
-                        - ASM_WIZ_ACCOUNT
                         - ASM_WP_JSON
-                        - AUTOMATED_PENTEST_GRAPHQL
-                        - AUTOMATED_PENTEST_REST
-                        - AUTOMATED_PENTEST_WEBAPP
+                        - AUTOMATED_PENTEST
                         - BLST_GRAPHQL
                         - BLST_REST
+                        - CONTINUOUS_PENTEST
+                        - EXTERNAL_NETWORK_PENTEST
                         - FRONTEND_DAST
+                        - MOBILE_APP_PENTEST
+                        - RETEST
+                        - AUTOMATED_PENTEST_WEBAPP
+                        - AUTOMATED_PENTEST_REST
+                        - AUTOMATED_PENTEST_GRAPHQL
                       description: Filter by scanner kinds
-                  description: Filter predicate; omit to match all issues
+                  description: Filter predicate. Required unless `all` is true.
+                all:
+                  type: boolean
+                  description: Set to true to target every issue. Mutually exclusive with a non-empty `where`.
+                dryRun:
+                  type: boolean
+                  description: Return the matching issue IDs and count without triggering any workflow
               required:
-              - status
+              - workflowIds
       responses:
         '200':
           description: OK
@@ -1007,9 +1636,34 @@ paths:
                     type: array
                     items:
                       type: string
-                    description: IDs of the updated issues
+                    description: IDs of the targeted issues
+                  count:
+                    type: integer
+                    description: Number of targeted issues in `ids`
+                  dryRun:
+                    type: boolean
+                    description: Whether this was a preview with no workflow triggered
+                  workflows:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The triggered workflow ID
+                        name:
+                          type: string
+                          description: The triggered workflow name
+                      required:
+                      - id
+                      - name
+                    description: Unique workflows triggered across every batch
                 required:
                 - ids
+                - count
+                - dryRun
+                - workflows
         '400':
           description: Bad Request
           content:
@@ -1085,6 +1739,9 @@ paths:
                     - LOW
                     - MEDIUM
                     description: The severity level of the issue
+                  manualSeverity:
+                    type: boolean
+                    description: Whether the severity has been manually overridden
                   status:
                     type: string
                     enum:
@@ -1137,6 +1794,7 @@ paths:
                         - DEV_TOOLS
                         - FRONTEND
                         - HOST
+                        - MOBILE_APP
                         - NETWORK
                         - REPOSITORY
                         - SCHEMA
@@ -1145,20 +1803,13 @@ paths:
                       type:
                         type: string
                         enum:
-                        - AKAMAI_ACCOUNT
-                        - AWS_ACCOUNT
+                        - APK
                         - AWS_LAMBDA
-                        - AZURE_TENANT
-                        - BITBUCKET_ORGANIZATION
                         - BITBUCKET_REPOSITORY
                         - BURPSUITE_EXPORT
-                        - CLOUDFLARE_ACCOUNT
                         - CODE_PROJECT
                         - DNS
-                        - GCP_PROJECT
-                        - GITHUB_ORGANIZATION
                         - GITHUB_REPOSITORY
-                        - GITLAB_GROUP
                         - GITLAB_REPOSITORY
                         - GRAPHQL
                         - GRAPHQL_SCHEMA
@@ -1168,19 +1819,16 @@ paths:
                         - IPV4
                         - IPV4_RANGE
                         - IPV6
-                        - KUBERNETES_CLUSTER
                         - MCP
                         - OPENAPI
                         - PACKAGE
                         - POSTMAN_COLLECTION
                         - POSTMAN_ENVIRONMENT
-                        - POSTMAN_ORGANIZATION
                         - REST
                         - SOAP
                         - SOFTWARE
                         - WEBAPP
                         - WEBSOCKET
-                        - WIZ_ACCOUNT
                         - WP_JSON
                       name:
                         type: string
@@ -1260,6 +1908,12 @@ paths:
                           - SENSITIVE_DATA
                           - UNAUTHENTICATED
                         description: The risks of the asset
+                      projectIds:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                        description: IDs of the projects this asset is assigned to
                       firstSeenScan:
                         type:
                         - object
@@ -1269,6 +1923,18 @@ paths:
                             type: string
                             format: uuid
                             description: The id of the scan
+                          profileId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the profile that ran the scan
+                          assetId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the asset that was scanned, if any
                           status:
                             type: string
                             description: The status of the scan
@@ -1323,6 +1989,8 @@ paths:
                             description: The links of the scan
                         required:
                         - id
+                        - profileId
+                        - assetId
                         - status
                         - createdAt
                         - finishedAt
@@ -1346,6 +2014,18 @@ paths:
                             type: string
                             format: uuid
                             description: The id of the scan
+                          profileId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the profile that ran the scan
+                          assetId:
+                            type:
+                            - string
+                            - 'null'
+                            format: uuid
+                            description: The id of the asset that was scanned, if any
                           status:
                             type: string
                             description: The status of the scan
@@ -1400,6 +2080,8 @@ paths:
                             description: The links of the scan
                         required:
                         - id
+                        - profileId
+                        - assetId
                         - status
                         - createdAt
                         - finishedAt
@@ -1935,9 +2617,14 @@ paths:
                               type: object
                               properties:
                                 port:
-                                  type: number
+                                  type: integer
+                                protocols:
+                                  type: array
+                                  items:
+                                    type: string
                               required:
                               - port
+                              - protocols
                           records:
                             type: array
                             items:
@@ -1958,11 +2645,391 @@ paths:
                         - records
                         title: AssetHostDetailed
                         description: The host of the asset
+                      technology:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - PACKAGE
+                            - SOFTWARE
+                            description: Whether this is a PACKAGE or SOFTWARE asset
+                          technologyKey:
+                            type: string
+                            description: Versionless technology identifier (e.g. vendor/product or ecosystem/name)
+                          version:
+                            type:
+                            - string
+                            - 'null'
+                            description: Detected version, if known
+                          cpe:
+                            type:
+                            - string
+                            - 'null'
+                            description: Common Platform Enumeration identifier, if known
+                          referenceUrl:
+                            type:
+                            - string
+                            - 'null'
+                            description: Reference URL for the technology
+                          purl:
+                            type:
+                            - string
+                            - 'null'
+                            description: Package URL, for PACKAGE assets
+                          packageType:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - ALPM
+                            - APK
+                            - BAZEL
+                            - BITBUCKET
+                            - BITNAMI
+                            - CARGO
+                            - COCOAPODS
+                            - COMPOSER
+                            - CONAN
+                            - CONDA
+                            - CPAN
+                            - CRAN
+                            - DEB
+                            - DOCKER
+                            - GEM
+                            - GENERIC
+                            - GITHUB
+                            - GO
+                            - HACKAGE
+                            - HEX
+                            - HUGGINGFACE
+                            - JULIA
+                            - LUAROCKS
+                            - MAVEN
+                            - MLFLOW
+                            - NPM
+                            - NUGET
+                            - OCI
+                            - OPAM
+                            - OTP
+                            - PUB
+                            - PYPI
+                            - QPKG
+                            - RPM
+                            - SWID
+                            - SWIFT
+                            - VSCODE_EXTENSION
+                            - YOCTO
+                            - null
+                            description: Package ecosystem, for PACKAGE assets
+                          wellKnownTechnology:
+                            type:
+                            - string
+                            - 'null'
+                            enum:
+                            - ANGULAR
+                            - APACHE
+                            - NGINX
+                            - REACT
+                            - REDIS
+                            - SVELTE
+                            - VUE
+                            - null
+                            description: Well-known technology label, when applicable
+                        required:
+                        - type
+                        - technologyKey
+                        - version
+                        - cpe
+                        - referenceUrl
+                        - purl
+                        - packageType
+                        - wellKnownTechnology
+                        title: AssetTechnologyDetailed
+                        description: Technology metadata for PACKAGE and SOFTWARE assets
+                      mobileApp:
+                        type:
+                        - object
+                        - 'null'
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - APK
+                            description: The type of the mobile app
+                          filename:
+                            type:
+                            - string
+                            - 'null'
+                            description: Original uploaded filename
+                          hash:
+                            type:
+                            - string
+                            - 'null'
+                            description: Hash of the uploaded binary
+                          bundleId:
+                            type:
+                            - string
+                            - 'null'
+                            description: Android package name, if known
+                        required:
+                        - type
+                        - filename
+                        - hash
+                        - bundleId
+                        title: AssetMobileAppDetailed
+                        description: Mobile app metadata for APK assets
                       schemaUrl:
                         type:
                         - string
                         - 'null'
                         description: Time-limited HTTPS URL for schema-class assets; null for other asset classes
+                      parents:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the related asset
+                            name:
+                              type: string
+                              description: The name of the related asset
+                            class:
+                              type: string
+                              enum:
+                              - API_SERVICE
+                              - CDN
+                              - CLOUD_COMPONENT
+                              - CLOUD_HOSTING
+                              - CODE_PROJECT
+                              - CSPM
+                              - DEV_TOOLS
+                              - FRONTEND
+                              - HOST
+                              - MOBILE_APP
+                              - NETWORK
+                              - REPOSITORY
+                              - SCHEMA
+                              - SOURCE_CODE_MANAGEMENT
+                              - TECHNOLOGY
+                              description: The class of the related asset
+                            type:
+                              type: string
+                              enum:
+                              - APK
+                              - AWS_LAMBDA
+                              - BITBUCKET_REPOSITORY
+                              - BURPSUITE_EXPORT
+                              - CODE_PROJECT
+                              - DNS
+                              - GITHUB_REPOSITORY
+                              - GITLAB_REPOSITORY
+                              - GRAPHQL
+                              - GRAPHQL_SCHEMA
+                              - GRPC
+                              - HAR_EXPORT
+                              - INSOMNIA
+                              - IPV4
+                              - IPV4_RANGE
+                              - IPV6
+                              - MCP
+                              - OPENAPI
+                              - PACKAGE
+                              - POSTMAN_COLLECTION
+                              - POSTMAN_ENVIRONMENT
+                              - REST
+                              - SOAP
+                              - SOFTWARE
+                              - WEBAPP
+                              - WEBSOCKET
+                              - WP_JSON
+                              description: The type of the related asset
+                          required:
+                          - id
+                          - name
+                          - class
+                          - type
+                          title: AssetRelationship
+                          description: A related asset in the asset relationship graph
+                        default: []
+                        description: Parent assets in the relationship graph (first 20)
+                      children:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: The id of the related asset
+                            name:
+                              type: string
+                              description: The name of the related asset
+                            class:
+                              type: string
+                              enum:
+                              - API_SERVICE
+                              - CDN
+                              - CLOUD_COMPONENT
+                              - CLOUD_HOSTING
+                              - CODE_PROJECT
+                              - CSPM
+                              - DEV_TOOLS
+                              - FRONTEND
+                              - HOST
+                              - MOBILE_APP
+                              - NETWORK
+                              - REPOSITORY
+                              - SCHEMA
+                              - SOURCE_CODE_MANAGEMENT
+                              - TECHNOLOGY
+                              description: The class of the related asset
+                            type:
+                              type: string
+                              enum:
+                              - APK
+                              - AWS_LAMBDA
+                              - BITBUCKET_REPOSITORY
+                              - BURPSUITE_EXPORT
+                              - CODE_PROJECT
+                              - DNS
+                              - GITHUB_REPOSITORY
+                              - GITLAB_REPOSITORY
+                              - GRAPHQL
+                              - GRAPHQL_SCHEMA
+                              - GRPC
+                              - HAR_EXPORT
+                              - INSOMNIA
+                              - IPV4
+                              - IPV4_RANGE
+                              - IPV6
+                              - MCP
+                              - OPENAPI
+                              - PACKAGE
+                              - POSTMAN_COLLECTION
+                              - POSTMAN_ENVIRONMENT
+                              - REST
+                              - SOAP
+                              - SOFTWARE
+                              - WEBAPP
+                              - WEBSOCKET
+                              - WP_JSON
+                              description: The type of the related asset
+                          required:
+                          - id
+                          - name
+                          - class
+                          - type
+                          title: AssetRelationship
+                          description: A related asset in the asset relationship graph
+                        default: []
+                        description: Child assets in the relationship graph (first 20)
+                      sources:
+                        type: array
+                        items:
+                          oneOf:
+                          - type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - asset
+                              assetId:
+                                type: string
+                                description: The id of the source asset
+                            required:
+                            - type
+                            - assetId
+                          - type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - integration
+                              integrationId:
+                                type: string
+                                description: The id of the source integration
+                              name:
+                                type:
+                                - string
+                                - 'null'
+                                description: The name of the source integration
+                            required:
+                            - type
+                            - integrationId
+                            - name
+                          - type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - manuallyCreated
+                              manuallyCreated:
+                                type: boolean
+                                description: Whether the asset was manually created
+                            required:
+                            - type
+                            - manuallyCreated
+                          title: AssetSource
+                          description: The source of an asset
+                        default: []
+                        description: The sources of the asset
+                      statistics:
+                        type: object
+                        properties:
+                          issues:
+                            type: object
+                            properties:
+                              severities:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    count:
+                                      type: integer
+                                      description: The number of issues with this severity
+                                    severity:
+                                      type: string
+                                      enum:
+                                      - CRITICAL
+                                      - HIGH
+                                      - INFO
+                                      - LOW
+                                      - MEDIUM
+                                      description: The severity level
+                                  required:
+                                  - count
+                                  - severity
+                            required:
+                            - severities
+                          events:
+                            type: object
+                            properties:
+                              attachments:
+                                type: integer
+                                description: The number of event attachments
+                            required:
+                            - attachments
+                        required:
+                        - issues
+                        - events
+                        title: AssetStatistics
+                        description: Per-asset statistics
+                      rawData:
+                        description: Raw asset data as JSON
+                      metadata:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - PRIVATE
+                          - SOMETHING_ELSE
+                        default: []
+                        description: Metadata flags for the asset
                       links:
                         type: object
                         properties:
@@ -1986,11 +3053,14 @@ paths:
                     - status
                     - tags
                     - risks
+                    - projectIds
                     - firstSeenScan
                     - lastSeenScan
                     - service
                     - frontend
                     - host
+                    - technology
+                    - mobileApp
                     - schemaUrl
                     - links
                     title: AssetDetailed
@@ -2009,6 +3079,18 @@ paths:
                         type: string
                         format: uuid
                         description: The id of the scan
+                      profileId:
+                        type:
+                        - string
+                        - 'null'
+                        format: uuid
+                        description: The id of the profile that ran the scan
+                      assetId:
+                        type:
+                        - string
+                        - 'null'
+                        format: uuid
+                        description: The id of the asset that was scanned, if any
                       status:
                         type: string
                         description: The status of the scan
@@ -2063,6 +3145,8 @@ paths:
                         description: The links of the scan
                     required:
                     - id
+                    - profileId
+                    - assetId
                     - status
                     - createdAt
                     - finishedAt
@@ -2087,14 +3171,42 @@ paths:
                     - string
                     - 'null'
                     description: ID of the custom rule if this is a custom issue
+                  securityTest:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The uid of the security test
+                      name:
+                        type: string
+                        description: The human readable name of the security test
+                    required:
+                    - id
+                    - name
+                    description: The security test that detected the issue
                   aiRemediationFramework:
                     type: string
                     description: Framework used for AI remediation
+                  aiRemediationFeedback:
+                    type:
+                    - boolean
+                    - 'null'
+                    description: Whether the full AI remediation (`remediation`) was rated useful. Null when no feedback was given
                   remediation:
                     type:
                     - string
                     - 'null'
-                    description: AI-generated remediation for the issue
+                    description: AI-generated remediation for the issue. Session credentials are redacted.
+                  aiRemediationSummary:
+                    type:
+                    - string
+                    - 'null'
+                    description: Short AI-generated remediation summary shown in the issue overview. Session credentials are redacted.
+                  aiRemediationSummaryFeedback:
+                    type:
+                    - boolean
+                    - 'null'
+                    description: Whether the AI remediation summary (`aiRemediationSummary`) was rated useful. Null when no feedback was given
                   cvss:
                     type:
                     - object
@@ -2146,12 +3258,190 @@ paths:
                   latestEventsTruncated:
                     type: boolean
                     description: True when the last-seen scan has more than 5 events. Use GET /v3/events?issueIds=<id>&scanIds=<lastSeenScanId> for the full list.
+                  targets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kind:
+                          type: string
+                          enum:
+                          - API_ROUTE
+                          - CODE_FILE
+                          - CVE
+                          - GRAPHQL_RESOLVER
+                          - PORT
+                          - WEB_CRAWLED_URL
+                          - WEB_PAGE
+                          description: The kind of scan target
+                        left:
+                          type: string
+                          description: Short label for the target (e.g. HTTP method or asset kind)
+                        right:
+                          type: string
+                          description: Primary target identifier (e.g. route path or URL)
+                      required:
+                      - kind
+                      - left
+                      - right
+                      title: IssueTarget
+                      description: A scan target associated with an issue, formatted for display
+                    description: Scan targets associated with the issue, deduplicated
+                  summary:
+                    type:
+                    - string
+                    - 'null'
+                    description: Summary of the finding (AI pentest findings)
+                  impact:
+                    type:
+                    - string
+                    - 'null'
+                    description: Impact of the finding
+                  agentic:
+                    type: boolean
+                    description: Whether the finding was produced by an AI pentest agent
+                  reproductionSteps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order:
+                          type: integer
+                          description: Position of the step, starting at 0
+                        title:
+                          type: string
+                          description: Short title of the step
+                        content:
+                          type: string
+                          description: Details of the step. Session credentials are redacted.
+                      required:
+                      - order
+                      - title
+                      - content
+                      title: IssueReproductionStep
+                    description: Steps to reproduce the finding, in order
+                  exploits:
+                    type: array
+                    items:
+                      type: string
+                    description: Exploit or proof-of-concept payloads. Session credentials are redacted.
+                  causes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - WHAT
+                          - WHY
+                          description: WHAT happened or WHY it happened
+                        content:
+                          type: string
+                          description: Description of the cause
+                      required:
+                      - type
+                      - content
+                      title: IssueCause
+                    description: Root causes of the finding, in order
+                  attackChain:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order:
+                          type: integer
+                          description: Position of the step in the attack chain
+                        stage:
+                          type: string
+                          enum:
+                          - CONFIGURATION_ANALYSIS
+                          - CREDENTIAL_ACCESS
+                          - DISCOVERY
+                          - EXFILTRATION
+                          - EXPLOITATION
+                          - IMPACT
+                          - INITIAL_ACCESS
+                          - LATERAL_MOVEMENT
+                          - OTHER
+                          - PERSISTENCE
+                          - PRIVILEGE_ESCALATION
+                          - RECONNAISSANCE
+                          - VALIDATION
+                          description: Attack stage of the step
+                        title:
+                          type: string
+                          description: Short title of the step
+                        description:
+                          type: string
+                          description: Summary of the step
+                        content:
+                          type: string
+                          description: Details of the step. Session credentials are redacted.
+                      required:
+                      - order
+                      - stage
+                      - title
+                      - description
+                      - content
+                      title: IssueAttackChainStep
+                    description: Attack chain steps (AI pentest findings), in order
+                  aiFalsePositive:
+                    type: object
+                    properties:
+                      isFalsePositive:
+                        type: boolean
+                        description: Whether the AI review judged the finding a false positive
+                      reasoning:
+                        type:
+                        - string
+                        - 'null'
+                        description: Full reasoning of the AI review
+                      reasoningSummary:
+                        type:
+                        - string
+                        - 'null'
+                        description: Short summary of the AI reasoning
+                    required:
+                    - isFalsePositive
+                    - reasoning
+                    - reasoningSummary
+                    description: Verdict of the AI false-positive review
+                  ticket:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      externalId:
+                        type: string
+                        description: Key of the ticket in the external tracker (e.g. Jira key)
+                      externalUrl:
+                        type: string
+                        description: URL of the ticket in the external tracker
+                      createdAt:
+                        type: string
+                        description: When the ticket was linked to the issue
+                    required:
+                    - externalId
+                    - externalUrl
+                    - createdAt
+                    title: IssueTicket
+                    description: Ticket linked to the issue, if any
+                  fixPrompt:
+                    type: string
+                    description: Ready-to-use prompt that asks a coding agent to fix this finding
+                  retestValidationId:
+                    type:
+                    - string
+                    - 'null'
+                    description: ID of the retest validation tied to this issue, if any
                 required:
                 - id
                 - name
                 - fullName
                 - category
                 - severity
+                - manualSeverity
                 - status
                 - context
                 - risks
@@ -2162,10 +3452,26 @@ paths:
                 - lastSeenScan
                 - firstSeenScanId
                 - customRuleId
+                - securityTest
                 - aiRemediationFramework
+                - aiRemediationFeedback
                 - remediation
+                - aiRemediationSummary
+                - aiRemediationSummaryFeedback
                 - cvss
                 - links
+                - targets
+                - summary
+                - impact
+                - agentic
+                - reproductionSteps
+                - exploits
+                - causes
+                - attackChain
+                - aiFalsePositive
+                - ticket
+                - fixPrompt
+                - retestValidationId
         '404':
           description: Not found
           content:
@@ -2204,14 +3510,76 @@ paths:
               type: object
               properties:
                 status:
-                  type: string
-                  enum:
-                  - FALSE_POSITIVE
-                  - IGNORED
-                  - MANUAL_REVIEW
-                  - OPEN
-                  - RESOLVED
+                  anyOf:
+                  - type: object
+                    properties:
+                      value:
+                        type: string
+                        enum:
+                        - FALSE_POSITIVE
+                        - IGNORED
+                        - MANUAL_REVIEW
+                        - OPEN
+                        - RESOLVED
+                        description: The status to set
+                      reason:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 1
+                        maxLength: 512
+                        description: Reason for the change (required if your organization enforces it)
+                    required:
+                    - value
+                  - type: string
+                    enum:
+                    - FALSE_POSITIVE
+                    - IGNORED
+                    - MANUAL_REVIEW
+                    - OPEN
+                    - RESOLVED
+                    description: 'Deprecated: pass an object { value, reason } instead'
+                    deprecated: true
                   description: The issue status
+                severity:
+                  anyOf:
+                  - type: object
+                    properties:
+                      value:
+                        type:
+                        - string
+                        - 'null'
+                        enum:
+                        - CRITICAL
+                        - HIGH
+                        - INFO
+                        - LOW
+                        - MEDIUM
+                        - null
+                        description: The severity to set. Pass null to reset to the scanner default.
+                      reason:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 1
+                        maxLength: 512
+                        description: Reason for the change (required if your organization enforces it)
+                    required:
+                    - value
+                  - type: string
+                    enum:
+                    - CRITICAL
+                    - HIGH
+                    - INFO
+                    - LOW
+                    - MEDIUM
+                    description: 'Deprecated: pass an object { value, reason } instead'
+                    deprecated: true
+                  - type: 'null'
+                    description: 'Deprecated: pass an object { value, reason } instead'
+                    deprecated: true
+                  - type: 'null'
+                  description: The issue severity
       responses:
         '200':
           description: OK
@@ -2318,10 +3686,16 @@ paths:
                       - ASSET_UPDATED
                       - COMMENT
                       - ISSUE_FOUND
+                      - ISSUE_RETESTED
+                      - ISSUE_SEVERITY_CHANGED
                       - ISSUE_STATUS_CHANGED
                       - OWNERS_NOTIFIED
                       - SCHEMA_LINKED
                       - SCHEMA_UNLINKED
+                    comment:
+                      type:
+                      - string
+                      - 'null'
                   required:
                   - author
                   - id
@@ -2413,10 +3787,16 @@ paths:
                     - ASSET_UPDATED
                     - COMMENT
                     - ISSUE_FOUND
+                    - ISSUE_RETESTED
+                    - ISSUE_SEVERITY_CHANGED
                     - ISSUE_STATUS_CHANGED
                     - OWNERS_NOTIFIED
                     - SCHEMA_LINKED
                     - SCHEMA_UNLINKED
+                  comment:
+                    type:
+                    - string
+                    - 'null'
                 required:
                 - author
                 - id
@@ -2473,6 +3853,254 @@ paths:
                 - details
                 title: InternalServerError
                 description: Returned when the server fails to fulfil the request
+  /issues/{issueId}/ai-remediation:
+    post:
+      tags:
+      - Issues
+      summary: Generate AI remediation for an issue
+      operationId: generateIssueAiRemediation
+      description: 'Trigger the asynchronous generation of AI remediation for an issue. Generation only schedules a job: read the result back with GET /v3/issues/{issueId}, on `remediation` for the full issue-panel remediation or on `aiRemediationSummary` for the short overview summary. Generating the full remediation clears the previous remediation and its feedback immediately. Generating the summary replaces the previous summary, and resets its rating, only once the generation job succeeds. Identical requests repeated within a short window are ignored and return `generated: false`.'
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kind:
+                  type: string
+                  enum:
+                  - remediation
+                  - summary
+                  default: remediation
+                  description: 'Which AI remediation artefact to act on: `remediation` for the full issue-panel remediation, `summary` for the short overview summary.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    enum:
+                    - remediation
+                    - summary
+                    description: The AI remediation that was requested
+                  generated:
+                    type: boolean
+                    description: Whether the generation request was accepted. False when an identical request is already in flight.
+                  cleared:
+                    type: boolean
+                    description: Whether this trigger synchronously cleared an existing full remediation (and its feedback). Always false for the `summary` kind, which is replaced asynchronously once the generation job succeeds.
+                required:
+                - kind
+                - generated
+                - cleared
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /issues/{issueId}/ai-remediation/feedback:
+    post:
+      tags:
+      - Issues
+      summary: Send feedback on AI remediation
+      operationId: saveIssueAiRemediationFeedback
+      description: 'Record whether an AI remediation artefact was useful. Use `kind` to choose the full issue-panel remediation (`aiRemediationFeedback`) or the short overview summary (`aiRemediationSummaryFeedback`). Pass `feedback: null` to clear a previous rating.'
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kind:
+                  type: string
+                  enum:
+                  - remediation
+                  - summary
+                  default: remediation
+                  description: 'Which AI remediation artefact to act on: `remediation` for the full issue-panel remediation, `summary` for the short overview summary.'
+                feedback:
+                  type:
+                  - boolean
+                  - 'null'
+                  description: Whether the remediation was useful. Pass null to clear the feedback.
+              required:
+              - feedback
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    enum:
+                    - remediation
+                    - summary
+                    description: The AI remediation the feedback applies to
+                  saved:
+                    type: boolean
+                    description: Whether the feedback was saved
+                required:
+                - kind
+                - saved
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /issues/{issueId}/manual-workflow:
+    post:
+      tags:
+      - Issues
+      summary: Trigger a manual workflow on an issue
+      operationId: triggerIssueManualWorkflow
+      description: Trigger a manual workflow for a specific issue, such as exporting the issue to Jira.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The issue ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The issue ID
+        name: issueId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workflowId:
+                  type: string
+                  format: uuid
+                  description: The manual workflow ID to trigger
+                  example: 00000000-0000-0000-0000-000000000000
+              required:
+              - workflowId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflow:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The triggered workflow ID
+                      name:
+                        type: string
+                        description: The triggered workflow name
+                    required:
+                    - id
+                    - name
+                required:
+                - workflow
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
   /issues/{issueId}/notify:
     post:
       tags:
@@ -2534,6 +4162,173 @@ paths:
                 - details
                 title: BadRequest
                 description: Returned when the request payload fails validation
+  /exports/issues/csv:
+    get:
+      tags:
+      - Issues
+      summary: Export issues as CSV
+      operationId: exportIssuesCsv
+      description: Export issues as a CSV file, optionally filtered by a JSON-encoded IssueWhereInput.
+      parameters:
+      - schema:
+          type: string
+          maxLength: 100000
+          description: Filter predicate as a JSON-encoded IssueWhereInput string.
+        required: false
+        description: Filter predicate as a JSON-encoded IssueWhereInput string.
+        name: where
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
+  /exports/issues/sarif:
+    get:
+      tags:
+      - Issues
+      summary: Export issues as SARIF
+      operationId: exportIssuesSarif
+      description: Export issues as a SARIF 2.1.0 JSON file, optionally filtered by a JSON-encoded IssueWhereInput.
+      parameters:
+      - schema:
+          type: string
+          maxLength: 100000
+          description: Filter predicate as a JSON-encoded IssueWhereInput string.
+        required: false
+        description: Filter predicate as a JSON-encoded IssueWhereInput string.
+        name: where
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/sarif+json:
+              schema: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: {}
+                  hint:
+                    type: string
+                required:
+                - error
+                - message
+                - details
+                - hint
+                title: ForwardedError
+                description: Error produced by the internal GraphQL API and forwarded by the public API. The HTTP status mirrors the internal error status.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Internal Server Error
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: InternalServerError
+                description: Returned when the server fails to fulfil the request
 components:
   securitySchemes:
     apiKey:

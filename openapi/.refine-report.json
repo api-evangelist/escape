@@ -1,61 +1,47 @@
 {
   "provider": "escape",
   "sources": [
-    "_original/escape-openapi.yml"
+    "_original/escape-openapi.json"
   ],
   "outputs": [
+    "escape-aichats-api-openapi.yml",
     "escape-asm-api-openapi.yml",
     "escape-assets-api-openapi.yml",
     "escape-audit-api-openapi.yml",
     "escape-beta-api-openapi.yml",
+    "escape-compliance-api-openapi.yml",
     "escape-customrules-api-openapi.yml",
     "escape-emails-api-openapi.yml",
     "escape-events-api-openapi.yml",
     "escape-integrations-api-openapi.yml",
     "escape-issues-api-openapi.yml",
     "escape-jobs-api-openapi.yml",
+    "escape-knowledgefiles-api-openapi.yml",
     "escape-locations-api-openapi.yml",
+    "escape-organizationsettings-api-openapi.yml",
     "escape-profiles-api-openapi.yml",
     "escape-projects-api-openapi.yml",
+    "escape-regressiontests-api-openapi.yml",
+    "escape-retests-api-openapi.yml",
     "escape-roles-api-openapi.yml",
     "escape-scans-api-openapi.yml",
+    "escape-securitytests-api-openapi.yml",
     "escape-statistics-api-openapi.yml",
     "escape-tags-api-openapi.yml",
     "escape-upload-api-openapi.yml",
     "escape-users-api-openapi.yml",
+    "escape-validations-api-openapi.yml",
+    "escape-vaultvariables-api-openapi.yml",
+    "escape-views-api-openapi.yml",
     "escape-workflows-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "escape-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "superseded outputs removed: escape-custom-rules-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 20 total)"
+    "escape-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+11 apis, 30 total)"
   ],
-  "skipped": [
-    "escape-asm-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-assets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-audit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-beta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-custom-rules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-emails-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-issues-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-locations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-profiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-roles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-scans-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-statistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-upload-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "escape-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }

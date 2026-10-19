@@ -1,0 +1,1346 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Regression Tests API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: RegressionTests
+  description: 'Manage regression tests.
+
+
+    Create regression tests from a source report, run them, and track their history. A regression test re-validates a finding against an updated codebase.'
+paths:
+  /regression-tests:
+    get:
+      tags:
+      - RegressionTests
+      summary: List regression tests
+      operationId: listRegressionTests
+      description: List the regression tests of the organization, most recent first.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          description: Search term to filter regression tests by name
+          example: checkout
+        required: false
+        description: Search term to filter regression tests by name
+        name: search
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test
+                        name:
+                          type: string
+                          description: The name of the regression test
+                        inputFilename:
+                          type: string
+                          description: The name of the uploaded source report file
+                        inputFormat:
+                          type: string
+                          enum:
+                          - MARKDOWN
+                          - PDF
+                          description: The format of the source report
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the latest run of the regression test
+                        createdAt:
+                          type: string
+                          description: When the regression test was created
+                        updatedAt:
+                          type: string
+                          description: When the regression test was last updated
+                      required:
+                      - id
+                      - name
+                      - inputFilename
+                      - inputFormat
+                      - status
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestSummary
+                      description: Summarized information about a regression test
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+    post:
+      tags:
+      - RegressionTests
+      summary: Create a regression test
+      operationId: createRegressionTest
+      description: Create a regression test from a source report. Upload the report first with POST /v3/upload/signed-url, then pass the returned id as `temporaryObjectKey`.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: The name of the regression test
+                  example: Checkout regression test
+                additionalContext:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+                  description: Free-form context given to the agent alongside the source report
+                  example: Focus on the checkout flow.
+                inputFilename:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: The name of the uploaded source report file
+                  example: report.pdf
+                inputFormat:
+                  type: string
+                  enum:
+                  - MARKDOWN
+                  - PDF
+                  description: The format of the source report. Inferred from the filename when omitted.
+                  example: PDF
+                temporaryObjectKey:
+                  type: string
+                  format: uuid
+                  description: The id returned by POST /v3/upload/signed-url. The file must have been uploaded to the signed URL before calling this endpoint.
+                  example: 00000000-0000-0000-0000-000000000000
+              required:
+              - name
+              - additionalContext
+              - inputFilename
+              - temporaryObjectKey
+              title: CreateRegressionTestInput
+              description: The source report is uploaded beforehand with POST /v3/upload/signed-url, which returns an id to pass as `temporaryObjectKey`.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the regression test
+                  name:
+                    type: string
+                    description: The name of the regression test
+                  additionalContext:
+                    type: string
+                    description: Free-form context given to the agent alongside the source report
+                  inputFilename:
+                    type: string
+                    description: The name of the uploaded source report file
+                  inputFormat:
+                    type: string
+                    enum:
+                    - MARKDOWN
+                    - PDF
+                    description: The format of the source report
+                  status:
+                    type: string
+                    enum:
+                    - CANCELLED
+                    - CLARIFICATION_GIVEN
+                    - CLARIFICATION_REQUIRED
+                    - ERROR
+                    - NOT_STARTED
+                    - RUNNING
+                    - TEST_FAILED
+                    - TEST_PASSED
+                    description: The status of the latest run of the regression test
+                  signedUrl:
+                    type: string
+                    description: A signed URL to download the source report. It expires after a short period.
+                  createdAt:
+                    type: string
+                    description: When the regression test was created
+                  updatedAt:
+                    type: string
+                    description: When the regression test was last updated
+                  runs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test run
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the run
+                        clarificationQuestion:
+                          type:
+                          - string
+                          - 'null'
+                          description: The question the agent asked, when the run needs a clarification
+                        clarificationAnswer:
+                          type:
+                          - string
+                          - 'null'
+                          description: The answer given to the clarification question
+                        validationId:
+                          type:
+                          - string
+                          - 'null'
+                          description: The id of the validation (scan) that ran the test
+                        createdAt:
+                          type: string
+                          description: When the run was created
+                        updatedAt:
+                          type: string
+                          description: When the run was last updated
+                      required:
+                      - id
+                      - status
+                      - clarificationQuestion
+                      - clarificationAnswer
+                      - validationId
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestRun
+                      description: A single run of a regression test
+                    description: The most recent runs of the regression test, most recent first. Capped; page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                  hasMoreRuns:
+                    type: boolean
+                    description: Whether more runs exist beyond the embedded `runs`. Page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                required:
+                - id
+                - name
+                - additionalContext
+                - inputFilename
+                - inputFormat
+                - status
+                - signedUrl
+                - createdAt
+                - updatedAt
+                - runs
+                - hasMoreRuns
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /regression-tests/{regressionTestId}:
+    get:
+      tags:
+      - RegressionTests
+      summary: Get a regression test
+      operationId: getRegressionTest
+      description: Get a regression test by ID, including its runs. When the test does not exist (or belongs to another organization), the internal API returns an error that is forwarded as a 404 to avoid leaking its existence.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the regression test
+                  name:
+                    type: string
+                    description: The name of the regression test
+                  additionalContext:
+                    type: string
+                    description: Free-form context given to the agent alongside the source report
+                  inputFilename:
+                    type: string
+                    description: The name of the uploaded source report file
+                  inputFormat:
+                    type: string
+                    enum:
+                    - MARKDOWN
+                    - PDF
+                    description: The format of the source report
+                  status:
+                    type: string
+                    enum:
+                    - CANCELLED
+                    - CLARIFICATION_GIVEN
+                    - CLARIFICATION_REQUIRED
+                    - ERROR
+                    - NOT_STARTED
+                    - RUNNING
+                    - TEST_FAILED
+                    - TEST_PASSED
+                    description: The status of the latest run of the regression test
+                  signedUrl:
+                    type: string
+                    description: A signed URL to download the source report. It expires after a short period.
+                  createdAt:
+                    type: string
+                    description: When the regression test was created
+                  updatedAt:
+                    type: string
+                    description: When the regression test was last updated
+                  runs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test run
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the run
+                        clarificationQuestion:
+                          type:
+                          - string
+                          - 'null'
+                          description: The question the agent asked, when the run needs a clarification
+                        clarificationAnswer:
+                          type:
+                          - string
+                          - 'null'
+                          description: The answer given to the clarification question
+                        validationId:
+                          type:
+                          - string
+                          - 'null'
+                          description: The id of the validation (scan) that ran the test
+                        createdAt:
+                          type: string
+                          description: When the run was created
+                        updatedAt:
+                          type: string
+                          description: When the run was last updated
+                      required:
+                      - id
+                      - status
+                      - clarificationQuestion
+                      - clarificationAnswer
+                      - validationId
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestRun
+                      description: A single run of a regression test
+                    description: The most recent runs of the regression test, most recent first. Capped; page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                  hasMoreRuns:
+                    type: boolean
+                    description: Whether more runs exist beyond the embedded `runs`. Page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                required:
+                - id
+                - name
+                - additionalContext
+                - inputFilename
+                - inputFormat
+                - status
+                - signedUrl
+                - createdAt
+                - updatedAt
+                - runs
+                - hasMoreRuns
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    put:
+      tags:
+      - RegressionTests
+      summary: Update a regression test
+      operationId: updateRegressionTest
+      description: Update the name and/or the additional context of a regression test.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: The new name of the regression test
+                  example: Checkout regression test
+                additionalContext:
+                  type: string
+                  minLength: 1
+                  maxLength: 10000
+                  description: The new free-form context given to the agent
+                  example: Focus on the checkout flow.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the regression test
+                  name:
+                    type: string
+                    description: The name of the regression test
+                  additionalContext:
+                    type: string
+                    description: Free-form context given to the agent alongside the source report
+                  inputFilename:
+                    type: string
+                    description: The name of the uploaded source report file
+                  inputFormat:
+                    type: string
+                    enum:
+                    - MARKDOWN
+                    - PDF
+                    description: The format of the source report
+                  status:
+                    type: string
+                    enum:
+                    - CANCELLED
+                    - CLARIFICATION_GIVEN
+                    - CLARIFICATION_REQUIRED
+                    - ERROR
+                    - NOT_STARTED
+                    - RUNNING
+                    - TEST_FAILED
+                    - TEST_PASSED
+                    description: The status of the latest run of the regression test
+                  signedUrl:
+                    type: string
+                    description: A signed URL to download the source report. It expires after a short period.
+                  createdAt:
+                    type: string
+                    description: When the regression test was created
+                  updatedAt:
+                    type: string
+                    description: When the regression test was last updated
+                  runs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test run
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the run
+                        clarificationQuestion:
+                          type:
+                          - string
+                          - 'null'
+                          description: The question the agent asked, when the run needs a clarification
+                        clarificationAnswer:
+                          type:
+                          - string
+                          - 'null'
+                          description: The answer given to the clarification question
+                        validationId:
+                          type:
+                          - string
+                          - 'null'
+                          description: The id of the validation (scan) that ran the test
+                        createdAt:
+                          type: string
+                          description: When the run was created
+                        updatedAt:
+                          type: string
+                          description: When the run was last updated
+                      required:
+                      - id
+                      - status
+                      - clarificationQuestion
+                      - clarificationAnswer
+                      - validationId
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestRun
+                      description: A single run of a regression test
+                    description: The most recent runs of the regression test, most recent first. Capped; page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                  hasMoreRuns:
+                    type: boolean
+                    description: Whether more runs exist beyond the embedded `runs`. Page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                required:
+                - id
+                - name
+                - additionalContext
+                - inputFilename
+                - inputFormat
+                - status
+                - signedUrl
+                - createdAt
+                - updatedAt
+                - runs
+                - hasMoreRuns
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+    delete:
+      tags:
+      - RegressionTests
+      summary: Delete a regression test
+      operationId: deleteRegressionTest
+      description: Delete a regression test and its source report. This is a destructive operation. When the test does not exist (or belongs to another organization), the internal API returns an error that is forwarded as a 404 to avoid leaking its existence.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /regression-tests/{regressionTestId}/run:
+    post:
+      tags:
+      - RegressionTests
+      summary: Run a regression test
+      operationId: runRegressionTest
+      description: 'Start a run of the regression test. The run is asynchronous: poll the test or its history to track the status. Fails when a run is already in progress.'
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the regression test
+                  name:
+                    type: string
+                    description: The name of the regression test
+                  additionalContext:
+                    type: string
+                    description: Free-form context given to the agent alongside the source report
+                  inputFilename:
+                    type: string
+                    description: The name of the uploaded source report file
+                  inputFormat:
+                    type: string
+                    enum:
+                    - MARKDOWN
+                    - PDF
+                    description: The format of the source report
+                  status:
+                    type: string
+                    enum:
+                    - CANCELLED
+                    - CLARIFICATION_GIVEN
+                    - CLARIFICATION_REQUIRED
+                    - ERROR
+                    - NOT_STARTED
+                    - RUNNING
+                    - TEST_FAILED
+                    - TEST_PASSED
+                    description: The status of the latest run of the regression test
+                  signedUrl:
+                    type: string
+                    description: A signed URL to download the source report. It expires after a short period.
+                  createdAt:
+                    type: string
+                    description: When the regression test was created
+                  updatedAt:
+                    type: string
+                    description: When the regression test was last updated
+                  runs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test run
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the run
+                        clarificationQuestion:
+                          type:
+                          - string
+                          - 'null'
+                          description: The question the agent asked, when the run needs a clarification
+                        clarificationAnswer:
+                          type:
+                          - string
+                          - 'null'
+                          description: The answer given to the clarification question
+                        validationId:
+                          type:
+                          - string
+                          - 'null'
+                          description: The id of the validation (scan) that ran the test
+                        createdAt:
+                          type: string
+                          description: When the run was created
+                        updatedAt:
+                          type: string
+                          description: When the run was last updated
+                      required:
+                      - id
+                      - status
+                      - clarificationQuestion
+                      - clarificationAnswer
+                      - validationId
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestRun
+                      description: A single run of a regression test
+                    description: The most recent runs of the regression test, most recent first. Capped; page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                  hasMoreRuns:
+                    type: boolean
+                    description: Whether more runs exist beyond the embedded `runs`. Page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                required:
+                - id
+                - name
+                - additionalContext
+                - inputFilename
+                - inputFormat
+                - status
+                - signedUrl
+                - createdAt
+                - updatedAt
+                - runs
+                - hasMoreRuns
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /regression-tests/{regressionTestId}/stop:
+    post:
+      tags:
+      - RegressionTests
+      summary: Stop a regression test
+      operationId: stopRegressionTest
+      description: Stop the run in progress for a regression test. A run that already finished is left unchanged. When the test does not exist (or belongs to another organization), the internal API returns an error that is forwarded as a 404 to avoid leaking its existence.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the regression test
+                  name:
+                    type: string
+                    description: The name of the regression test
+                  additionalContext:
+                    type: string
+                    description: Free-form context given to the agent alongside the source report
+                  inputFilename:
+                    type: string
+                    description: The name of the uploaded source report file
+                  inputFormat:
+                    type: string
+                    enum:
+                    - MARKDOWN
+                    - PDF
+                    description: The format of the source report
+                  status:
+                    type: string
+                    enum:
+                    - CANCELLED
+                    - CLARIFICATION_GIVEN
+                    - CLARIFICATION_REQUIRED
+                    - ERROR
+                    - NOT_STARTED
+                    - RUNNING
+                    - TEST_FAILED
+                    - TEST_PASSED
+                    description: The status of the latest run of the regression test
+                  signedUrl:
+                    type: string
+                    description: A signed URL to download the source report. It expires after a short period.
+                  createdAt:
+                    type: string
+                    description: When the regression test was created
+                  updatedAt:
+                    type: string
+                    description: When the regression test was last updated
+                  runs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test run
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the run
+                        clarificationQuestion:
+                          type:
+                          - string
+                          - 'null'
+                          description: The question the agent asked, when the run needs a clarification
+                        clarificationAnswer:
+                          type:
+                          - string
+                          - 'null'
+                          description: The answer given to the clarification question
+                        validationId:
+                          type:
+                          - string
+                          - 'null'
+                          description: The id of the validation (scan) that ran the test
+                        createdAt:
+                          type: string
+                          description: When the run was created
+                        updatedAt:
+                          type: string
+                          description: When the run was last updated
+                      required:
+                      - id
+                      - status
+                      - clarificationQuestion
+                      - clarificationAnswer
+                      - validationId
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestRun
+                      description: A single run of a regression test
+                    description: The most recent runs of the regression test, most recent first. Capped; page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                  hasMoreRuns:
+                    type: boolean
+                    description: Whether more runs exist beyond the embedded `runs`. Page through all runs with GET /v3/regression-tests/{regressionTestId}/history.
+                required:
+                - id
+                - name
+                - additionalContext
+                - inputFilename
+                - inputFormat
+                - status
+                - signedUrl
+                - createdAt
+                - updatedAt
+                - runs
+                - hasMoreRuns
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /regression-tests/{regressionTestId}/history:
+    get:
+      tags:
+      - RegressionTests
+      summary: List the runs of a regression test
+      operationId: listRegressionTestHistory
+      description: List the runs of a regression test, most recent first. When the test does not exist (or belongs to another organization), the internal API returns an error that is forwarded as a 404 to avoid leaking its existence.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: 00000000-0000-0000-0000-000000000000
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The id of the regression test run
+                        status:
+                          type: string
+                          enum:
+                          - CANCELLED
+                          - CLARIFICATION_GIVEN
+                          - CLARIFICATION_REQUIRED
+                          - ERROR
+                          - NOT_STARTED
+                          - RUNNING
+                          - TEST_FAILED
+                          - TEST_PASSED
+                          description: The status of the run
+                        clarificationQuestion:
+                          type:
+                          - string
+                          - 'null'
+                          description: The question the agent asked, when the run needs a clarification
+                        clarificationAnswer:
+                          type:
+                          - string
+                          - 'null'
+                          description: The answer given to the clarification question
+                        validationId:
+                          type:
+                          - string
+                          - 'null'
+                          description: The id of the validation (scan) that ran the test
+                        createdAt:
+                          type: string
+                          description: When the run was created
+                        updatedAt:
+                          type: string
+                          description: When the run was last updated
+                      required:
+                      - id
+                      - status
+                      - clarificationQuestion
+                      - clarificationAnswer
+                      - validationId
+                      - createdAt
+                      - updatedAt
+                      title: RegressionTestRun
+                      description: A single run of a regression test
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+  /regression-tests/{regressionTestId}/runs/{runId}/clarifications:
+    post:
+      tags:
+      - RegressionTests
+      summary: Reply to a clarification
+      operationId: replyRegressionTestClarification
+      description: Answer the clarification question asked by the agent during a run. The run must be waiting for a clarification (status CLARIFICATION_REQUIRED or CLARIFICATION_GIVEN).
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test ID
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The regression test ID
+        name: regressionTestId
+        in: path
+      - schema:
+          type: string
+          format: uuid
+          description: The regression test run ID
+          example: 00000000-0000-0000-0000-000000000001
+        required: true
+        description: The regression test run ID
+        name: runId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  minLength: 1
+                  maxLength: 2000000
+                  description: The answer to the clarification question
+                  example: The checkout flow now uses the v2 API.
+              required:
+              - content
+              title: ReplyRegressionTestClarificationInput
+              description: The answer to the clarification question asked by the agent during a run.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The id of the regression test run
+                  status:
+                    type: string
+                    enum:
+                    - CANCELLED
+                    - CLARIFICATION_GIVEN
+                    - CLARIFICATION_REQUIRED
+                    - ERROR
+                    - NOT_STARTED
+                    - RUNNING
+                    - TEST_FAILED
+                    - TEST_PASSED
+                    description: The status of the run
+                  clarificationQuestion:
+                    type:
+                    - string
+                    - 'null'
+                    description: The question the agent asked, when the run needs a clarification
+                  clarificationAnswer:
+                    type:
+                    - string
+                    - 'null'
+                    description: The answer given to the clarification question
+                  validationId:
+                    type:
+                    - string
+                    - 'null'
+                    description: The id of the validation (scan) that ran the test
+                  createdAt:
+                    type: string
+                    description: When the run was created
+                  updatedAt:
+                    type: string
+                    description: When the run was last updated
+                required:
+                - id
+                - status
+                - clarificationQuestion
+                - clarificationAnswer
+                - validationId
+                - createdAt
+                - updatedAt
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

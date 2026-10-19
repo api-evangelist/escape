@@ -1,0 +1,401 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Organization Settings API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: OrganizationSettings
+  description: 'Organization settings.
+
+
+    Manage organization-wide settings: issue SLA policy, AI system prompt, project propagation and scoped webhook export. Scan kill switches are read-only.'
+paths:
+  /organization-settings:
+    get:
+      tags:
+      - OrganizationSettings
+      summary: Get organization settings
+      operationId: getOrganizationSettings
+      description: Get the organization issue SLA policy, the organization-wide AI system prompt, the organization settings, the read-only scan kill switches, and the latest scanner configuration metadata. Scanner configuration content and credentials are never returned. Requires organization admin rights.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        severity:
+                          type: string
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          description: The issue severity
+                        timeMs:
+                          type: integer
+                          minimum: 0
+                          description: The SLA deadline for this severity, in milliseconds
+                        enabled:
+                          type: boolean
+                          description: Whether the SLA is enforced for this severity
+                      required:
+                      - severity
+                      - timeMs
+                      - enabled
+                      title: SlaPolicy
+                      description: The issue SLA policy for a single severity.
+                    description: The issue SLA policy per severity
+                  aiSystemPrompt:
+                    type:
+                    - string
+                    - 'null'
+                    description: The organization-wide AI system prompt, or null when not configured
+                  settings:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - DISABLE_AI_PENTESTING_SCANS
+                      - DISABLE_ASM_SCANS
+                      - DISABLE_DAST_SCANS
+                      - DISABLE_PROJECT_PROPAGATION
+                      - ENABLE_SCOPED_WEBHOOK_EXPORT
+                    description: The organization settings, including the read-only kill switches
+                  killSwitches:
+                    type: object
+                    properties:
+                      dast:
+                        type: boolean
+                        description: 'Read-only: whether DAST scans are disabled for the organization'
+                      aiPentesting:
+                        type: boolean
+                        description: 'Read-only: whether AI pentesting scans are disabled for the organization'
+                      asm:
+                        type: boolean
+                        description: 'Read-only: whether ASM scans are disabled for the organization'
+                    required:
+                    - dast
+                    - aiPentesting
+                    - asm
+                    title: OrganizationKillSwitches
+                    description: Read-only org-wide scan kill switches. They can only be changed from the Escape dashboard, never through the public API.
+                  scannerConfiguration:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The scanner configuration ID
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: When this scanner configuration was created
+                    required:
+                    - id
+                    - createdAt
+                    title: OrganizationScannerConfigurationSummary
+                    description: Metadata of the latest organization-wide scanner configuration, or null when none exists
+                required:
+                - slas
+                - aiSystemPrompt
+                - settings
+                - killSwitches
+                - scannerConfiguration
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: Forbidden
+                description: Returned when the authenticated user does not have sufficient permissions
+    put:
+      tags:
+      - OrganizationSettings
+      summary: Update organization settings
+      operationId: updateOrganizationSettings
+      description: Update the organization issue SLA policy and the organization-wide AI system prompt. Requires organization admin rights. Read-only scan kill switches cannot be changed here. Organization settings toggles (project propagation, scoped webhook export) are not writable through the public API because the internal mutation replaces the whole settings list and would drop settings the public API cannot see.
+      requestBody:
+        required: true
+        description: Body of the request to update organization settings
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                aiSystemPrompt:
+                  type:
+                  - string
+                  - 'null'
+                  maxLength: 4000
+                  description: The organization-wide AI system prompt. Pass an empty string to clear it.
+                slas:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      severity:
+                        type: string
+                        enum:
+                        - CRITICAL
+                        - HIGH
+                        - INFO
+                        - LOW
+                        - MEDIUM
+                        description: The issue severity
+                      timeMs:
+                        type: integer
+                        minimum: 0
+                        description: The SLA deadline for this severity, in milliseconds
+                        example: 604800000
+                      enabled:
+                        type: boolean
+                        description: Whether the SLA is enforced for this severity
+                    required:
+                    - severity
+                    - timeMs
+                    - enabled
+                  minItems: 1
+                  maxItems: 5
+                  description: The issue SLA policy entries to update, keyed by severity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        severity:
+                          type: string
+                          enum:
+                          - CRITICAL
+                          - HIGH
+                          - INFO
+                          - LOW
+                          - MEDIUM
+                          description: The issue severity
+                        timeMs:
+                          type: integer
+                          minimum: 0
+                          description: The SLA deadline for this severity, in milliseconds
+                        enabled:
+                          type: boolean
+                          description: Whether the SLA is enforced for this severity
+                      required:
+                      - severity
+                      - timeMs
+                      - enabled
+                      title: SlaPolicy
+                      description: The issue SLA policy for a single severity.
+                    description: The issue SLA policy per severity
+                  aiSystemPrompt:
+                    type:
+                    - string
+                    - 'null'
+                    description: The organization-wide AI system prompt, or null when not configured
+                  settings:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - DISABLE_AI_PENTESTING_SCANS
+                      - DISABLE_ASM_SCANS
+                      - DISABLE_DAST_SCANS
+                      - DISABLE_PROJECT_PROPAGATION
+                      - ENABLE_SCOPED_WEBHOOK_EXPORT
+                    description: The organization settings, including the read-only kill switches
+                  killSwitches:
+                    type: object
+                    properties:
+                      dast:
+                        type: boolean
+                        description: 'Read-only: whether DAST scans are disabled for the organization'
+                      aiPentesting:
+                        type: boolean
+                        description: 'Read-only: whether AI pentesting scans are disabled for the organization'
+                      asm:
+                        type: boolean
+                        description: 'Read-only: whether ASM scans are disabled for the organization'
+                    required:
+                    - dast
+                    - aiPentesting
+                    - asm
+                    title: OrganizationKillSwitches
+                    description: Read-only org-wide scan kill switches. They can only be changed from the Escape dashboard, never through the public API.
+                  scannerConfiguration:
+                    type:
+                    - object
+                    - 'null'
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The scanner configuration ID
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: When this scanner configuration was created
+                    required:
+                    - id
+                    - createdAt
+                    title: OrganizationScannerConfigurationSummary
+                    description: Metadata of the latest organization-wide scanner configuration, or null when none exists
+                required:
+                - slas
+                - aiSystemPrompt
+                - settings
+                - killSwitches
+                - scannerConfiguration
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: Forbidden
+                description: Returned when the authenticated user does not have sufficient permissions
+  /organization-settings/scanner-configuration:
+    post:
+      tags:
+      - OrganizationSettings
+      summary: Create an organization scanner configuration
+      operationId: createOrganizationScannerConfiguration
+      description: Create a new organization-wide scanner configuration version. Requires organization admin rights. The configuration content is validated by the internal API and is never returned.
+      requestBody:
+        description: Body of the request to create an organization scanner configuration
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: object
+                  additionalProperties: {}
+                  description: The organization-wide scanner configuration content. Defaults to an empty object.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The scanner configuration ID
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: When this scanner configuration was created
+                required:
+                - id
+                - createdAt
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: Forbidden
+                description: Returned when the authenticated user does not have sufficient permissions
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY

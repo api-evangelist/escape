@@ -1,0 +1,778 @@
+openapi: 3.2.0
+info:
+  version: 3.0.0
+  title: Escape Public Retests API
+  description: 'This API enables you to operate Escape programmatically.
+
+
+    All requests must be authenticated with a valid API key, provided in the `X-ESCAPE-API-KEY` header.
+
+    For example: `X-ESCAPE-API-KEY: YOUR_API_KEY`.
+
+
+    You can find your API key in the Escape dashboard.'
+servers:
+- url: https://public.escape.tech/v3
+security:
+- apiKey: []
+tags:
+- name: Retests
+  description: 'A Retest is a scan that re-validates selected issues on a DAST or AI pentest profile.
+
+
+    Start a retest with explicit issue IDs or a filter, then poll status, progress, and per-issue agents (status and outcome). The retest id is the scan id.
+
+
+    See our documentation for more details.'
+paths:
+  /retests:
+    get:
+      tags:
+      - Retests
+      summary: List retests
+      operationId: listRetests
+      description: List issue retests of the organization. The id of each item is the scan id.
+      parameters:
+      - schema:
+          type: string
+          description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the pagination from. Returned by the previous page response. If not provided, the first page will be returned.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of items to return per page
+          example: 50
+        required: false
+        description: The number of items to return per page
+        name: size
+        in: query
+      - schema:
+          type: string
+          enum:
+          - SEVERITY
+          - createdAt
+          description: The type to sort by
+        required: false
+        description: The type to sort by
+        name: sortType
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+          description: The direction to sort by
+        required: false
+        description: The direction to sort by
+        name: sortDirection
+        in: query
+      - schema:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Filter by profile IDs
+          example: 00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000001
+        required: false
+        description: Filter by profile IDs
+        name: profileIds
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                  totalCount:
+                    type: integer
+                    default: 100
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The scan ID of the retest
+                        profileId:
+                          type: string
+                          description: The profile the retest ran on
+                        status:
+                          type: string
+                          description: The scan status of the retest
+                        progressRatio:
+                          type: number
+                          description: The progress ratio of the retest scan
+                        createdAt:
+                          type: string
+                          description: The date and time the retest was created
+                        finishedAt:
+                          type:
+                          - string
+                          - 'null'
+                          description: The date and time the retest finished
+                        context:
+                          type:
+                          - string
+                          - 'null'
+                          description: Optional operator context passed when starting the retest
+                        agents:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type:
+                                - string
+                                - 'null'
+                                format: uuid
+                                description: The agent id. Null until the agent has started.
+                              issueId:
+                                type: string
+                                format: uuid
+                                description: The issue this agent retests
+                              status:
+                                type:
+                                - string
+                                - 'null'
+                                enum:
+                                - FAILED
+                                - FINISHED
+                                - RUNNING
+                                - null
+                                description: The agent run status. Null until the agent has started.
+                              outcome:
+                                type:
+                                - string
+                                - 'null'
+                                enum:
+                                - FAILED
+                                - NOT_TESTED
+                                - VERIFIED_FIXED
+                                - VULNERABLE
+                                - null
+                                description: The retest outcome. Null while the report is still pending.
+                            required:
+                            - id
+                            - issueId
+                            - status
+                            - outcome
+                            title: RetestAgent
+                            description: One retest agent and its issue outcome. Does not include logs.
+                          description: Retest agents with status and outcome
+                      required:
+                      - id
+                      - profileId
+                      - status
+                      - progressRatio
+                      - createdAt
+                      - finishedAt
+                      - context
+                      - agents
+                      title: RetestDetailed
+                      description: A retest run. The id is the scan id.
+                required:
+                - nextCursor
+                - data
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+    post:
+      tags:
+      - Retests
+      summary: Start a retest
+      operationId: startRetest
+      description: Start an issue retest on a DAST or AI pentest profile. Provide either issueIds or filter, not both. The returned id is the scan id.
+      requestBody:
+        description: Body of the request to start a retest
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profileId:
+                  type: string
+                  format: uuid
+                  description: The profile ID to retest
+                  example: 00000000-0000-0000-0000-000000000000
+                issueIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Explicit issue IDs to retest. Provide this or filter, not both.
+                  example:
+                  - 00000000-0000-0000-0000-000000000000
+                filter:
+                  type: object
+                  properties:
+                    ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by specific issue IDs
+                    blacklistedIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Exclude these issue IDs
+                    blacklistedNames:
+                      type: array
+                      items:
+                        type: string
+                      description: Exclude issues by their raw name (e.g. 'SQL injection')
+                    projectIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by project IDs
+                    assetIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by asset IDs
+                    targetIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by target IDs
+                    scanIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by scan IDs
+                    tagIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Filter by tag IDs
+                    securityTestUids:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by security test UIDs
+                    domains:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by domain
+                    names:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by issue full name (the display name including risk characteristics, e.g. 'SQL injection found on external-facing asset')
+                    search:
+                      type: string
+                      description: Search term to filter issues by name or description
+                    jiraTicket:
+                      type: boolean
+                      description: Filter by issues with Jira tickets
+                    noTags:
+                      type: boolean
+                      enum:
+                      - true
+                      description: 'Filter by issues whose assets have no tags. Only `true` is supported: the API cannot express "assets that have tags", so `false` is rejected instead of silently matching every issue.'
+                    aiFalsePositive:
+                      type: boolean
+                      description: Filter by AI false positive classification
+                    agentic:
+                      type: boolean
+                      description: Filter by agentic (AI pentest) issues
+                    risks:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - CRITICAL_FINDING
+                        - EXPOSED
+                        - OPEN_SCHEMA
+                        - PRIVATE
+                        - PROD_ONLY_MODE
+                        - SENSITIVE_DATA
+                        - UNAUTHENTICATED
+                      description: Filter by risk types
+                    assetClasses:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - API_SERVICE
+                        - CDN
+                        - CLOUD_COMPONENT
+                        - CLOUD_HOSTING
+                        - CODE_PROJECT
+                        - CSPM
+                        - DEV_TOOLS
+                        - FRONTEND
+                        - HOST
+                        - MOBILE_APP
+                        - NETWORK
+                        - REPOSITORY
+                        - SCHEMA
+                        - SOURCE_CODE_MANAGEMENT
+                        - TECHNOLOGY
+                      description: Filter by asset classes
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ACCESS_CONTROL
+                        - CONFIGURATION
+                        - CUSTOM
+                        - INFORMATION_DISCLOSURE
+                        - INJECTION
+                        - PROTOCOL
+                        - REQUEST_FORGERY
+                        - RESOURCE_LIMITATION
+                        - SCHEMA
+                        - SENSITIVE_DATA
+                      description: Filter by issue categories
+                    assetTypes:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - APK
+                        - AWS_LAMBDA
+                        - BITBUCKET_REPOSITORY
+                        - BURPSUITE_EXPORT
+                        - CODE_PROJECT
+                        - DNS
+                        - GITHUB_REPOSITORY
+                        - GITLAB_REPOSITORY
+                        - GRAPHQL
+                        - GRAPHQL_SCHEMA
+                        - GRPC
+                        - HAR_EXPORT
+                        - INSOMNIA
+                        - IPV4
+                        - IPV4_RANGE
+                        - IPV6
+                        - MCP
+                        - OPENAPI
+                        - PACKAGE
+                        - POSTMAN_COLLECTION
+                        - POSTMAN_ENVIRONMENT
+                        - REST
+                        - SOAP
+                        - SOFTWARE
+                        - WEBAPP
+                        - WEBSOCKET
+                        - WP_JSON
+                      description: Filter by asset types
+                    assetStatuses:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - DEPRECATED
+                        - FALSE_POSITIVE
+                        - MONITORED
+                        - OUT_OF_SCOPE
+                        - THIRD_PARTY
+                      description: Filter by asset statuses
+                    scannerKinds:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ASM_APK
+                        - ASM_AWS_LAMBDA
+                        - ASM_BITBUCKET_REPOSITORY
+                        - ASM_BURPSUITE_EXPORT
+                        - ASM_CODE_PROJECT
+                        - ASM_DNS
+                        - ASM_GITHUB_REPOSITORY
+                        - ASM_GITLAB_REPOSITORY
+                        - ASM_GRAPHQL
+                        - ASM_GRAPHQL_SCHEMA
+                        - ASM_GRPC
+                        - ASM_HAR_EXPORT
+                        - ASM_INSOMNIA
+                        - ASM_IPV4
+                        - ASM_IPV4_RANGE
+                        - ASM_IPV6
+                        - ASM_MCP
+                        - ASM_OPENAPI
+                        - ASM_PACKAGE
+                        - ASM_POSTMAN_COLLECTION
+                        - ASM_POSTMAN_ENVIRONMENT
+                        - ASM_REST
+                        - ASM_SOAP
+                        - ASM_SOFTWARE
+                        - ASM_WEBAPP
+                        - ASM_WEBSOCKET
+                        - ASM_WP_JSON
+                        - AUTOMATED_PENTEST
+                        - BLST_GRAPHQL
+                        - BLST_REST
+                        - CONTINUOUS_PENTEST
+                        - EXTERNAL_NETWORK_PENTEST
+                        - FRONTEND_DAST
+                        - MOBILE_APP_PENTEST
+                        - RETEST
+                        - AUTOMATED_PENTEST_WEBAPP
+                        - AUTOMATED_PENTEST_REST
+                        - AUTOMATED_PENTEST_GRAPHQL
+                      description: Filter by scanner kinds
+                    severities:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - CRITICAL
+                        - HIGH
+                        - INFO
+                        - LOW
+                        - MEDIUM
+                      description: Filter by issue severities
+                    status:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - FALSE_POSITIVE
+                        - IGNORED
+                        - MANUAL_REVIEW
+                        - OPEN
+                        - RESOLVED
+                      description: Filter by issue status
+                    dnf:
+                      type: object
+                      additionalProperties: {}
+                      description: Advanced filter as a DNF expression (JSON object)
+                  additionalProperties: false
+                  description: Issue filter. Matches issues on the given profile.
+                context:
+                  type: string
+                  maxLength: 4000
+                  description: Optional operator context for the retest agents
+                  example: Verify the auth bypass fix on checkout.
+                initiator:
+                  type: string
+                  enum:
+                  - CI
+                  - MANUAL
+                  - SCHEDULED
+                  description: The initiator of the retest
+                  example: MANUAL
+              required:
+              - profileId
+            example:
+              profileId: 00000000-0000-0000-0000-000000000000
+              issueIds:
+              - 11111111-1111-4111-8111-111111111111
+              initiator: MANUAL
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The scan ID of the retest
+                  profileId:
+                    type: string
+                    description: The profile the retest ran on
+                  status:
+                    type: string
+                    description: The scan status of the retest
+                  progressRatio:
+                    type: number
+                    description: The progress ratio of the retest scan
+                  createdAt:
+                    type: string
+                    description: The date and time the retest was created
+                  finishedAt:
+                    type:
+                    - string
+                    - 'null'
+                    description: The date and time the retest finished
+                  context:
+                    type:
+                    - string
+                    - 'null'
+                    description: Optional operator context passed when starting the retest
+                  agents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The agent id. Null until the agent has started.
+                        issueId:
+                          type: string
+                          format: uuid
+                          description: The issue this agent retests
+                        status:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - FAILED
+                          - FINISHED
+                          - RUNNING
+                          - null
+                          description: The agent run status. Null until the agent has started.
+                        outcome:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - FAILED
+                          - NOT_TESTED
+                          - VERIFIED_FIXED
+                          - VULNERABLE
+                          - null
+                          description: The retest outcome. Null while the report is still pending.
+                      required:
+                      - id
+                      - issueId
+                      - status
+                      - outcome
+                      title: RetestAgent
+                      description: One retest agent and its issue outcome. Does not include logs.
+                    description: Retest agents with status and outcome
+                required:
+                - id
+                - profileId
+                - status
+                - progressRatio
+                - createdAt
+                - finishedAt
+                - context
+                - agents
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Bad Request
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: BadRequest
+                description: Returned when the request payload fails validation
+  /retests/{id}:
+    get:
+      tags:
+      - Retests
+      summary: Get a retest
+      operationId: getRetest
+      description: Get a retest by scan ID. Reports are cursor-paginated. Returns 404 if the scan is not a retest.
+      parameters:
+      - schema:
+          type: string
+          description: The scan ID of the retest
+          example: 00000000-0000-0000-0000-000000000000
+        required: true
+        description: The scan ID of the retest
+        name: id
+        in: path
+      - schema:
+          type: string
+          description: The cursor to start the reports page from. Returned as nextCursor on the previous response.
+          example: R1BDOlM6NTEwMzk4NTYtNGIyOS00NTlkLTg0ZDYtMWJhYjM0NWMzZjU5
+        required: false
+        description: The cursor to start the reports page from. Returned as nextCursor on the previous response.
+        name: cursor
+        in: query
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+          description: The number of reports to return per page
+          example: 50
+        required: false
+        description: The number of reports to return per page
+        name: size
+        in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The scan ID of the retest
+                  profileId:
+                    type: string
+                    description: The profile the retest ran on
+                  status:
+                    type: string
+                    description: The scan status of the retest
+                  progressRatio:
+                    type: number
+                    description: The progress ratio of the retest scan
+                  createdAt:
+                    type: string
+                    description: The date and time the retest was created
+                  finishedAt:
+                    type:
+                    - string
+                    - 'null'
+                    description: The date and time the retest finished
+                  context:
+                    type:
+                    - string
+                    - 'null'
+                    description: Optional operator context passed when starting the retest
+                  agents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type:
+                          - string
+                          - 'null'
+                          format: uuid
+                          description: The agent id. Null until the agent has started.
+                        issueId:
+                          type: string
+                          format: uuid
+                          description: The issue this agent retests
+                        status:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - FAILED
+                          - FINISHED
+                          - RUNNING
+                          - null
+                          description: The agent run status. Null until the agent has started.
+                        outcome:
+                          type:
+                          - string
+                          - 'null'
+                          enum:
+                          - FAILED
+                          - NOT_TESTED
+                          - VERIFIED_FIXED
+                          - VULNERABLE
+                          - null
+                          description: The retest outcome. Null while the report is still pending.
+                      required:
+                      - id
+                      - issueId
+                      - status
+                      - outcome
+                      title: RetestAgent
+                      description: One retest agent and its issue outcome. Does not include logs.
+                    description: Retest agents with status and outcome
+                  nextCursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for the next page of reports. Null when there is no next page.
+                required:
+                - id
+                - profileId
+                - status
+                - progressRatio
+                - createdAt
+                - finishedAt
+                - context
+                - agents
+                - nextCursor
+        '400':
+          description: Pagination error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Invalid cursor
+                    - Branch filters page limit reached
+                  details:
+                    type: string
+                required:
+                - message
+                - details
+                title: PaginationError
+                description: Returned when an invalid pagination cursor is supplied or when the branch filters page limit is reached
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not found
+                required:
+                - message
+                title: NotFound
+                description: Returned when the requested resource does not exist
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ESCAPE-API-KEY
