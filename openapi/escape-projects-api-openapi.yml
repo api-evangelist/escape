@@ -875,3 +875,9 @@ components:
       type: apiKey
       in: header
       name: X-ESCAPE-API-KEY
+x-provenance:
+  method: harvested
+  publisher: Escape
+  source: https://public.escape.tech/v3/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
